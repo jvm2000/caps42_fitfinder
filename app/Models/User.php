@@ -18,9 +18,17 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'password',
+        'first_name',
+        'last_name',
+        'phone_number',
+        'gender',
+        'role',
+        'birthdate',
+        'tags',
+        'profile-pic',
     ];
 
     /**
@@ -39,7 +47,14 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
+        'birthdate' => 'datetime',
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'tags' => 'array',
     ];
+
+    public function getAgeAttribute()
+    {
+        return $this->birthdate?->diffInYears(now());
+    }
 }

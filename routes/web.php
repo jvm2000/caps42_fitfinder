@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {return view('welcome');});
+Route::get('/logged-in/dashboard', function () {return view('dashboard/main');});
 
-Route::get('/route-login', function () {return view('auth/login');});
-Route::get('/route-register', function () {return view('auth/register');});
+// Auth
+Route::get('/login', function () {return view('auth/login');});
+Route::get('/register', function () {return view('auth/register');});
+Route::post('/auth-register', [AuthController::class, 'store'])->name('user.register');
+Route::post('/auth-login', [AuthController::class, 'login'])->name('user.login');
+Route::get('/auth/profile/{user}',[AuthController::class, 'show'])->middleware('auth')->name('user.show');
+
+
+
