@@ -25,7 +25,7 @@
                 </div>
                 <div class="flex place-items-center absolute space-x-12 right-[16rem]">
                     <div class="font-bold text-black text-sm bg-white rounded-md py-3 px-7 cursor-pointer">
-                        <a href="/route-login" class="outline-none">Sign In</a>
+                        <a href="/login" class="outline-none">Sign In</a>
                     </div>
                 </div>
                 </div>

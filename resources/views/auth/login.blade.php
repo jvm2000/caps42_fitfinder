@@ -25,33 +25,49 @@
         </p>
       </div>
       <!-- Credentials Input -->
-      <div class="grid space-y-5 px-2 pt-8">
-          <div class="relative w-full h-12 border-gray-500 border rounded-md bg-gray-100 flex place-items-center">
-            <!-- Username  -->
-            <input type="text" class="bg-inherit text-lg px-8 ring-0 focus:right-0 border-none focus:border-non outline-none focus:outline-none appearance-none w-full" placeholder="Username..."
+      <form method="POST" action="/auth-login">
+        @csrf
+        <div class="grid space-y-5 px-2 pt-8">
+          <div class="space-y-2">
+            <input 
+              type="email" 
+              class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" 
+              placeholder="Email"
+              name="email"
             >
+            @error('email')
+            <p class="text-red-500 text-sm">{{$message}}</p>
+            @enderror
           </div>
-          <div class="relative w-full h-12 border-gray-500 border rounded-md bg-gray-100 flex place-items-center">
-          <!-- Password  -->
-            <input class="bg-inherit text-lg px-8 ring-0 focus:right-0 border-none focus:border-non outline-none focus:outline-none appearance-none w-full" placeholder="Password...">
+          <div class="space-y-2">
+            <input 
+              type="password" 
+              class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" 
+              placeholder="Password"
+              name="password"
+            >
+            @error('password')
+            <p class="text-red-500 text-sm">{{$message}}</p>
+            @enderror
           </div>
-      </div>
-      <!-- Sign Up -->
-      <div class="pt-6 pl-2">
-        <p class="font-normal text-md">
-          No Account yet?<br>
-          Click <a class="font-semibold text-indigo-500 cursor-pointer" href="/route-register">here</a> to join us today.
-        </p>
-      </div>
-      <div class="pt-8 w-full grid items-center relative h-24">
-        <div class="">
+        </div>
+        <!-- Sign Up -->
+        <div class="pt-6 pl-2">
+          <p class="font-normal text-md">
+            No Account yet?<br>
+            Click <a class="font-semibold text-indigo-500 cursor-pointer" href="/register">here</a> to join us today.
+          </p>
+        </div>
+
+        <div class="pt-8 w-full grid items-center relative h-24">
           <button 
+            type="submit"
             class="rounded-md text-center px-6 py-4 text-md text-white bg-black cursor-pointer w-full"
           >
             Login
           </button>
         </div>
-      </div>
+      </form>  
     </div>
 
   </div>

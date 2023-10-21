@@ -24,28 +24,58 @@
         </p>
       </div>
       <!-- Credentials Input -->
-      <div class="grid space-y-4 px-2 pt-8">
-        <div class="space-y-2">
-          <span class="text-md text-gray-600">Email</span>
-          <input type="text" class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" placeholder="Enter your Username"
+      <form method="POST" action="/auth-register">
+        @csrf
+        <div class="grid space-y-4 px-2 pt-8">
+
+          <div class="space-y-2">
+            <span class="text-md text-gray-600">Username</span>
+            <input 
+              type="text" 
+              class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" 
+              placeholder="Enter your Username"
+              name="username"
             >
-        </div>
-        <div class="space-y-2">
-          <span class="text-md text-gray-600">Password</span>
-          <input type="password" class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" placeholder="Enter your Password"
+            @error('username')
+            <p class="text-red-500 text-sm">{{$message}}</p>
+            @enderror
+          </div>
+  
+          <div class="space-y-2">
+            <span class="text-md text-gray-600">Email</span>
+            <input 
+              type="email" 
+              class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" 
+              placeholder="Enter your Email"
+              name="email"
             >
-        </div>
-        <div class="space-y-2">
-          <span class="text-md text-gray-600">Confirm Password</span>
-          <input type="password" class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" placeholder="Re-enter your Password"
+            @error('email')
+            <p class="text-red-500 text-sm">{{$message}}</p>
+            @enderror
+          </div>
+  
+          <div class="space-y-2">
+            <span class="text-md text-gray-600">Password</span>
+            <input 
+              type="password" 
+              class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" 
+              placeholder="Enter your Password"
+              name="password"
             >
+            @error('password')
+            <p class="text-red-500 text-sm">{{$message}}</p>
+            @enderror
+          </div>
         </div>
-      </div>
-      <div class="pt-8 w-full grid items-center relative space-y-4 ">
-        <button class="rounded-md text-center px-6 py-4 text-md text-white bg-black cursor-pointer w-full">
-          Register
-        </button>
-      </div>
+  
+        <div class="pt-8 w-full grid items-center relative space-y-4 ">
+          <button 
+            type="submit"
+            class="rounded-md text-center px-6 py-4 text-md text-white bg-black cursor-pointer w-full"
+          >Register</button>
+        </div>
+      </form>
+
     </div>
 
   </div>
