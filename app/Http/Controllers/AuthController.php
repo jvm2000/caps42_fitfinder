@@ -96,4 +96,12 @@ class AuthController extends Controller
   {
     //
   }
+
+  public function logout(Request $request) {
+    auth()->logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect('/')->with('message','Logged out successfully!');
+  }
 }
