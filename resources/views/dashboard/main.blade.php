@@ -1,7 +1,7 @@
 <x-layout>
   {{-- Title  --}}
   <x-slot:title>
-    Dashboard
+    FitFinder - Dashboard
   </x-slot>
   <div class="w-full py-10 px-12">
     <div class="flex items-center relative">
