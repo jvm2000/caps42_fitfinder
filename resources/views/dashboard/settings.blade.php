@@ -13,6 +13,16 @@
       {{-- Left Panel --}}
       <div class="flex flex-col space-y-6 col-span-3">
         <div class="grid grid-cols-3 items-center">
+          <label class="text-base font-medium col-span-1 text-gray-400">Username<span class="text-red-500 font-light">*</span></label>
+          <input 
+            type="text" 
+            class="bg-inherit text-sm px-6 py-2 w-full border-gray-500 border rounded-md col-span-2" 
+            placeholder="Enter Username"
+            name="first_name"
+          >
+        </div>
+
+        <div class="grid grid-cols-3 items-center">
           <label class="text-base font-medium col-span-1 text-gray-400">First Name<span class="text-red-500 font-light">*</span></label>
           <input 
             type="text" 
