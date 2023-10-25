@@ -21,7 +21,7 @@
 <div class="relative inline-block text-left">
   <div class="flex items-center space-x-4">
     <div class="text-right">
-        <p class="text-base font-bold">Mia Khalifa</p>
+        <p class="text-base font-bold">{{auth()->user()->username}}</p>
         <p class="text-base text-neutral-400">Trainee / Novice</p>
     </div>
     <button 

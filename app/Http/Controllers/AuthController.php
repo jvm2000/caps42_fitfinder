@@ -70,7 +70,7 @@ class AuthController extends Controller
    */
   public function show(User $user)
   {
-    return view(['user' => $user]);
+    return view('dashboard.settings',['user' => $user]);
   }
 
   /**
@@ -84,10 +84,29 @@ class AuthController extends Controller
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, string $id)
-  {
-    //
-  }
+  public function update(Request $request, User $user){
+    if($user->id != auth()->id()){
+        abort(403,'Unauthorized Action');
+    }
+
+    $form = $request->validate([
+        'username'=>'string',
+        'email'=>'string',
+        'first_name'=>['required','string'],
+        'last_name'=>['required','string'],
+        'phone_number'=>['required', 'min:11'],
+        'gender'=>['required'],
+        'birthdate'=>'required',
+        'tags'=>'required',
+        'profile-pic'=>'string',
+    ]);
+
+    $user->update($form);
+
+    auth()->login($user);
+
+    return back()->with('message', 'User updated successfully!');
+}
 
   /**
    * Remove the specified resource from storage.

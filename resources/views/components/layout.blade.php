@@ -45,7 +45,7 @@
           <div class="absolute bottom-0">
             <a 
               class="flex items-center relative group"
-              href="/logged-in/settings"
+              href="/auth/profile/{{auth()->user()->id}}"
             >
               <span class="w-2 h-9 rounded-r-md mr-[110px]"></span>
               <img src="/dashboard/icons/settings.svg" alt="Main" class="w-8 h-8 group-hover:mb-1 mr-14">
