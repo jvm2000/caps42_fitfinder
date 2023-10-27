@@ -13,7 +13,7 @@
         @foreach ($matchingTrainers as $trainer)
         <p>Trainer: {{ $trainer->trainer_fname }} {{ $trainer->trainer_lname }}</p>
         <form action="{{ route('send.request') }}" method="post">
-            @csrf <!-- Place @csrf within the form -->
+            @csrf
             <input type="hidden" name="trainee_id" value="{{ $t_id }}">
             <input type="hidden" name="trainer_id" value="{{ $trainer->trainer_id }}">
             <button type="submit" name="sendRequest">Send Request</button>
