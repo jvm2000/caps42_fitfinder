@@ -21,8 +21,10 @@
 <div class="relative inline-block text-left">
   <div class="flex items-center space-x-4">
     <div class="text-right">
-        <p class="text-base font-bold">Mia Khalifa</p>
-        <p class="text-base text-neutral-400">Trainee / Novice</p>
+        <p class="text-base font-bold">{{ ucwords(auth()->user()->username) }}
+        </p>
+        <p class="text-base text-neutral-400">{{ ucwords(auth()->user()->role) }}
+        </p>
     </div>
     <button 
       class="w-11 h-11 rounded-full border"
@@ -38,12 +40,15 @@
     @csrf
     <div
       id="dropdown-menu"
-      class="origin-top-right absolute right-0 mt-4 w-full rounded-md shadow-lg hidden py-2"
+      class="origin-top-right absolute right-0 mt-4 w-full rounded-md shadow-lg hidden py-2 z-[9999] bg-white"
     >
-      {{-- <button class="flex w-full items-center space-x-8 cursor-pointer py-2 hover:bg-gray-100">
+      <a 
+        class="flex w-full items-center space-x-8 cursor-pointer py-2 hover:bg-gray-100"
+        href="/logged-in/settings"
+      >
         <img src="/icons/settings/gear-icon.svg" alt="Gear Icon" class="w-6 h-6 ml-4">
         <p class="text-sm font-medium">Settings</p>
-      </button> --}}
+      </a>
 
       <button class="flex w-full items-center space-x-8 cursor-pointer py-2 hover:bg-gray-100">
         <img src="/icons/settings/logout-icon.svg" alt="Gear Icon" class="w-6 h-6 ml-4">

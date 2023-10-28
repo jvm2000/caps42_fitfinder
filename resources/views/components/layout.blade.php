@@ -13,16 +13,26 @@
   </head>
 
   <body class="antialiased">
-    <div class="w-screen h-screen grid grid-cols-8 bg-[#1A1A1A]">
+    <div class="w-screen h-screen grid grid-cols-8 bg-[#1A1A1A] overflow-hidden">
 
       <nav class="col-span-2 py-24">
-        <div class="relative h-full w-full">
+        <div class="relative h-full max-h-[46rem] w-full">
           <div class="grid place-items-center">
             <img src="/dashboard/logo-sidebar.svg" alt="Sidebar Logo">
           </div>
 
+          
           <div class="mt-36 w-full">
-            <div class="flex items-center relative group">
+          <div class="flex items-center relative mt-14 group">
+          <span class="w-2 h-9 rounded-r-md mr-[110px]"></span>
+          <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Matchmake</p>
+          </div>
+          
+            <a 
+              class="flex items-center relative group"
+              href="/logged-in/dashboard"
+            >
+            
               <span class="w-2 h-9 rounded-r-md mr-[110px]"></span>
               <img src="/dashboard/icons/main.svg" alt="Main" class="w-6 h-6 group-hover:mb-1 mr-14">
               <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Dashboard</p>
@@ -38,20 +48,24 @@
               <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Contracts</p>
             </div>
           </div>
-
+        
+            
           <div class="absolute bottom-0">
-            <div class="flex items-center relative group">
+            <a 
+              class="flex items-center relative group"
+              href="/logged-in/settings"
+            >
               <span class="w-2 h-9 rounded-r-md mr-[110px]"></span>
               <img src="/dashboard/icons/settings.svg" alt="Main" class="w-8 h-8 group-hover:mb-1 mr-14">
               <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Settings</p>
-            </div>
+            </a>
           </div>
 
         </div>
       </nav>
 
       <div class="col-span-6 py-10 pr-10">
-        <div class="bg-white rounded-3xl h-full">
+        <div class="bg-white rounded-3xl h-full max-h-[54rem] overflow-hidden">
           <main>
           @yield('content')
           {{$slot}}
