@@ -9,9 +9,8 @@
       <x-menu-dropdown />
     </div>
     <div class="w-full border-b-8 mt-4"></div>
-    <form method ="GET" action="" enctype="multipart/form-data">
+    <form method ="POST" action="/auth/profile/update/{{auth()->user()->id}}">
       @csrf
-      {{-- @method('PUT') --}}
       <div class="grid grid-cols-5 gap-x-16 py-12 w-full px-12">
         {{-- Left Panel --}}
         <div class="flex flex-col space-y-6 col-span-3">
@@ -33,6 +32,7 @@
               class="bg-inherit text-sm px-6 py-2 w-full border-gray-500 border rounded-md col-span-2" 
               placeholder="Enter First Name"
               name="first_name"
+              value="{{$user->first_name}}"
             >
           </div>
   
@@ -43,6 +43,7 @@
               class="bg-inherit text-sm px-6 py-2 w-full border-gray-500 border rounded-md col-span-2" 
               placeholder="Enter Last Name"
               name="last_name"
+              value="{{$user->last_name}}"
             >
           </div>
   
@@ -55,6 +56,7 @@
               minlength="11"
               maxlength="11"
               name="phone_number"
+              value="{{$user->phone_number}}"
             >
           </div>
   
@@ -64,7 +66,8 @@
               type="date" 
               class="bg-inherit text-sm px-6 py-2 w-full border-gray-500 border rounded-md col-span-2" 
               placeholder="MM/DD/YY"
-              name="phone_number"
+              name="birthdate"
+              value="{{$user->birthdate}}"
             >
           </div>
   
@@ -74,6 +77,7 @@
               type="text" 
               class="bg-inherit text-sm px-6 py-2 w-full border-gray-500 border rounded-md col-span-2 appearance-none" 
               name="gender"
+              value="{{$user->gender}}"
             >
               <option value="" selected disabled>Enter Gender</option>
               <option value="Male">Male</option>
@@ -95,11 +99,12 @@
         {{-- Main Panel  --}}
         <div class="flex flex-col space-y-6 col-span-3">
           <div class="grid grid-cols-3 items-center">
-            <label class="text-base font-medium col-span-1 text-gray-400">Role</span></label>
+            <label class="text-base font-medium col-span-1 text-black">Role</span></label>
             <select 
               type="text" 
               class="bg-inherit text-sm px-6 py-2 w-full border-gray-500 border rounded-md col-span-2 appearance-none" 
               name="role"
+              value="{{$user->role}}"
             >
               <option value="" selected disabled>Enter Role</option>
               <option value="Coach">Coach</option>
@@ -107,12 +112,13 @@
             </select>
           </div>
           <div class="grid grid-cols-3 items-center">
-            <label class="text-base font-medium col-span-1 text-gray-400">Tags</span></label>
+            <label class="text-base font-medium col-span-1 text-black">Tags</span></label>
             <input 
               type="text" 
               class="bg-inherit text-sm px-6 py-2 w-full border-gray-500 border rounded-md col-span-2" 
               placeholder="Enter Tags"
               name="tags"
+              value="{{$user->tags}}"
             >
           </div>
         </div>
@@ -123,7 +129,7 @@
         {{-- Main Panel  --}}
         <div class="flex flex-col space-y-6 col-span-3">
           <div class="grid grid-cols-3 items-center">
-            <label class="text-base font-medium col-span-1 text-gray-400">Email</span></label>
+            <label class="text-base font-medium col-span-1 text-black">Email</span></label>
             <input 
               type="email" 
               class="bg-inherit text-sm px-6 py-2 w-full border-gray-500 border rounded-md col-span-2" 
@@ -132,7 +138,7 @@
             >
           </div>
           <div class="grid grid-cols-3 items-center">
-            <label class="text-base font-medium col-span-1 text-gray-400">Verification code</span></label>
+            <label class="text-base font-medium col-span-1 text-black">Verification code</span></label>
             <input 
               type="text" 
               class="bg-inherit text-sm px-6 py-2 w-full border-gray-500 border rounded-md col-span-2" 

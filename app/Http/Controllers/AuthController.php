@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -52,17 +53,15 @@ class AuthController extends Controller
     $form = $request->validate([
       'email' => ['required', 'email'],
       'password' => 'required'
-
-
     ]);
 
     if (auth()->attempt($form)) {
       $request->session()->regenerate();
-      return redirect('/logged-in/dashboard')->with('message', 'Logged in successfully!');
+      return redirect('/logged-in/dashboard')->with('loginMessage', 'Logged in successfully!');
     } else {
-      return redirect('/login')->with('message', 'Logged in Unsuccessfully!');
+      return redirect('/login')->with('loginMessage', 'Logged in Unsuccessfully!');
     }
-    // return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
+    return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
   }
 
   /**
@@ -74,39 +73,23 @@ class AuthController extends Controller
   }
 
   /**
-   * Show the form for editing the specified resource.
-   */
-  public function edit(string $id)
-  {
-    //
-  }
-
-  /**
    * Update the specified resource in storage.
    */
   public function update(Request $request, User $user){
-    if($user->id != auth()->id()){
-        abort(403,'Unauthorized Action');
-    }
-
     $form = $request->validate([
-        'username'=>'string',
-        'email'=>'string',
         'first_name'=>['required','string'],
         'last_name'=>['required','string'],
         'phone_number'=>['required', 'min:11'],
-        'gender'=>['required'],
         'birthdate'=>'required',
+        'gender'=>['required'],
+        'role'=>['required'],
         'tags'=>'required',
-        'profile-pic'=>'string',
     ]);
 
-    $user->update($form);
+    Auth::user()->update($form);
 
-    auth()->login($user);
-
-    return back()->with('message', 'User updated successfully!');
-}
+    return back()->with('success', 'User Updated successfully');
+  }
 
   /**
    * Remove the specified resource from storage.

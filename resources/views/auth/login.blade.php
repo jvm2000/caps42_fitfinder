@@ -1,3 +1,14 @@
+<script>
+function myFunction() {
+  var x = document.getElementById("myInput");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -41,6 +52,7 @@
           </div>
           <div class="space-y-2">
             <input 
+              id="myInput"
               type="password" 
               class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" 
               placeholder="Password"
@@ -50,23 +62,29 @@
             <p class="text-red-500 text-sm">{{$message}}</p>
             @enderror
           </div>
+
         </div>
         <!-- Sign Up -->
-        <div class="pt-6 pl-2">
-          <p class="font-normal text-md">
-            No Account yet?<br>
-            Click <a class="font-semibold text-indigo-500 cursor-pointer" href="/register">here</a> to join us today.
-          </p>
+        <div class="pt-6 pl-2 flex items-start relative">
+          <div class="font-normal text-md space-y-0 mr-auto">
+            <p>No Account Yet?</p>
+            <p>Click <a class="font-semibold text-indigo-500 cursor-pointer" href="/register">here</a> to join us today.</p>
+          </div>
+          <div class="flex items-center space-x-3 mt-1 mr-2">
+            <input id="showPass" class="w-4 h-4" type="checkbox" onclick="myFunction()">
+            <label for="showPass" class="text-sm text-black cursor-pointer">Show Password</label>
+          </div>
         </div>
 
         <div class="pt-8 w-full grid items-center relative h-24">
           <button 
             type="submit"
-            class="rounded-md text-center px-6 py-4 text-md text-white bg-black cursor-pointer w-full"
+            class="rounded-md text-center px-6 py-4 text-md text-white bg-black cursor-pointer w-full active:mt-1"
           >
             Login
           </button>
         </div>
+
       </form>  
     </div>
 
