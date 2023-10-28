@@ -42,8 +42,8 @@ class AuthController extends Controller
     $user = User::create($form);
 
     auth()->login($user);
-
-    return redirect('/login')->with('message', 'User creation successfully!');
+    
+    return redirect('/logged-in/dashboard')->with('message', 'User creation successfully!');
   }
 
   /**
@@ -59,9 +59,7 @@ class AuthController extends Controller
     if (auth()->attempt($form)) {
       $request->session()->regenerate();
       return redirect('/logged-in/dashboard')->with('loginMessage', 'Logged in successfully!');
-    } else {
-      return redirect('/login')->with('loginMessage', 'Logged in Unsuccessfully!');
-    }
+    } 
     return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
   }
 
