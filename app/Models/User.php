@@ -18,6 +18,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'username',
         'email',
         'password',
@@ -50,7 +51,6 @@ class User extends Authenticatable
         'birthdate' => 'datetime',
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
-        'tags' => 'array',
     ];
 
     public function getAgeAttribute()

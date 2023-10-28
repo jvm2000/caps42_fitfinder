@@ -16,15 +16,11 @@
   });
 </script>
 
-<!-- resources/views/components/custom-dropdown.blade.php -->
-
 <div class="relative inline-block text-left">
   <div class="flex items-center space-x-4">
     <div class="text-right">
-        <p class="text-base font-bold">{{ ucwords(auth()->user()->username) }}
-        </p>
-        <p class="text-base text-neutral-400">{{ ucwords(auth()->user()->role) }}
-        </p>
+        <p class="text-base font-bold">{{auth()->user()->first_name}} {{auth()->user()->last_name}}</p>
+        <p class="text-base text-neutral-400">{{auth()->user()->role}} / Novice</p>
     </div>
     <button 
       class="w-11 h-11 rounded-full border"
@@ -44,7 +40,7 @@
     >
       <a 
         class="flex w-full items-center space-x-8 cursor-pointer py-2 hover:bg-gray-100"
-        href="/logged-in/settings"
+        href="/auth/profile/{{auth()->user()->id}}"
       >
         <img src="/icons/settings/gear-icon.svg" alt="Gear Icon" class="w-6 h-6 ml-4">
         <p class="text-sm font-medium">Settings</p>
