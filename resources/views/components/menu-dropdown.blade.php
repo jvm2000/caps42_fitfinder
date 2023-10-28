@@ -16,8 +16,6 @@
   });
 </script>
 
-<!-- resources/views/components/custom-dropdown.blade.php -->
-
 <div class="relative inline-block text-left">
   <div class="flex items-center space-x-4">
     <div class="text-right">
@@ -42,7 +40,7 @@
     >
       <a 
         class="flex w-full items-center space-x-8 cursor-pointer py-2 hover:bg-gray-100"
-        href="/logged-in/settings"
+        href="/auth/profile/{{auth()->user()->id}}"
       >
         <img src="/icons/settings/gear-icon.svg" alt="Gear Icon" class="w-6 h-6 ml-4">
         <p class="text-sm font-medium">Settings</p>

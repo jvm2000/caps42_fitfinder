@@ -1,3 +1,14 @@
+<script>
+function myFunction() {
+  var x = document.getElementById("myInput");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -57,6 +68,7 @@
           <div class="space-y-2">
             <span class="text-md text-gray-600">Password</span>
             <input 
+              id="myInput"
               type="password" 
               class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" 
               placeholder="Enter your Password"
@@ -66,6 +78,10 @@
             <p class="text-red-500 text-sm">{{$message}}</p>
             @enderror
           </div>
+          <div class="flex items-center space-x-3 mt-0 mr-2">
+            <input id="showPass" class="w-4 h-4" type="checkbox" onclick="myFunction()">
+            <label for="showPass" class="text-sm text-black cursor-pointer">Show Password</label>
+          </div>
         </div>
   
         <div class="pt-8 w-full grid items-center relative space-y-4 ">
@@ -73,9 +89,13 @@
             type="submit"
             class="rounded-md text-center px-6 py-4 text-md text-white bg-black cursor-pointer w-full"
           >Register</button>
+          <a 
+            href="/login"
+            class="rounded-md text-center px-6 py-3 text-md text-black border border-black cursor-pointer w-full"
+          >Back</a>
         </div>
+        
       </form>
-
     </div>
 
   </div>
