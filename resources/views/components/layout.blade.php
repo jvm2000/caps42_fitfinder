@@ -21,15 +21,22 @@
             <img src="/dashboard/logo-sidebar.svg" alt="Sidebar Logo">
           </div>
 
+          
           <div class="mt-36 w-full">
+          <div class="flex items-center relative mt-14 group">
+          <span class="w-2 h-9 rounded-r-md mr-[110px]"></span>
+          <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Matchmake</p>
+          </div>
+          
             <a 
               class="flex items-center relative group"
               href="/logged-in/dashboard"
             >
+            
               <span class="w-2 h-9 rounded-r-md mr-[110px]"></span>
               <img src="/dashboard/icons/main.svg" alt="Main" class="w-6 h-6 group-hover:mb-1 mr-14">
               <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Dashboard</p>
-            </a>
+            </div>
             <div class="flex items-center relative mt-14 group">
               <span class="w-2 h-9 rounded-r-md mr-[110px]"></span>
               <img src="/dashboard/icons/programs.svg" alt="Main" class="w-6 h-6 mr-14 group-hover:mb-1">
@@ -41,7 +48,8 @@
               <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Contracts</p>
             </div>
           </div>
-
+        
+            
           <div class="absolute bottom-0">
             <a 
               class="flex items-center relative group"

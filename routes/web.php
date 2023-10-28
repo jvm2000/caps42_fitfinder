@@ -1,7 +1,11 @@
 <?php
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MatchmakingController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +20,6 @@ use App\Http\Controllers\AuthController;
 
 Route::get('/', function () {return view('welcome');});
 Route::get('/logged-in/dashboard', function () {return view('dashboard/main');});
-Route::get('/logged-in/settings', function () {return view('dashboard/settings');});
 
 // Auth
 Route::get('/login', function () {return view('auth/login');});
@@ -26,6 +29,16 @@ Route::post('/auth-login', [AuthController::class, 'login'])->name('user.login')
 Route::post('/auth-logout', [AuthController::class, 'logout'])->middleware('auth')->name('user.logout');
 Route::get('/auth/profile/{user}',[AuthController::class, 'show'])->middleware('auth')->name('user.show');
 Route::post('/auth/profile/update/{user}',[AuthController::class, 'update'])->middleware('auth')->name('user.update');
+
+Route::get('/logged-in/matchmake', function () {
+  return view('dashboard/matchmaking');
+});
+Route::get('/matchmaking', [MatchmakingController::class, 'index'])->name('matchmaking.index');
+
+Route::get('/matchmaking/result', [MatchmakingController::class, 'show'])->name('matchmaking.result');
+Route::post('/matchmaking/send-request', [MatchmakingController::class, 'sendRequest'])->name('send.request');
+
+
 
 
 
