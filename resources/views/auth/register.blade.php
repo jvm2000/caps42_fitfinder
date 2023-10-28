@@ -46,6 +46,7 @@ function myFunction() {
               class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" 
               placeholder="Enter your Firstname"
               name="first_name"
+              value="{{old('first_name')}}"
             >
             @error('first_name')
             <p class="text-red-500 text-sm">{{$message}}</p>
@@ -59,6 +60,7 @@ function myFunction() {
               class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" 
               placeholder="Enter your Lastname"
               name="last_name"
+              value="{{old('last_name')}}"
             >
             @error('last_name')
             <p class="text-red-500 text-sm">{{$message}}</p>
@@ -74,6 +76,7 @@ function myFunction() {
               minlength="11"
               maxlength="11"
               name="phone_number"
+              value="{{old('phone_number')}}"
             >
             @error('phone_number')
             <p class="text-red-500 text-sm">{{$message}}</p>
@@ -86,6 +89,7 @@ function myFunction() {
               type="text" 
               class="bg-inherit text-lg px-6 py-2 w-full border-gray-500 border rounded-md col-span-2 appearance-none" 
               name="gender"
+              value="{{old('gender')}}"
             >
               <option value="" selected disabled>Enter Gender</option>
               <option value="Male">Male</option>
@@ -100,6 +104,7 @@ function myFunction() {
               class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" 
               placeholder="Enter your Birthdate"
               name="birthdate"
+              value="{{old('birthdate')}}"
             >
             @error('birthdate')
             <p class="text-red-500 text-sm">{{$message}}</p>
@@ -113,6 +118,7 @@ function myFunction() {
               class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" 
               placeholder="Enter your Username"
               name="username"
+              value="{{old('username')}}"
             >
             @error('username')
             <p class="text-red-500 text-sm">{{$message}}</p>
@@ -126,6 +132,7 @@ function myFunction() {
               class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" 
               placeholder="Enter your Email"
               name="email"
+              value="{{old('email')}}"
             >
             @error('email')
             <p class="text-red-500 text-sm">{{$message}}</p>
@@ -140,6 +147,7 @@ function myFunction() {
               class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" 
               placeholder="Enter your Password"
               name="password"
+              value="{{old('password')}}"
             >
             @error('password')
             <p class="text-red-500 text-sm">{{$message}}</p>
@@ -152,6 +160,7 @@ function myFunction() {
               type="text" 
               class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md appearance-none" 
               name="role"
+              value="{{old('role')}}"
             >
               <option value="" selected disabled>Enter Role</option>
               <option value="Coach">Coach</option>
@@ -166,6 +175,7 @@ function myFunction() {
               class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" 
               placeholder="Enter your Tags"
               name="tags"
+              value="{{old('tags')}}"
             >
           </div>
 

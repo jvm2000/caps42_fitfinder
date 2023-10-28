@@ -33,9 +33,9 @@ Route::post('/auth/profile/update/{user}',[AuthController::class, 'update'])->mi
 Route::get('/logged-in/matchmake', function () {
   return view('dashboard/matchmaking');
 });
-Route::get('/matchmaking', [MatchmakingController::class, 'index'])->name('matchmaking.index');
+Route::get('/dashboard/matchmaking', [MatchmakingController::class, 'index'])->name('matchmaking.index');
 
-Route::get('/matchmaking/result', [MatchmakingController::class, 'show'])->name('matchmaking.result');
+Route::get('logged-in/dashboard', [MatchmakingController::class, 'show'])->name('dashboard/main');
 Route::post('/matchmaking/send-request', [MatchmakingController::class, 'sendRequest'])->name('send.request');
 
 
