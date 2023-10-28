@@ -78,10 +78,24 @@ function myFunction() {
             <p class="text-red-500 text-sm">{{$message}}</p>
             @enderror
           </div>
-          <div class="flex items-center space-x-3 mt-0 mr-2">
+          {{-- <div class="flex items-center space-x-3 mt-0 mr-2">
             <input id="showPass" class="w-4 h-4" type="checkbox" onclick="myFunction()">
             <label for="showPass" class="text-sm text-black cursor-pointer">Show Password</label>
+          </div> --}}
+
+          <div class="space-y-2">
+            <label class="text-base font-medium col-span-1 text-gray-600">Role</span></label>
+            <select 
+              type="text" 
+              class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md appearance-none" 
+              name="role"
+            >
+              <option value="" selected disabled>Enter Role</option>
+              <option value="Coach">Coach</option>
+              <option value="Trainee">Trainee</option>
+            </select>
           </div>
+
         </div>
   
         <div class="pt-8 w-full grid items-center relative space-y-4 ">

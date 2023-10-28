@@ -34,6 +34,7 @@ class AuthController extends Controller
       'username' => ['required', 'min:3'],
       'email' => ['required', 'email', Rule::unique('users', 'email')],
       'password' => ['required', 'min:8'],
+      'role'=>['required'],
     ]);
 
     $form['password'] = bcrypt($form['password']);
