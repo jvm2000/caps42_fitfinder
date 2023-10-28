@@ -20,7 +20,6 @@ use App\Http\Controllers\MatchmakingController;
 
 Route::get('/', function () {return view('welcome');});
 Route::get('/logged-in/dashboard', function () {return view('dashboard/main');});
-Route::get('/logged-in/settings', function () {return view('dashboard/settings');});
 
 // Auth
 Route::get('/login', function () {return view('auth/login');});

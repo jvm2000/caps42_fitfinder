@@ -21,8 +21,10 @@
 <div class="relative inline-block text-left">
   <div class="flex items-center space-x-4">
     <div class="text-right">
-        <p class="text-base font-bold">Mia Khalifa</p>
-        <p class="text-base text-neutral-400">Trainee / Novice</p>
+        <p class="text-base font-bold">{{ ucwords(auth()->user()->username) }}
+        </p>
+        <p class="text-base text-neutral-400">{{ ucwords(auth()->user()->role) }}
+        </p>
     </div>
     <button 
       class="w-11 h-11 rounded-full border"

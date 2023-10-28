@@ -36,8 +36,7 @@
               <span class="w-2 h-9 rounded-r-md mr-[110px]"></span>
               <img src="/dashboard/icons/main.svg" alt="Main" class="w-6 h-6 group-hover:mb-1 mr-14">
               <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Dashboard</p>
-            </a>
-          
+            </div>
             <div class="flex items-center relative mt-14 group">
               <span class="w-2 h-9 rounded-r-md mr-[110px]"></span>
               <img src="/dashboard/icons/programs.svg" alt="Main" class="w-6 h-6 mr-14 group-hover:mb-1">
