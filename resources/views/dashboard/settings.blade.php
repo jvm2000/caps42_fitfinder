@@ -1,3 +1,21 @@
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const editButton = document.getElementById('dropdown-button');
+    const dropdownMenu = document.getElementById('dropdown-menu');
+
+    editButton.addEventListener('click', function () {
+        dropdownMenu.classList.toggle('hidden');
+    });
+
+    // Close the dropdown when clicking outside of it
+    document.addEventListener('click', function (event) {
+      if (!editButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+          dropdownMenu.classList.add('hidden');
+      }
+    });
+  });
+</script>
+
 <x-layout>
   {{-- Title  --}}
   <x-slot:title>
@@ -84,6 +102,19 @@
               <option value="Female">Female</option>
             </select>
           </div>
+
+          <div class="flex flex-col space-y-6 col-span-3">
+            <div class="grid grid-cols-3 items-center">
+              <label class="text-base font-medium col-span-1 text-black">Tags</span></label>
+              <input 
+                type="text" 
+                class="bg-inherit text-sm px-6 py-2 w-full border-gray-500 border rounded-md col-span-2" 
+                placeholder="Enter Tags"
+                name="tags"
+                value="{{$user->tags}}"
+              >
+            </div>
+          </div>
           
         </div>
         {{-- Right Panel  --}}
@@ -95,22 +126,9 @@
         </div>
       </div>
       {{-- Navigation Panel  --}}
-      <div class="mt-10 grid grid-cols-5 gap-x-16 px-12">
+      <div class="mt-6 grid grid-cols-5 gap-x-16 px-12">
         {{-- Main Panel  --}}
         <div class="flex flex-col space-y-6 col-span-3">
-          <div class="grid grid-cols-3 items-center">
-            <label class="text-base font-medium col-span-1 text-black">Role</span></label>
-            <select 
-              type="text" 
-              class="bg-inherit text-sm px-6 py-2 w-full border-gray-500 border rounded-md col-span-2 appearance-none" 
-              name="role"
-              value="{{$user->role}}"
-            >
-              <option value="" selected disabled>Enter Role</option>
-              <option value="Coach">Coach</option>
-              <option value="Trainee">Trainee</option>
-            </select>
-          </div>
           <div class="grid grid-cols-3 items-center">
             <label class="text-base font-medium col-span-1 text-black">Tags</span></label>
             <input 
@@ -148,10 +166,14 @@
         </div>
   
       </div>
-      <div class="pt-8 w-full grid items-center relative space-y-4 ">
+      <div class="pt-16 w-full max-w-3xl flex items-center relative pl-11 pr-5">
+        <div class="flex items-center space-x-3 mt-1 mr-auto">
+          <input id="showPass" class="w-6 h-6" type="checkbox" onclick="myFunction()">
+          <label for="showPass" class="text-sm text-black cursor-pointer whitespace-nowrap">Edit Allow</label>
+        </div>
         <button 
           type="submit"
-          class="rounded-md text-center px-6 py-4 text-md text-white bg-black cursor-pointer w-full"
+          class="rounded-md text-center px-6 py-3 text-md text-white bg-black cursor-pointer w-36"
         >Update</button>
       </div>
     </form>
