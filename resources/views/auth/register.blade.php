@@ -159,39 +159,35 @@
               </select>
             </div>
 
-            <div class="space-y-2">
-              <span class="text-md text-gray-600">Tags</span>
-              <input 
-                type="text" 
-                class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" 
-                placeholder="Enter Tags"
-                name="tags"
-              >
-              @error('tags')
-              <p class="text-red-500 text-sm">{{$message}}</p>
-              @enderror
-            </div>
-  
-  
+          <div class="space-y-2">
+            <label class="text-md text-gray-600">Tags</span></label>
+            <input 
+              type="text" 
+              class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" 
+              placeholder="Enter your Tags"
+              name="tags"
+            >
           </div>
-    
-          <div class="pt-8 w-full flex items-center relative">
-            <div class="mr-auto"></div>
-            <div class="flex items-center space-x-4">
-              <a 
-                href="/login"
-                class="rounded-md text-center px-6 py-3 text-md text-black border border-black cursor-pointer w-full"
-              >Back</a>
-              <button 
-                type="submit"
-                class="rounded-md text-center px-6 py-3 text-md text-white bg-black cursor-pointer w-full"
-              >Register</button>
-            </div>
-          </div>
-          
-        </form>
-      </div>
+
+        </div>
   
+        <div class="pt-8 w-full flex items-center relative">
+          <div class="mr-auto"></div>
+          <div class="flex items-center space-x-4">
+            <a 
+              href="/login"
+              class="rounded-md text-center px-6 py-3 text-md text-black border border-black cursor-pointer w-full"
+            >Back</a>
+            <button 
+              type="submit"
+              class="rounded-md text-center px-6 py-3 text-md text-white bg-black cursor-pointer w-full"
+            >Register</button>
+          </div>
+        </div>
+        
+      </form>
     </div>
-  </body>
-  </html>
+
+  </div>
+</body>
+</html>
