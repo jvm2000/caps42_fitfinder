@@ -1,19 +1,4 @@
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const editButton = document.getElementById('dropdown-button');
-    const dropdownMenu = document.getElementById('dropdown-menu');
-
-    editButton.addEventListener('click', function () {
-        dropdownMenu.classList.toggle('hidden');
-    });
-
-    // Close the dropdown when clicking outside of it
-    document.addEventListener('click', function (event) {
-      if (!editButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
-          dropdownMenu.classList.add('hidden');
-      }
-    });
-  });
 </script>
 
 <x-layout>
