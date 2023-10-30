@@ -21,7 +21,9 @@ function myFunction() {
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
 </head>
+
 <body class="antialiased">
   <div class="h-screen w-screen bg-white grid place-items-center overflow-hidden">
 
@@ -41,7 +43,7 @@ function myFunction() {
         <div class="grid space-y-5 px-2 pt-8">
           <div class="space-y-2">
             <input 
-              type="email" 
+              type="text" 
               class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" 
               placeholder="Email"
               name="email"

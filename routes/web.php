@@ -1,11 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MatchmakingController;
-
+use App\Http\Controllers\PortfolioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,21 +16,33 @@ use App\Http\Controllers\MatchmakingController;
 |
 */
 
-Route::get('/', function () {return view('welcome');});
-Route::get('/logged-in/dashboard', function () {return view('dashboard/main');});
+Route::get('/', function () {return view('welcome');})->middleware('loggedin-already')->name('welcome');
 
 // Auth
-Route::get('/login', function () {return view('auth/login');});
+Route::get('/login', function () {return view('auth/login');})->name('login');
 Route::get('/register', function () {return view('auth/register');});
 Route::post('/auth-register', [AuthController::class, 'store'])->name('user.register');
 Route::post('/auth-login', [AuthController::class, 'login'])->name('user.login');
-Route::post('/auth-logout', [AuthController::class, 'logout'])->middleware('auth')->name('user.logout');
-Route::get('/auth/profile/{user}',[AuthController::class, 'show'])->middleware('auth')->name('user.show');
-Route::post('/auth/profile/update/{user}',[AuthController::class, 'update'])->middleware('auth')->name('user.update');
 
-Route::get('/logged-in/matchmake', function () {
-  return view('dashboard/matchmaking');
+Route::middleware(['auth'])->group(function () {
+  // General 
+  Route::get('/main', function () {return view('dashboard/main');})->name('main');
+  Route::post('/auth-logout', [AuthController::class, 'logout'])->name('user.logout');
+  Route::get('/auth/profile/{user}',[AuthController::class, 'show'])->name('user.show');
+  Route::post('/auth/profile/update',[AuthController::class, 'update'])->name('user.update');
+  Route::get('/profile/{user}',[PortfolioController::class, 'index'])->name('profile.index');
+
+  //Programs
+  Route::get('/programs/list', function () {return view('programs/main');})->name('programs');
 });
+
+
+
+Route::middleware(['it-should-be-coach-only'])->group(function () {
+  //Portfolio Creation
+  Route::post('/portfolio/create/{user}', [PortfolioController::class, 'store'])->name('portfolio.create');
+});
+
 Route::get('/dashboard/matchmaking', [MatchmakingController::class, 'index'])->name('matchmaking.index');
 
 Route::get('logged-in/dashboard', [MatchmakingController::class, 'show'])->name('dashboard/main');

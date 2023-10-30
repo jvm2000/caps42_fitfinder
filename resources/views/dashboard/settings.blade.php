@@ -6,15 +6,16 @@
   <x-slot:title>
     FitFinder - Settings
   </x-slot>
+  
   <div class="w-full py-10 px-12 overflow-y-auto h-full max-h-[54rem]">
     <div class="flex items-center relative">
       <p class="text-3xl font-semibold mr-auto">Settings</p>
       <x-menu-dropdown />
     </div>
     <div class="w-full border-b-8 mt-4"></div>
-    <form method ="POST" action="/auth/profile/update/{{auth()->user()->id}}">
+    <form method ="POST" action="/auth/profile/update">
       @csrf
-      <div class="grid grid-cols-5 gap-x-16 py-12 w-full px-12">
+      <div class="grid grid-cols-5 gap-x-16 py-12 w-full px-12 items-start">
         {{-- Left Panel --}}
         <div class="flex flex-col space-y-6 col-span-3">
           <div class="grid grid-cols-3 items-center">
@@ -70,7 +71,6 @@
               class="bg-inherit text-sm px-6 py-2 w-full border-gray-500 border rounded-md col-span-2" 
               placeholder="MM/DD/YY"
               name="birthdate"
-              value="{{$user->birthdate}}"
             >
           </div>
   
@@ -103,7 +103,7 @@
           
         </div>
         {{-- Right Panel  --}}
-        <div class="space-y-1 col-span-2 grid place-items-center">
+        <div class="space-y-4 col-span-2 grid place-items-center">
           <div class="w-48 h-48 rounded-full border-4 border-gray-300 relative grid place-items-center">
             <img src="/icons/settings/upload-icon.svg" alt="Upload Icon" class="w-8 h-8">
           </div>
@@ -145,13 +145,12 @@
             <input 
               type="text" 
               class="bg-inherit text-sm px-6 py-2 w-full border-gray-500 border rounded-md col-span-2" 
-              name=""
             >
           </div>
         </div>
   
       </div>
-      <div class="pt-16 w-full max-w-3xl flex items-center relative pl-11 pr-5">
+      <div class="pt-16 w-full max-w-2xl flex items-center relative pl-11 pr-10">
         <div class="flex items-center space-x-3 mt-1 mr-auto">
           <input id="showPass" class="w-6 h-6" type="checkbox" onclick="myFunction()">
           <label for="showPass" class="text-sm text-black cursor-pointer whitespace-nowrap">Edit Allow</label>

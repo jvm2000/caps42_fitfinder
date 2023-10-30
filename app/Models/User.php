@@ -57,4 +57,9 @@ class User extends Authenticatable
     {
         return $this->birthdate?->diffInYears(now());
     }
+
+    public function portfolio()
+    {
+        return $this->hasOne(Portfolio::class);
+    }
 }

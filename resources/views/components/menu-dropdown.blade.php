@@ -20,7 +20,7 @@
   <div class="flex items-center space-x-4">
     <div class="text-right">
         <p class="text-base font-bold">{{auth()->user()->first_name}} {{auth()->user()->last_name}}</p>
-        <p class="text-base text-neutral-400">{{auth()->user()->role}} / Novice</p>
+        <p class="text-base text-neutral-400">{{auth()->user()->role}}</p>
     </div>
     <button 
       class="w-11 h-11 rounded-full border"
@@ -38,6 +38,13 @@
       id="dropdown-menu"
       class="origin-top-right absolute right-0 mt-4 w-full rounded-md shadow-lg hidden py-2 z-[9999] bg-white"
     >
+      <a 
+        class="flex w-full items-center space-x-8 cursor-pointer py-2 hover:bg-gray-100"
+        href="/profile/{{auth()->user()->id}}"
+      >
+        <img src="/icons/settings/profile-icon.svg" alt="Profile Icon" class="w-6 h-6 ml-4">
+        <p class="text-sm font-medium">Profile</p>
+      </a>
       <a 
         class="flex w-full items-center space-x-8 cursor-pointer py-2 hover:bg-gray-100"
         href="/auth/profile/{{auth()->user()->id}}"
