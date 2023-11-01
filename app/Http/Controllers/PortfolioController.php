@@ -12,9 +12,13 @@ class PortfolioController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Portfolio $portfolio, User $user)
+    public function index()
     {
-        return view('user.profile', compact('portfolio', 'user'));
+        $user = Auth::user();
+
+        $portfolio = $user->portfolio()->with('user')->latest();
+
+        return view('user.profile', compact('portfolio'));
     }
 
     /**
@@ -36,9 +40,19 @@ class PortfolioController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Portfolio $portfolio)
     {
-        //
+        // Get the currently authenticated user
+        $form = $request->validate([
+            'description'=>['nullable','string','min:12'],
+            'recent_works'=>['nullable','string'],
+            'hobbies'=>['nullable', 'min:6'],
+        ]);
+        
+        // Update the user's fields
+        $portfolio->update($form);
+
+        return back()->with('success', 'Portfolio Updated successfully');
     }
 
     /**

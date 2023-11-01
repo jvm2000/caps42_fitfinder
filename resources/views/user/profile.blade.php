@@ -39,7 +39,7 @@
 
         <div class="space-y-1 col-span-1 text-center">
           <p class="text-base font-semibold">Age</p>
-          <p class="text-base font-normal">{{auth()->user()->age}}</p>
+          <p class="text-base font-normal">{{auth()->user()->getAgeAttribute()}}</p>
         </div>
 
         <div class="space-y-1 col-span-4">
@@ -50,6 +50,9 @@
 
     </div>
 
+    @if ($portfolio->count() > 0 && auth()->user()->role === 'Coach') 
+    <x-portfolio.edit />
+    @elseif (auth()->user()->role === 'Coach')
     <form method="POST" action="/portfolio/create/{{auth()->user()->id}}">
       @csrf
       <div class="mt-8 w-full grid place-items-center">
@@ -62,10 +65,6 @@
               </button>
             </div>
 
-            {{-- @if
-              @if ()
-              
-            @endif --}}
             <div class="mt-10 flex flex-col space-y-5">
               <div class="space-y-2">
                 <span class="text-md text-gray-600 font-semibold">Description</span>
@@ -139,5 +138,6 @@
       </div>
 
     </form>
+    @endif
   </div>
 </x-layout>

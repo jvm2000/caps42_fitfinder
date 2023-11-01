@@ -31,7 +31,6 @@ Route::middleware(['auth'])->group(function () {
   Route::post('/auth-logout', [AuthController::class, 'logout'])->name('user.logout');
   Route::get('/auth/profile/{user}',[AuthController::class, 'show'])->name('user.show');
   Route::put('/auth/profile/update/{user}',[AuthController::class, 'update'])->name('user.update');
-  Route::get('/profile/{user}',[PortfolioController::class, 'index'])->name('profile.index');
 
   //Programs
   Route::get('/programs/list', [ProgramController::class, 'index'])->name('programs.index');
@@ -39,18 +38,15 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/programs/make', function () {return view('programs/create');})->name('programs.make');
   Route::post('/programs/create/{user}', [ProgramController::class, 'store'])->name('programs.create');
   
-});
-
-
-
-Route::middleware(['it-should-be-coach-only'])->group(function () {
   //Portfolio Creation
+  Route::get('/profile/{user}',[PortfolioController::class, 'index'])->name('profile.index');
   Route::post('/portfolio/create/{user}', [PortfolioController::class, 'store'])->name('portfolio.create');
+  Route::put('/portfolio/update/{portfolio}', [PortfolioController::class, 'update'])->name('portfolio.update');
 });
 
-Route::get('/dashboard/matchmaking', [MatchmakingController::class, 'index'])->name('matchmaking.index');
+Route::get('/main', [MatchmakingController::class, 'index'])->name('matchmaking.index');
 
-Route::get('logged-in/dashboard', [MatchmakingController::class, 'show'])->name('dashboard/main');
+Route::get('logged-in/dashboard', [MatchmakingController::class, 'show'])->name('dashboard.main');
 Route::post('/matchmaking/send-request', [MatchmakingController::class, 'sendRequest'])->name('send.request');
 
 
