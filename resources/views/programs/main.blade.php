@@ -53,7 +53,7 @@
             <tr class="">
               <td class="border-l-8 border-indigo-500 py-1">
                 <div class="ml-4 flex items-center space-x-4">
-                  <div class="w-9 h-9 rounded-full bg-blue-400"></div>
+                  <img src="{{$program->getImageURL()}}" class="w-9 h-9 rounded-full">
                   <div class="text-left">
                     <p class="text-black text-sm font-medium">{{$program->name}}</p>
                     <p class="text-xs text-zinc-400">{{$program->category}}</p>

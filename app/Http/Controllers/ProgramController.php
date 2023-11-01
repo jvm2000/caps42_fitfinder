@@ -30,14 +30,13 @@ class ProgramController extends Controller
             'name'=>['required','string'],
             'category'=>['required','string'],
             'summary'=>['required', 'min:6'],
-            // 'image'=>['string', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            // 'image' => ['image'],
         ]);
 
-        // $fileName = time() . '.' . $request->image->extension();
-
-        // $request->image->storeAs('public/uploads/programs', $fileName);
-
-        // $form['image'] = $fileName;
+        // if(request()->has('image')){
+        //     $imagePath = request()->file('image')->store('profile','public');
+        //     $form['image'] = $imagePath;
+        // }
 
         Program::create(['user_id' => $user->id] + $form);
 

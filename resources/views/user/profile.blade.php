@@ -12,7 +12,7 @@
 
     <div class="py-7 flex items-center relative w-full border-b-8">
       <div class="flex items-center space-x-6 mr-auto">
-        <div class="w-36 h-36 rounded-full bg-slate-400"></div>
+        <img src="{{auth()->user()->getImageURL()}}" alt="Profile" class="w-36 h-36 rounded-full">
 
         <div class="space-y-1">
           <div class="flex items-center space-x-2">

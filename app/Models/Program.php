@@ -30,4 +30,11 @@ class Program extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getImageURL(){
+        if($this->image){
+            return url('storage/'. $this->image);
+        }
+        return '/programs/default.svg';
+    }
 }
