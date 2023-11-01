@@ -49,7 +49,7 @@ class AuthController extends Controller
 
     auth()->login($user);
     
-    return redirect('/logged-in/dashboard')->with('message', 'User creation successfully!');
+    return redirect('/main')->with('message', 'User creation successfully!');
   }
 
   /**
@@ -64,7 +64,7 @@ class AuthController extends Controller
 
     if (auth()->attempt($form)) {
       $request->session()->regenerate();
-      return redirect('/logged-in/dashboard')->with('loginMessage', 'Logged in successfully!');
+      return redirect('/main')->with('loginMessage', 'Logged in successfully!');
     } 
     return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
   }
@@ -80,21 +80,32 @@ class AuthController extends Controller
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, User $user){
+public function update(Request $request, User $user)
+{
+    // Get the currently authenticated user
     $form = $request->validate([
-        'first_name'=>['required','string'],
-        'last_name'=>['required','string'],
-        'phone_number'=>['required', 'min:11'],
-        'birthdate'=>'required',
-        'gender'=>['required'],
-        'role'=>['required'],
-        'tags'=>'required',
+        'first_name' => ['nullable', 'string'],
+        'last_name' => ['nullable', 'string'],
+        'phone_number' => ['nullable', 'size:11'], // Ensure exactly 11 characters
+        'birthdate' => 'nullable',
+        'gender' => ['nullable'],
+        'role' => ['nullable'],
+        'tags' => 'nullable',
+        'image' => ['nullable', 'image'],
     ]);
 
-    Auth::user()->update($form);
+    if(request()->has('image')){
+      $imagePath = request()->file('image')->store('profile','public');
+      $form['image'] = $imagePath;
+    }
+    
+    // Update the user's fields
+    $user->update($form);
 
     return back()->with('success', 'User Updated successfully');
-  }
+}
+ 
+
 
   /**
    * Remove the specified resource from storage.
@@ -109,6 +120,6 @@ class AuthController extends Controller
     $request->session()->invalidate();
     $request->session()->regenerateToken();
 
-    return redirect('/')->with('message','Logged out successfully!');
+    return redirect('/login')->with('message','Logged out successfully!');
   }
 }

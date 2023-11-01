@@ -5,7 +5,8 @@
 </head>
 <body>
     <h1>Matchmaking</h1>
-    <h2>Your Tags: {{ $traineeTags ?? 'No tags found' }}</h2>
+    <h2>Your Tags: {{ ucwords(auth()->user()->username) }}
+</h2>
 
     <form action="{{ route('matchmaking.result') }}" method="get">
         @csrf

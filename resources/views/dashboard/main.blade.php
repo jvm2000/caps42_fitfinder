@@ -8,5 +8,8 @@
       <p class="text-3xl font-semibold mr-auto">Dashboard</p>
       <x-menu-dropdown />
     </div>
+    
+
+    </div>
   </div>
 </x-layout>

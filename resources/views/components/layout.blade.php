@@ -10,10 +10,11 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
     <title>{{ $title ?? 'FitFinder' }}</title>
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
   </head>
 
   <body class="antialiased">
-    <div class="w-screen h-screen grid grid-cols-8 bg-[#1A1A1A]">
+    <div class="w-screen h-screen grid grid-cols-8 bg-[#1A1A1A] overflow-hidden">
 
       <nav class="col-span-2 py-24">
         <div class="relative h-full w-full">
@@ -22,29 +23,35 @@
           </div>
 
           <div class="mt-36 w-full">
-            <div class="flex items-center relative group">
+            <a href="/main" class="flex items-center relative group">
               <span class="w-2 h-9 rounded-r-md mr-[110px]"></span>
               <img src="/dashboard/icons/main.svg" alt="Main" class="w-6 h-6 group-hover:mb-1 mr-14">
               <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Dashboard</p>
-            </div>
-            <div class="flex items-center relative mt-14 group">
+            </a>
+
+            @if (auth()->user()->role === 'Coach')
+            <a href="/programs/list" class="flex items-center relative mt-14 group">
               <span class="w-2 h-9 rounded-r-md mr-[110px]"></span>
               <img src="/dashboard/icons/programs.svg" alt="Main" class="w-6 h-6 mr-14 group-hover:mb-1">
               <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Programs</p>
-            </div>
+            </a>
+            @endif
+
+            @if (auth()->user()->role === 'Coach')
             <div class="flex items-center relative mt-14 group">
               <span class="w-2 h-9 rounded-r-md mr-[110px]"></span>
               <img src="/dashboard/icons/contracts.svg" alt="Main" class="w-6 h-6 mr-14 group-hover:mb-1">
               <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Contracts</p>
             </div>
+            @endif
           </div>
 
           <div class="absolute bottom-0">
-            <div class="flex items-center relative group">
+            <a href="/auth/profile/{{auth()->user()->id}}" class="flex items-center relative group">
               <span class="w-2 h-9 rounded-r-md mr-[110px]"></span>
               <img src="/dashboard/icons/settings.svg" alt="Main" class="w-8 h-8 group-hover:mb-1 mr-14">
               <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Settings</p>
-            </div>
+            </a>
           </div>
 
         </div>

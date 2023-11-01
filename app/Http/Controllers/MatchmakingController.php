@@ -8,35 +8,40 @@ use App\Http\Controllers\Controller;
 
 class MatchmakingController extends Controller
 {
-     public function index()
-    {
-        // Replace $traineeId with your desired trainee ID
-        $traineeId = 1111;
-
-        $traineeTags = DB::table('trainee')->where('trainee_id', $traineeId)->value('tags');
-
-        return view('matchmaking', [
-            'traineeTags' => $traineeTags,
-            'traineeId' => $traineeId,
-        ]);
-    }
+     
     public function show(Request $request)
-    {
-        $t_id = $request->input('trainee_id');
+{
+    $role = auth()->user()->role;
+    $t_id = auth()->user()->id;
+    if($role == "Trainee"){
+    // Retrieve the trainee's tags
+    $traineeTags = DB::table('users')->where('id', $t_id)->value('tags');
+
+    // Retrieve users who have the role "coach" and share common tags with the trainee
+    $matchingTrainers = DB::table('users')
     
-        
-        $traineeTags = DB::table('trainee')->where('trainee_id', $t_id)->value('tags');
-    
-        $matchingTrainers = DB::table('trainer')
-            ->whereRaw("FIND_IN_SET('$traineeTags', tags) > 0")
-            ->get();
-    
-        return view('matchmaking-result', [
-            't_id' => $t_id,
-            'traineeTags' => $traineeTags,
-            'matchingTrainers' => $matchingTrainers,
+
+        ->where('role', 'coach') // Replace 'role' with the actual column name storing user roles
+        ->where('id', '!=', $t_id) // Exclude the trainee from the results
+        ->where(function ($query) use ($traineeTags) {
+            $query->whereRaw("FIND_IN_SET('$traineeTags', tags) > 0");
+        })
+        ->get();
+
+
+        return view('dashboard.tmain', [
+       'matchingTrainers' => $matchingTrainers,
+       't_id' => $t_id,
         ]);
     }
+        else{
+            $sample = "Sample";
+            return view('dashboard.main', [
+                'matchingTrainers' => $sample,
+            ]);
+        }
+    }
+
     
     public function sendRequest(Request $request)
     {
