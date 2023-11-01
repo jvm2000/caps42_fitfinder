@@ -14,7 +14,7 @@ class PortfolioController extends Controller
      */
     public function index(Portfolio $portfolio, User $user)
     {
-        return view('user.portfolio', compact('portfolio', 'user'));
+        return view('user.profile', compact('portfolio', 'user'));
     }
 
     /**
@@ -28,10 +28,6 @@ class PortfolioController extends Controller
             'hobbies'=>['required', 'min:6'],
         ]);
 
-        // $fileName = time().'.'.$request->file->extension();  
-       
-        // $request->file->move(public_path('uploads'), $fileName);
-    
         Portfolio::create(['user_id' => $user->id] + $form);
 
         return back()->with('success', 'User Updated successfully');

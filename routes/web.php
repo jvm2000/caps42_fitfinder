@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MatchmakingController;
 use App\Http\Controllers\PortfolioController;
+use App\Http\Controllers\ProgramController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,11 +30,15 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/main', function () {return view('dashboard/main');})->name('main');
   Route::post('/auth-logout', [AuthController::class, 'logout'])->name('user.logout');
   Route::get('/auth/profile/{user}',[AuthController::class, 'show'])->name('user.show');
-  Route::post('/auth/profile/update',[AuthController::class, 'update'])->name('user.update');
+  Route::put('/auth/profile/update/{user}',[AuthController::class, 'update'])->name('user.update');
   Route::get('/profile/{user}',[PortfolioController::class, 'index'])->name('profile.index');
 
   //Programs
-  Route::get('/programs/list', function () {return view('programs/main');})->name('programs');
+  Route::get('/programs/list', [ProgramController::class, 'index'])->name('programs.index');
+  Route::get('/programs/create/{user}', [ProgramController::class, 'store'])->name('programs.create');
+  Route::get('/programs/make', function () {return view('programs/create');})->name('programs.make');
+  Route::post('/programs/create/{user}', [ProgramController::class, 'store'])->name('programs.create');
+  
 });
 
 

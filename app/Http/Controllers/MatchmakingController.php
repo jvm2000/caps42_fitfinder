@@ -32,7 +32,8 @@ class MatchmakingController extends Controller
         return view('dashboard.tmain', [
        'matchingTrainers' => $matchingTrainers,
        't_id' => $t_id,
-        ]);}
+        ]);
+    }
         else{
             $sample = "Sample";
             return view('dashboard.main', [

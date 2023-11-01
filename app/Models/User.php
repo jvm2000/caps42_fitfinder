@@ -29,7 +29,7 @@ class User extends Authenticatable
         'role',
         'birthdate',
         'tags',
-        'profile-pic',
+        'image',
     ];
 
     /**
@@ -58,8 +58,20 @@ class User extends Authenticatable
         return $this->birthdate?->diffInYears(now());
     }
 
+    public function getImageURL(){
+        if($this->image){
+            return url('storage/'. $this->image);
+        }
+        return '/icons/settings/profile-icon.svg';
+    }
+
     public function portfolio()
     {
         return $this->hasOne(Portfolio::class);
+    }
+
+    public function programs()
+    {
+        return $this->hasMany(Program::class);
     }
 }

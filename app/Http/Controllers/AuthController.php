@@ -80,23 +80,27 @@ class AuthController extends Controller
   /**
    * Update the specified resource in storage.
    */
-public function update(Request $request)
+public function update(Request $request, User $user)
 {
     // Get the currently authenticated user
-    $user = Auth::user();
-
     $form = $request->validate([
-        'first_name' => ['required', 'string'],
-        'last_name' => ['required', 'string'],
-        'phone_number' => ['required', 'size:11'], // Ensure exactly 11 characters
-        'birthdate' => 'required',
-        'gender' => ['required'],
-        'role' => ['required'],
-        'tags' => 'required',
+        'first_name' => ['nullable', 'string'],
+        'last_name' => ['nullable', 'string'],
+        'phone_number' => ['nullable', 'size:11'], // Ensure exactly 11 characters
+        'birthdate' => 'nullable',
+        'gender' => ['nullable'],
+        'role' => ['nullable'],
+        'tags' => 'nullable',
+        'image' => ['nullable', 'image'],
     ]);
 
+    if(request()->has('image')){
+      $imagePath = request()->file('image')->store('profile','public');
+      $form['image'] = $imagePath;
+    }
+    
     // Update the user's fields
-    $user->save($form);
+    $user->update($form);
 
     return back()->with('success', 'User Updated successfully');
 }
