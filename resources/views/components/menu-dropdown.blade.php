@@ -28,7 +28,7 @@
       aria-haspopup="true"
       aria-expanded="true"  
     >
-        <img src="{{auth()->user()->getImageURL()}}" alt="Sample Icon" class="rounded-full h-full w-auto">
+        <img src="{{auth()->user()->getImageURL()}}" alt="Sample Icon" class="rounded-full h-full w-full">
     </button>
   </div>
   {{-- Dropdown Menu  --}}

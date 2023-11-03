@@ -9,7 +9,7 @@
       <x-menu-dropdown />
     </div>
 
-    <form method="POST" action="/programs/create/{{auth()->user()->id}}">
+    <form method="POST" action="/programs/create/{{auth()->user()->id}}" enctype="multipart/form-data" >
       @csrf
       <div class="mt-24 w-full grid place-items-center">
         <div class="max-w-4xl w-full">
@@ -60,12 +60,16 @@
             </div>
     
             {{-- Upload Image  --}}
-            <div class="space-y-4 grid place-items-center col-span-1">
+            <div class="space-y-4 col-span-1 pl-20 grid place-items-center">
               <div 
                 id="uploadPhoto" 
                 class="w-48 h-48 rounded-full border-2 hover:border-blue-950 active:mt-[1px] border-gray-300 relative grid place-items-center cursor-pointer"
               >
-                <img id="preview" width="100" height="100" class="w-48 h-48 rounded-full fixed z-20 border-2" />
+                <img 
+                  id="preview" width="100" height="100" 
+                  class="w-48 h-48 rounded-full absolute z-20" 
+                  src=""
+                />
                 <img src="/icons/settings/upload-icon.svg" alt="Upload Icon" class="w-8 h-8 z-10">
                 <input 
                   id="uploaded" 

@@ -1,15 +1,4 @@
-<script>
-  function myFunction() {
-    var x = document.getElementById("myInput");
-    if (x.type === "password") {
-      x.type = "text";
-    } else {
-      x.type = "password";
-    }
-  }
-  </script>
-  
-  <html lang="en">
+<html lang="en">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,46 +29,44 @@
           @csrf
           <div class="grid items-center grid-cols-2 space-y-0 gap-y-4 px-2 pt-8 gap-x-14">
   
-            <div class="space-y-2">
-              <span class="text-md text-gray-600">Firstname</span>
-              <input 
-                type="text" 
-                class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" 
-                placeholder="Enter your Firstname"
-                name="first_name"
-              >
-              @error('first_name')
-              <p class="text-red-500 text-sm">{{$message}}</p>
-              @enderror
-            </div>
+            <x-app.input 
+              type="text" 
+              label="First Name" 
+              placeholder="Enter First Name" 
+              name="first_name"
+            >
+              <x-slot name="errors">
+                @error('first_name')
+                <p class="text-red-500 text-sm error">{{$message}}</p>
+                @enderror
+              </x-slot>
+            </x-app.input>
+
+            <x-app.input 
+              type="text" 
+              label="Last Name" 
+              placeholder="Enter Last Name" 
+              name="last_name"
+            >
+              <x-slot name="errors">
+                @error('last_name')
+                <p class="text-red-500 text-sm error">{{$message}}</p>
+                @enderror
+              </x-slot>
+            </x-app.input>
   
-            <div class="space-y-2">
-              <span class="text-md text-gray-600">Lastname</span>
-              <input 
-                type="text" 
-                class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" 
-                placeholder="Enter your Lastname"
-                name="last_name"
-              >
-              @error('last_name')
-              <p class="text-red-500 text-sm">{{$message}}</p>
-              @enderror
-            </div>
-  
-            <div class="space-y-2">
-              <span class="text-md text-gray-600">Phone Number</span>
-              <input 
-                type="text" 
-                class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" 
-                placeholder="Enter your Phone Number"
-                minlength="11"
-                maxlength="11"
-                name="phone_number"
-              >
-              @error('phone_number')
-              <p class="text-red-500 text-sm">{{$message}}</p>
-              @enderror
-            </div>
+            <x-app.input 
+              type="text" 
+              label="Phone Number" 
+              placeholder="Enter Phone Number" 
+              name="phone_number"
+            >
+              <x-slot name="errors">
+                @error('phone_number')
+                <p class="text-red-500 text-sm error">{{$message}}</p>
+                @enderror
+              </x-slot>
+            </x-app.input>
   
             <div class="space-y-2">
               <label class="text-md text-gray-600">Gender</label>
@@ -94,58 +81,52 @@
               </select>
             </div>
   
-            <div class="space-y-2">
-              <span class="text-md text-gray-600">Birthdate</span>
-              <input 
-                type="date" 
-                class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" 
-                placeholder="Enter your Birthdate"
-                name="birthdate"
-              >
-              @error('birthdate')
-              <p class="text-red-500 text-sm">{{$message}}</p>
-              @enderror
-            </div>
+            <x-app.input 
+              type="date" 
+              label="Birthdate" 
+              name="birthdate"
+              placeholder=""
+            >
+              <x-slot name="errors">
+                @error('birthdate')
+                <p class="text-red-500 text-sm error">{{$message}}</p>
+                @enderror
+              </x-slot>
+            </x-app.input>
   
-            <div class="space-y-2">
-              <span class="text-md text-gray-600">Username</span>
-              <input 
-                type="text" 
-                class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" 
-                placeholder="Enter your Username"
-                name="username"
-              >
-              @error('username')
-              <p class="text-red-500 text-sm">{{$message}}</p>
-              @enderror
-            </div>
+            <x-app.input 
+              type="text" 
+              label="Username" 
+              placeholder="Enter Username" 
+              name="username"
+            >
+              <x-slot name="errors">
+                @error('username')
+                <p class="text-red-500 text-sm error">{{$message}}</p>
+                @enderror
+              </x-slot>
+            </x-app.input>
     
-            <div class="space-y-2">
-              <span class="text-md text-gray-600">Email</span>
-              <input 
-                type="email" 
-                class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" 
-                placeholder="Enter your Email"
-                name="email"
-              >
-              @error('email')
-              <p class="text-red-500 text-sm">{{$message}}</p>
-              @enderror
-            </div>
+            <x-app.input 
+              type="email" 
+              label="Email" 
+              placeholder="Enter Email" 
+              name="email"
+            >
+              <x-slot name="errors">
+                @error('email')
+                <p class="text-red-500 text-sm error">{{$message}}</p>
+                @enderror
+              </x-slot>
+            </x-app.input>
     
-            <div class="space-y-2">
-              <span class="text-md text-gray-600">Password</span>
-              <input 
-                id="myInput"
-                type="password" 
-                class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" 
-                placeholder="Enter your Password"
-                name="password"
-              >
-              @error('password')
-              <p class="text-red-500 text-sm">{{$message}}</p>
-              @enderror
-            </div>
+            <x-app.input-pass name="password" label="Password">
+              <x-slot name="errors">
+                @error('password')
+                <p class="text-red-500 text-sm error">{{$message}}</p>
+                @enderror
+              </x-slot>
+            </x-app.input-pass>
   
             <div class="space-y-2">
               <label class="text-md text-gray-600">Role</span></label>
@@ -191,4 +172,13 @@
 
   </div>
 </body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('input').click(function() {
+        $('.error').hide();
+    });
+});
+</script>
 </html>

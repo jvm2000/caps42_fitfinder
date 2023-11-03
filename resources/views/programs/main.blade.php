@@ -11,15 +11,15 @@
 
     <div class="mt-20 flex flex-col space-y-10">
       <div class="flex place-items-center h-14 relative">
-        <div class="relative h-14 text-center w-52">
-          <p class="text-xl font-semibold text-indigo-500">Active</p>
+        <button class="relative py-6 text-center w-52 group" onclick="openCity(event, 'Active')">
+          <p class="text-xl font-semibold text-indigo-500 group-hover:text-indigo-500">Active</p>
           <div class="w-52 border-b-8 border-indigo-500 absolute bottom-0 z-20"></div>
-        </div>
+        </button>
 
-        <div class="relative h-14 text-center w-56">
-          <p class="text-xl font-medium text-gray-500">Archive</p>
-          <div class="w-52 border-b-8 absolute bottom-0 z-20"></div>
-        </div>
+        <button class="relative py-6 justify-center group" onclick="openCity(event, 'Archive')">
+          <p class="text-xl font-medium text-gray-500 group-hover:text-indigo-500">Archive</p>
+          <div class="border-b-8 group-hover:border-indigo-500 absolute bottom-0 z-20"></div>
+        </button>
 
         <a 
           href="/programs/make"
@@ -30,7 +30,7 @@
           <p class="whitespace-nowrap">Create</p>
         </a>
 
-        <div class="w-full border-b-8 mt-12 z-10"></div>
+        <div class="w-full border-b-8 mt-[66px] z-10"></div>
       </div>
     </div>
 
@@ -95,4 +95,25 @@
       </div>
     @endif
   </div>
+  
+  @if(session('message'))
+    <x-app.toaster message="{{ session('message') }}">
+    </x-app.toaster>
+  @endif
 </x-layout>
+
+<script>
+  function openCity(evt, cityName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+  </script>

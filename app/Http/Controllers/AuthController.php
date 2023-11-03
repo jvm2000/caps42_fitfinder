@@ -10,22 +10,6 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
   /**
-   * Display a listing of the resource.
-   */
-  public function index()
-  {
-    //
-  }
-
-  /**
-   * Show the form for creating a new resource.
-   */
-  public function create()
-  {
-    //
-  }
-
-  /**
    * Store a newly created resource in storage.
    */
   public function store(Request $request)
@@ -49,7 +33,7 @@ class AuthController extends Controller
 
     auth()->login($user);
     
-    return redirect('/main')->with('message', 'User creation successfully!');
+    return redirect('/main')->with('message', 'User Registered successfully!');
   }
 
   /**
@@ -64,9 +48,10 @@ class AuthController extends Controller
 
     if (auth()->attempt($form)) {
       $request->session()->regenerate();
-      return redirect('/main')->with('loginMessage', 'Logged in successfully!');
+      return redirect('/main')->with('loading', true);
     } 
-    return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
+    
+    return back()->withErrors(['email' => 'Entered email and password is incorrect.'])->onlyInput('email')->withInput();
   }
 
   /**
@@ -102,24 +87,14 @@ public function update(Request $request, User $user)
     // Update the user's fields
     $user->update($form);
 
-    return back()->with('success', 'User Updated successfully');
+    return back()->with('message', 'User updated successfully');
 }
- 
-
-
-  /**
-   * Remove the specified resource from storage.
-   */
-  public function destroy(string $id)
-  {
-    //
-  }
 
   public function logout(Request $request) {
     auth()->logout();
     $request->session()->invalidate();
     $request->session()->regenerateToken();
 
-    return redirect('/login')->with('message','Logged out successfully!');
+    return redirect('/login')->with('message','User logged out successfully!');
   }
 }

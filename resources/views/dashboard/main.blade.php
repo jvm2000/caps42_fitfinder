@@ -42,4 +42,4 @@
     {{-- Right Tab  --}}
     <div class="absolute top-0 right-0 bg-[#F6F6F6] w-full max-w-md h-[860px] z-10 rounded-r-3xl"></div>
   </div>
-</x-layout>
+</x-layout>  
