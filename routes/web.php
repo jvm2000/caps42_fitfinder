@@ -1,10 +1,11 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\MatchmakingController;
-use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\PortfolioController;
+use App\Http\Controllers\MatchmakingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +44,11 @@ Route::middleware(['auth'])->group(function () {
    
   // Matchmake 
   Route::get('/main', [MatchmakingController::class, 'index'])->name('matchmaking.index');
+  //viewprofile
+  Route::get('/viewprofile/{id}', [MatchmakingController::class, 'show'])->name('viewprofile');
+   //SendRequest
+  Route::post('/send-request', [MatchmakingController::class, 'sendRequest'])->name('sendRequest');
+  
 });
 
 

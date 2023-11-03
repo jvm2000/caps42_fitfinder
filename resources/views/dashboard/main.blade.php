@@ -10,7 +10,6 @@
     <div class="absolute top-10 right-12 z-20">
       <x-menu-dropdown />
     </div>
-
     {{-- Matchmakes Tab  --}}
     <div class="mt-12 pl-10 space-y-12 h-full max-h-[680px] overflow-y-auto">
       {{-- Matching Trainee  --}}
@@ -28,6 +27,10 @@
             <p class="absolute bottom-0 left-6"><span class="font-medium">
               Tags</span>: <span class="font-light">{{ $match->tags }}</span></p>
           </div>
+          <br>
+          <a href="{{ route('viewprofile', ['id' => $match->id]) }}" class="btn btn-primary">View Profile</a>
+          <button style="color:aqua;background-color:bisque">
+          
         </div>
         @endforeach
 
