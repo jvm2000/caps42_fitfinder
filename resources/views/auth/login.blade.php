@@ -1,14 +1,3 @@
-<script>
-function myFunction() {
-  var x = document.getElementById("myInput");
-  if (x.type === "password") {
-    x.type = "text";
-  } else {
-    x.type = "password";
-  }
-}
-</script>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -43,27 +32,24 @@ function myFunction() {
         <div class="grid space-y-5 px-2 pt-8">
           <div class="space-y-2">
             <input 
-              type="text" 
+              type="email" 
               class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" 
               placeholder="Email"
               name="email"
+              value="{{ old('email') }}"
             >
             @error('email')
-            <p class="text-red-500 text-sm">{{$message}}</p>
+            <p class="text-red-500 text-sm error">{{$message}}</p>
             @enderror
           </div>
-          <div class="space-y-2">
-            <input 
-              id="myInput"
-              type="password" 
-              class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" 
-              placeholder="Password"
-              name="password"
-            >
-            @error('password')
-            <p class="text-red-500 text-sm">{{$message}}</p>
-            @enderror
-          </div>
+          
+          <x-app.input-pass name="password" label="">
+            <x-slot name="errors">
+              @error('password')
+              <p class="text-red-500 text-sm error">{{$message}}</p>
+              @enderror
+            </x-slot>
+          </x-app.input-pass>
 
         </div>
         <!-- Sign Up -->
@@ -71,10 +57,6 @@ function myFunction() {
           <div class="font-normal text-md space-y-0 mr-auto">
             <p>No Account Yet?</p>
             <p>Click <a class="font-semibold text-indigo-500 cursor-pointer" href="/register">here</a> to join us today.</p>
-          </div>
-          <div class="flex items-center space-x-3 mt-1 mr-2">
-            <input id="showPass" class="w-4 h-4" type="checkbox" onclick="myFunction()">
-            <label for="showPass" class="text-sm text-black cursor-pointer">Show Password</label>
           </div>
         </div>
 
@@ -91,5 +73,20 @@ function myFunction() {
     </div>
 
   </div>
+
+  @if(session('message'))
+    <x-app.toaster message="{{ session('message') }}">
+    </x-app.toaster>
+  @endif
 </body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Hide the error message when the input field with the name "name" is clicked
+    $('input').click(function() {
+        $('.error').hide();
+    });
+});
+</script>
 </html>

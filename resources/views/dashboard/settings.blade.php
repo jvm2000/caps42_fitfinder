@@ -13,7 +13,7 @@
       <x-menu-dropdown />
     </div>
     <div class="w-full border-b-8 mt-4"></div>
-    <form enctype="multipart/form-data" method ="POST" action="/auth/profile/update/{{$user->id}}">
+    <form method ="POST" action="/auth/profile/update/{{$user->id}}" enctype="multipart/form-data" >
       @csrf
       @method('PUT')
       <div class="grid grid-cols-5 gap-x-16 py-12 w-full px-12 items-start">
@@ -111,7 +111,7 @@
           >
             <img 
               id="preview" width="100" height="100" 
-              class="w-48 h-48 rounded-full absolute z-20" 
+              class="w-48 h-48 rounded-full absolute z-20 border-2 hover:border-blue-950 border-gray-300" 
               src="{{auth()->user()->getImageURL()}}"
             />
             <img src="/icons/settings/upload-icon.svg" alt="Upload Icon" class="w-8 h-8 z-10">
@@ -179,9 +179,8 @@
   </div>
 
   @if(session('message'))
-  <div class="fixed bottom-20 right-20">
-    <div class="py-4 px-6 bg-white shadow-lg border-l-4 border-green-500">sss</div>
-  </div>
+    <x-app.toaster message="{{ session('message') }}">
+    </x-app.toaster>
   @endif
 
 </x-layout>

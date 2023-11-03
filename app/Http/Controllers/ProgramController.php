@@ -14,11 +14,12 @@ class ProgramController extends Controller
      */
     public function index()
     {
+
         $user = Auth::user();
 
-        $programs = $user->programs()->with('user')->latest()->paginate(10);
+        $programs = $user->programs()->with('user')->latest()->paginate(5);
 
-        return view('programs.main', compact('programs'));
+        return view('programs.main', compact('programs'))->with(['shorter-load' => true]);
     }
 
     /**
@@ -30,17 +31,16 @@ class ProgramController extends Controller
             'name'=>['required','string'],
             'category'=>['required','string'],
             'summary'=>['required', 'min:6'],
-            // 'image' => ['image'],
+            'status'=>['nullable'],
+            'image' => ['nullable','image'],
         ]);
 
-        // if(request()->has('image')){
-        //     $imagePath = request()->file('image')->store('profile','public');
-        //     $form['image'] = $imagePath;
-        // }
+        $imagePath = request()->file('image')->store('programs','public');
+        $form['image'] = $imagePath;
 
-        Program::create(['user_id' => $user->id] + $form);
+        $user->programs()->create($form);
 
-        return redirect('/programs/list')->with('message', 'User creation successfully!');
+        return redirect('/programs/list')->with('message', 'Program created successfully!');
     }
 
     /**
