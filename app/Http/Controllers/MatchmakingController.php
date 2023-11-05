@@ -14,12 +14,15 @@ class MatchmakingController extends Controller
         $role = auth()->user()->role;
         $tag_id = auth()->user()->id;
         if ($role == "Trainee") {
-            $tags = DB::table('users')->where('id', $tag_id)->value('tags');
+            $tagsJson = DB::table('users')->where('id', $tag_id)->value('tags');
+            $tags = json_decode($tagsJson);
             $matching = DB::table('users')
                 ->where('role', 'coach') // Replace 'role' with the actual column name storing user roles
                 ->where('id', '!=', $tag_id) // Exclude the trainee from the results
                 ->where(function ($query) use ($tags) {
-                    $query->whereRaw("FIND_IN_SET('$tags', tags) > 0");
+                    foreach ($tags as $tag) {
+                        $query->orWhereJsonContains('tags', $tag);
+                    }
                 })
                 ->get();
             
@@ -29,12 +32,15 @@ class MatchmakingController extends Controller
             ]);
         }
         else{
-            $tags = DB::table('users')->where('id', $tag_id)->value('tags');
+            $tagsJson = DB::table('users')->where('id', $tag_id)->value('tags');
+            $tags = json_decode($tagsJson);
             $matching = DB::table('users')
                 ->where('role', 'trainee') // Replace 'role' with the actual column name storing user roles
                 ->where('id', '!=', $tag_id) // Exclude the trainee from the results
                 ->where(function ($query) use ($tags) {
-                    $query->whereRaw("FIND_IN_SET('$tags', tags) > 0");
+                    foreach ($tags as $tag) {
+                        $query->orWhereJsonContains('tags', $tag);
+                    }
                 })
                 ->get();
             return view('dashboard.main', [

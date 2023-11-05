@@ -44,7 +44,11 @@
 
         <div class="space-y-1 col-span-4">
           <p class="text-base font-semibold">Tags</p>
-          <p class="text-base font-normal">{{auth()->user()->tags}}</p>
+          <div class="flex items-center space-x-2">
+            @foreach(auth()->user()->tags as $tag)
+              <p class="text-base font-normal capitalize">{{ $tag }},</p>
+            @endforeach
+          </div>
         </div>
       </div>
 
@@ -75,7 +79,7 @@
                   name="description"
                 ></textarea>
                 @error('description')
-                <p class="text-red-500 text-sm">{{$message}}</p>
+                <p class="text-red-500 text-sm error">{{$message}}</p>
                 @enderror
               </div>
 
@@ -88,7 +92,7 @@
                   name="recent_works"
                 />
                 @error('recent_works')
-                <p class="text-red-500 text-sm">{{$message}}</p>
+                <p class="text-red-500 text-sm error">{{$message}}</p>
                 @enderror
               </div>
 
@@ -101,7 +105,7 @@
                   name="hobbies"
                 />
                 @error('hobbies')
-                <p class="text-red-500 text-sm">{{$message}}</p>
+                <p class="text-red-500 text-sm error">{{$message}}</p>
                 @enderror
               </div>
             </div>
@@ -141,3 +145,11 @@
     @endif
   </div>
 </x-layout>
+
+<script>
+$(document).ready(function() {
+  $('input').click(function() {
+      $('.error').hide();
+  });
+});
+</script>

@@ -33,7 +33,7 @@ class AuthController extends Controller
 
     auth()->login($user);
     
-    return redirect('/main')->with('message', 'User Registered successfully!');
+    return redirect('/main')->with('loading', true);
   }
 
   /**
@@ -87,7 +87,7 @@ public function update(Request $request, User $user)
     // Update the user's fields
     $user->update($form);
 
-    return back()->with('message', 'User updated successfully');
+    return redirect('/main')->with('loading', true);  
 }
 
   public function logout(Request $request) {

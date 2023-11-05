@@ -10,8 +10,8 @@
       placeholder="Enter Password"
       name="{{ $name }}"
     >
-    <img src="/auth/eye-icon.svg" alt="Pass not shown" class="absolute right-8 w-6 h-6 cursor-pointer eyeslashicon" onclick="myFunction()" id="pass-hidden-container">
-    <img src="/auth/eye-slash-icon.svg" alt="Pass shown" class="absolute right-8 w-6 h-6 cursor-pointer eyeicon" onclick="myFunction()" id="pass-shown-container">
+    <img src="/auth/eye-icon.svg" alt="Pass not shown" class="absolute right-4 w-6 h-6 cursor-pointer eyeslashicon" onclick="myFunction()" id="pass-hidden-container">
+    <img src="/auth/eye-slash-icon.svg" alt="Pass shown" class="absolute right-4 w-6 h-6 cursor-pointer eyeicon" onclick="myFunction()" id="pass-shown-container">
   </div>
   {{ $errors }}
 </div>

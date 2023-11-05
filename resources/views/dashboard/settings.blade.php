@@ -89,7 +89,7 @@
             </select>
           </div>
 
-          <div class="flex flex-col space-y-6 col-span-3">
+          {{-- <div class="flex flex-col space-y-6 col-span-3">
             <div class="grid grid-cols-3 items-center">
               <label class="text-base font-medium col-span-1 text-black">Tags</span></label>
               <input 
@@ -100,7 +100,7 @@
                 value="{{$user->tags}}"
               >
             </div>
-          </div>
+          </div> --}}
           
         </div>
         {{-- Right Panel  --}}
@@ -130,7 +130,7 @@
       {{-- Navigation Panel  --}}
       <div class="mt-6 grid grid-cols-5 gap-x-16 px-12">
         {{-- Main Panel  --}}
-        <div class="flex flex-col space-y-6 col-span-3">
+        {{-- <div class="flex flex-col space-y-6 col-span-3">
           <div class="grid grid-cols-3 items-center">
             <label class="text-base font-medium col-span-1 text-black">Tags</span></label>
             <input 
@@ -141,7 +141,7 @@
               value="{{$user->tags}}"
             >
           </div>
-        </div>
+        </div> --}}
   
       </div>
   

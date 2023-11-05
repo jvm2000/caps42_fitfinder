@@ -51,6 +51,7 @@ class User extends Authenticatable
         'birthdate' => 'datetime',
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'tags' => 'array'
     ];
 
     public function getAgeAttribute()

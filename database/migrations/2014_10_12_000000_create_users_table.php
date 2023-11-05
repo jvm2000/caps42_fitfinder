@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('gender')->nullable();
             $table->string('role')->nullable();
             $table->timestamp('birthdate')->nullable();
-            $table->string('tags')->nullable();
+            $table->json('tags')->nullable();
             $table->string('image')->nullable();
             $table->rememberToken();
             $table->timestamps();
