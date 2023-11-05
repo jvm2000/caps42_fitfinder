@@ -11,7 +11,7 @@
 }
 </style>
 
-@props(['desc','name'])
+@props(['name'])
 
 <div id="openCreateModal">
   {{ $button }}
@@ -22,25 +22,11 @@
   <!-- Modal content -->
   <div {{ $attributes->class(['w-full bg-white m-auto rounded-xl']) }}>
     <div class="w-full relative flex items-center py-5 indent-6 border-b">
-      <p class="text-2xl font-medium">{{ $name }}</p>
+      <p class="text-xl font-medium">{{ $name }}</p>
       <img id="close" src="/icons/programs/close.svg" alt="" class="w-4 h-4 absolute right-8 cursor-pointer active:mt-1">
     </div>
     <div class="px-8 py-6">
       {{ $slot }}
-      <div class="flex items-center mt-8 relative">
-        <div class="mr-auto"></div>
-        <div class="flex items-center space-x-4">
-          <div 
-            id="cancel"
-            class="rounded-lg text-center px-6 py-3 text-sm text-black border-2 cursor-pointer"
-          >Cancel</div>
-
-          <button type="submit">
-          {{ $store }}
-          </button>
-        </div>
-
-      </div>
     </div>
 
   </div>

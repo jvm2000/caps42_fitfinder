@@ -9,12 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 class ProgramController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-
         $user = Auth::user();
 
         $programs = $user->programs()->with('user')->latest()->paginate(5);
@@ -52,19 +48,28 @@ class ProgramController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function archive(Request $request, Program $program)
     {
-        //
+        $form = $request->validate([
+            'status'=>['nullable']
+        ]);
+        
+        $program->update($form);
+
+        return redirect('/programs/list')->with('message', 'Program archived successfully!');
+    }
+
+    public function restore(Request $request, Program $program)
+    {
+        $form = $request->validate([
+            'status'=>['nullable']
+        ]);
+        
+        $program->update($form);
+
+        return redirect('/programs/list')->with('message', 'Program restored successfully!');
     }
 
     /**

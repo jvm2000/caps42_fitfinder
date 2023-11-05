@@ -40,6 +40,8 @@ Route::middleware(['auth'])->group(function () {
    Route::get('/programs/make', function () {return view('programs/create');})->name('programs.make');
    Route::get('/programs/list', [ProgramController::class, 'index'])->name('programs.index');
    Route::post('/programs/create/{user}', [ProgramController::class, 'store'])->name('programs.create');
+   Route::put('/programs/archive/{program}', [ProgramController::class, 'archive'])->name('programs.archive');
+   Route::put('/programs/restore/{program}', [ProgramController::class, 'restore'])->name('programs.restore');
    
   // Matchmake 
   Route::get('/main', [MatchmakingController::class, 'index'])->name('matchmaking.index');

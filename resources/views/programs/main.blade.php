@@ -1,3 +1,15 @@
+<style>
+.tab button {
+  background-color: inherit;
+}
+
+.tab button.active {
+  border-color: #6366F1; 
+	color: #6366F1; 
+}
+
+</style>
+
 <x-layout>
   {{-- Title  --}}
   <x-slot:title>
@@ -9,91 +21,136 @@
       <x-menu-dropdown />
     </div>
 
-    <div class="mt-20 flex flex-col space-y-10">
-      <div class="flex place-items-center h-14 relative">
-        <button class="relative py-6 text-center w-52 group" onclick="openCity(event, 'Active')">
-          <p class="text-xl font-semibold text-indigo-500 group-hover:text-indigo-500">Active</p>
-          <div class="w-52 border-b-8 border-indigo-500 absolute bottom-0 z-20"></div>
-        </button>
+		<div class="mt-20 flex flex-col space-y-10">
+			<div class="flex items-center relative h-20">
+				<div class="flex items-center mr-auto z-20 tab">
+					<button id="defaultTabButton" class="relative px-10 group border-b-8 py-[22px] cursor-pointer hover:border-indigo-500 tablinks" onclick="openTab(event, 'Active')">
+						<p class="text-xl font-semibold group-hover:text-indigo-500">Active</p>
+					</button>
 
-        <button class="relative py-6 justify-center group" onclick="openCity(event, 'Archive')">
-          <p class="text-xl font-medium text-gray-500 group-hover:text-indigo-500">Archive</p>
-          <div class="border-b-8 group-hover:border-indigo-500 absolute bottom-0 z-20"></div>
-        </button>
+					<button class="relative px-10 justify-center border-b-8 group py-[22px] cursor-pointer hover:border-indigo-400 tablinks" onclick="openTab(event, 'Archive')">
+						<p class="text-xl font-medium group-hover:text-indigo-400">Archive</p>
+					</button>
+				</div>
 
-        <a 
-          href="/programs/make"
-          type="submit"
-          class="rounded-full flex opa items-center space-x-4 px-6 py-3 text-md text-white bg-black cursor-pointer w-auto absolute right-0 bottom-4 active:bottom-[15px]"
-        >
-          <img src="/icons/programs/plus.svg" class="w-6 h-6">
-          <p class="whitespace-nowrap">Create</p>
-        </a>
+				<a 
+					href="/programs/make"
+					type="submit"
+					class="rounded-full flex items-center space-x-4 px-6 py-3 text-md text-white bg-black cursor-pointer w-auto"
+				>
+					<img src="/icons/programs/plus.svg" class="w-6 h-6">
+					<p class="whitespace-nowrap">Create</p>
+				</a>
 
-        <div class="w-full border-b-8 mt-[66px] z-10"></div>
-      </div>
-    </div>
+				<div class="w-full border-t-8 absolute z-10 bottom-0"></div>
 
-    @if ($programs->count() > 0) 
-      {{-- Table  --}}
-      <div class="mt-2">
-        <table class="w-full table-auto border-spacing-y-6 border-separate">
-          <thead>
-            <tr>
-              <th class="text-xl font-medium text-gray-400 py-4 text-left indent-16">Program's Info</th>
-              <th class="text-xl font-medium text-gray-400 py-4 text-left">Summary</th>
-              <th class="py-4">
-                <p class="text-xl font-medium text-gray-400 py-4 text-left w-44">Number of Trainees Enrolled</p>
-              </th>
-              <th class="text-xl font-medium text-gray-400 py-4 text-left">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach($programs as $program)
-            <tr class="">
-              <td class="border-l-8 border-indigo-500 py-1">
-                <div class="ml-4 flex items-center space-x-4">
-                  <img src="{{$program->getImageURL()}}" class="w-9 h-9 rounded-full">
-                  <div class="text-left">
-                    <p class="text-black text-sm font-medium">{{$program->name}}</p>
-                    <p class="text-xs text-zinc-400">{{$program->category}}</p>
-                  </div>
-                </div>
-              </td>
+			</div>
+		</div>
 
-              <td class="py-1">
-                <p class="text-sm text-ellipsis">{{$program->summary}}</p>
-              </td>
-              <td class="py-2">
-                <p class="text-sm"><span class="text-red-500">10</span> / 30</p>
-              </td>
+			{{-- Table  --}}
+		<div class="mt-2">
+			<div id="Active" class="tabcontent">
+				<table class="w-full table-auto border-spacing-y-6 border-separate">
+					<thead>
+						<tr>
+							<th class="text-xl font-medium text-gray-400 py-4 text-left indent-16">Program's Info</th>
+							<th class="text-xl font-medium text-gray-400 py-4 text-left">Summary</th>
+							<th class="py-4">
+								<p class="text-xl font-medium text-gray-400 py-4 text-left w-44">Number of Trainees Enrolled</p>
+							</th>
+							<th class="text-xl font-medium text-gray-400 py-4 text-left">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach($programs as $program)
+							@if($program->status === 'active')
+							<tr class="">
+								<td class="border-l-8 border-indigo-500 py-1">
+									<div class="ml-4 flex items-center space-x-4">
+										<img src="{{$program->getImageURL()}}" class="w-9 h-9 rounded-full">
+										<div class="text-left">
+											<p class="text-black text-sm font-medium">{{$program->name}}</p>
+											<p class="text-xs text-zinc-400">{{$program->category}}</p>
+										</div>
+									</div>
+								</td>
 
-              <td class="py-2">
-                <div class="flex items-center space-x-3 relative">
-                  <button class="w-7 h-7 rounded-full p-1.5 bg-indigo-500">
-                    <img src="/icons/programs/view.svg" alt="" class="w-4 h-4">
-                  </button>
+								<td class="py-1">
+									<p class="text-sm text-ellipsis">{{$program->summary}}</p>
+								</td>
+								<td class="py-2">
+									<p class="text-sm"><span class="text-red-500">10</span> / 30</p>
+								</td>
 
-                  <button class="w-7 h-7 rounded-full p-1.5 bg-indigo-500">
-                    <img src="/icons/programs/edit.svg" alt="" class="w-4 h-4">
-                  </button>
+								<td class="py-2">
+									<div class="flex items-center space-x-3 relative">
+										<button class="w-7 h-7 rounded-full p-1.5 bg-indigo-500">
+											<img src="/icons/programs/view.svg" alt="" class="w-4 h-4">
+										</button>
 
-                  <button class="w-7 h-7 rounded-full p-1.5 bg-indigo-500">
-                    <img src="/icons/programs/archive.svg" alt="" class="w-4 h-4">
-                  </button>
-                </div>
-              </td>
-            </tr>
-            @endforeach
-          </tbody>
-        </table>
-      </div>
-    @else
-      <div class="mt-36 w-full grid place-items-center space-y-4">
-        <img src="/empty/programs.svg" alt="Empty Stage">
-        <p class="text-gray-300 text-lg font-medium">You have no programs added yet.</p>
-      </div>
-    @endif
+										<button class="w-7 h-7 rounded-full p-1.5 bg-indigo-500">
+											<img src="/icons/programs/edit.svg" alt="" class="w-4 h-4">
+										</button>
+
+										<x-programs.modal.archive :program="$program->id"/>
+									</div>
+								</td>
+							</tr>
+							@endif
+						@endforeach
+					</tbody>
+				</table>
+			</div>
+
+			<div id="Archive" class="tabcontent">
+				<table class="w-full table-auto border-spacing-y-6 border-separate">
+					<thead>
+						<tr>
+							<th class="text-xl font-medium text-gray-400 py-4 text-left indent-16">Program's Info</th>
+							<th class="text-xl font-medium text-gray-400 py-4 text-left w-64">Summary</th>
+							<th class="py-4">
+								<p class="text-xl font-medium text-gray-400 py-4 text-left">Achived at</p>
+							</th>
+							<th class="text-xl font-medium text-gray-400 py-4 text-left">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach($programs as $program)
+							@if($program->status === 'archive')
+							<tr class="">
+								<td class="border-l-8 border-indigo-500 py-1">
+									<div class="ml-4 flex items-center space-x-4">
+										<img src="{{$program->getImageURL()}}" class="w-9 h-9 rounded-full">
+										<div class="text-left">
+											<p class="text-black text-sm font-medium">{{$program->name}}</p>
+											<p class="text-xs text-zinc-400">{{$program->category}}</p>
+										</div>
+									</div>
+								</td>
+
+								<td class="py-1">
+									<p class="text-sm text-ellipsis">{{$program->summary}}</p>
+								</td>
+								<td class="py-2">
+									<p class="text-sm"><span class="text-red-500">10</span> / 30</p>
+								</td>
+
+								<td class="py-2">
+									<div class="flex items-center space-x-3 relative">
+										<x-programs.modal.active :program="$program->id" />
+
+										<button class="w-7 h-7 rounded-full p-1.5 bg-indigo-500">
+											<img src="/icons/programs/delete.svg" alt="" class="w-4 h-4">
+										</button>
+									</div>
+								</td>
+							</tr>
+							@endif
+						@endforeach
+					</tbody>
+				</table>
+			</div>
+		</div>
   </div>
   
   @if(session('message'))
@@ -103,17 +160,25 @@
 </x-layout>
 
 <script>
-  function openCity(evt, cityName) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-      tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(cityName).style.display = "block";
-    evt.currentTarget.className += " active";
+window.onload = function() {
+	var event = new Event('click');
+	var defaultTabButton = document.getElementById('defaultTabButton');
+	openTab(event, 'Active');
+	defaultTabButton.dispatchEvent(event);
+};
+
+function openTab(evt, tabName) {
+  var i, tabcontent, tablinks;
+  
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
   }
-  </script>
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+</script>

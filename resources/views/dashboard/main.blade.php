@@ -1,3 +1,4 @@
+<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
 <x-layout>
   {{-- Title  --}}
   <x-slot:title>
@@ -26,7 +27,7 @@
               <p class="text-base text-gray-600">summary sample</p>
             </div>
             <p class="absolute bottom-0 left-6"><span class="font-medium">
-              Tags</span>: <span class="font-light">{{ $match->tags }}</span></p>
+              Tags</span>: <span class="font-light">{{ $match->tags }}</span></p> 
           </div>
         </div>
         @endforeach
