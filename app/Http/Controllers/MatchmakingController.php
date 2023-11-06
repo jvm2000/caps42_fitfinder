@@ -91,6 +91,6 @@ class MatchmakingController extends Controller
         }
         
         // Pass the user data to the view
-        return view('viewprofile', ['user' => $user]);
+        return view('request.profile', ['user' => $user]);
     }
 }

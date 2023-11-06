@@ -16,9 +16,13 @@
       {{-- Matching Trainee  --}}
       @if ($matching->count() > 0)
         @foreach ($matching as $match)
-        <div class="bg-zinc-100 max-w-xl w-full rounded-xl shadow-lg flex">
+        <div class="bg-zinc-100 max-w-xl w-full rounded-xl shadow-lg flex relative">
           <div class="w-52 h-48 relative">
-            <img src="{{ url('storage/' . $match->image) }}" alt="Trainee Pic" class="w-full h-full rounded-l-xl">
+            @if($match->image !== null)
+              <img src="{{ url('storage/' . $match->image) }}" alt="Trainee Pic" class="w-full h-full rounded-l-xl">
+            @else
+            <img src="default.jpg" alt="Trainee Pic" class="w-full h-full rounded-l-xl">
+            @endif
           </div>
           <div class="p-6 relative h-44">
             <div class="space-y-4">
@@ -28,9 +32,9 @@
             <p class="absolute bottom-0 left-6"><span class="font-medium">
               Tags</span>: <span class="font-light">{{ $match->tags }}</span></p> 
           </div>
-          <br>
-          <a href="{{ route('viewprofile', ['id' => $match->id]) }}" class="btn btn-primary">View Profile</a>
-          <button style="color:aqua;background-color:bisque">
+          <a href="{{ route('viewprofile', ['id' => $match->id]) }}" class="absolute bottom-6 right-6">
+            <img src="/icons/chevron-left-icon.svg" alt="View Profile" class="w-6 h-6">
+          </a>
           
         </div>
         @endforeach

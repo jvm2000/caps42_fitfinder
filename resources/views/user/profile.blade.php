@@ -124,22 +124,17 @@
             </div>
           </div>
 
-        </div>
-      </div>
+          <div class="col-span-2 w-full flex items-center relative mt-8">
+            <div class="mr-auto"></div>
+            <button 
+              type="submit"
+              class="rounded-md text-center px-6 py-3 text-md text-white bg-black cursor-pointer"
+            >Update</button>
+          </div>
 
-      <div class="flex items-center w-full relative mt-6">
-        <div class="mr-auto"></div>
-        <div class="flex items-center space-x-4">
-          <button 
-            class="rounded-md text-center px-6 py-3 text-md text-black border border-black cursor-pointer"
-            disabled
-          >Cancel</button>
-          <button 
-            type="submit"
-            class="rounded-md text-center px-6 py-3 text-md text-white bg-black cursor-pointer"
-          >Update</button>
         </div>
       </div>
+    </div>
 
     </form>
     @endif
