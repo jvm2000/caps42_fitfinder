@@ -1,11 +1,11 @@
 <?php
 
-use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\MatchmakingController;
+use App\Http\Controllers\MedicalCertificateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +44,10 @@ Route::middleware(['auth'])->group(function () {
    Route::put('/programs/archive/{program}', [ProgramController::class, 'archive'])->name('programs.archive');
    Route::put('/programs/restore/{program}', [ProgramController::class, 'restore'])->name('programs.restore');
    
+   //Medcerts
+   Route::post('/medcert/create/{user}', [MedicalCertificateController::class, 'store'])->name('medcert.create');
+   
+
   // Matchmake 
   Route::get('/main', [MatchmakingController::class, 'index'])->name('matchmaking.index');
   //viewprofile
