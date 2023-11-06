@@ -15,7 +15,7 @@ class ProgramController extends Controller
 
         $programs = $user->programs()->with('user')->latest()->paginate(5);
 
-        return view('programs.main', compact('programs'))->with(['shorter-load' => true]);
+        return view('programs.main', compact('programs'));
     }
 
     /**
@@ -40,14 +40,6 @@ class ProgramController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function archive(Request $request, Program $program)
@@ -58,7 +50,7 @@ class ProgramController extends Controller
         
         $program->update($form);
 
-        return redirect('/programs/list')->with('message', 'Program archived successfully!');
+        return redirect('/programs/list');
     }
 
     public function restore(Request $request, Program $program)

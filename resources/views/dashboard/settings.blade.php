@@ -1,5 +1,4 @@
-<script>
-</script>
+<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
 
 <x-layout>
   {{-- Title  --}}
@@ -63,30 +62,6 @@
               name="phone_number"
               value="{{$user->phone_number}}"
             >
-          </div>
-  
-          <div class="grid grid-cols-3 items-center">
-            <label class="text-base font-medium col-span-1 text-black">Birthdate<span class="text-red-500 font-light">*</span></label>
-            <input 
-              type="date" 
-              class="bg-inherit text-sm px-6 py-2 w-full border-gray-500 border rounded-md col-span-2" 
-              placeholder="MM/DD/YY"
-              name="birthdate"
-            >
-          </div>
-  
-          <div class="grid grid-cols-3 items-center">
-            <label class="text-base font-medium col-span-1 text-black">Gender<span class="text-red-500 font-light">*</span></label>
-            <select 
-              type="text" 
-              class="bg-inherit text-sm px-6 py-2 w-full border-gray-500 border rounded-md col-span-2 appearance-none" 
-              name="gender"
-              value="{{$user->gender}}"
-            >
-              <option value="" selected disabled>Enter Gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
           </div>
 
           {{-- <div class="flex flex-col space-y-6 col-span-3">
@@ -166,13 +141,13 @@
           </div>
         </div>
   
-      </div>
-      <div class="pt-16 w-full max-w-2xl flex items-center relative pl-11 pr-10">
-        <div class="mr-auto"></div>
-        <button 
-          type="submit"
-          class="rounded-md text-center px-6 py-3 text-md text-white bg-black cursor-pointer w-36"
-        >Update</button>
+        <div class="mt-16 col-span-3 flex items-center relative">
+          <div class="mr-auto"></div>
+          <button 
+            type="submit"
+            class="rounded-md text-center px-6 py-3 text-md text-white bg-black cursor-pointer w-36"
+          >Update</button>
+        </div>
       </div>
 
     </form>

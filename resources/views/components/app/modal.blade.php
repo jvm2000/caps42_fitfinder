@@ -1,13 +1,21 @@
 <style>
-  .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 9999; /* Sit on top */
+.modal {
+  opacity: 0;
+  display: none;
+  transition: opacity 0.3s ease-in-out, display 0s linear 0.3s;
+  position: fixed;
+  z-index: 9999;
   left: 0;
   top: 0;
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+.modal.active {
+  opacity: 1;
+  display: block;
+  transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s;
+
 }
 </style>
 
@@ -25,7 +33,7 @@
       <p class="text-xl font-medium">{{ $name }}</p>
       <img id="close" src="/icons/programs/close.svg" alt="" class="w-4 h-4 absolute right-8 cursor-pointer active:mt-1">
     </div>
-    <div class="px-8 py-6">
+    <div class="px-8 pt-6 pb-4">
       {{ $slot }}
     </div>
 
@@ -46,24 +54,24 @@ var success = document.getElementById("successfullyCreate");
 var span = document.getElementsByClassName("close")[0];
 
 btn.onclick = function() {
-  modal.style.display = "block";
+  modal.classList.add("active");
 }
 
 closeBtn.onclick = function() {
-  modal.style.display = "none";
+   modal.classList.remove("active");
 }
 
 cancelBtn.onclick = function() {
-  modal.style.display = "none";
+   modal.classList.remove("active");
 }
 
 success.onclick = function() {
-  modal.style.display = "none";
+  modal.classList.add("active");
 }
 
 window.onclick = function(event) {
   if (event.target == modal) {
-    modal.style.display = "none";
+    modal.classList.remove("active");
   }
 }
 </script>

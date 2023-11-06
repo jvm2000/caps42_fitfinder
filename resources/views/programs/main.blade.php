@@ -7,8 +7,33 @@
   border-color: #6366F1; 
 	color: #6366F1; 
 }
-
 </style>
+
+<script>
+window.onload = function() {
+	var event = new Event('click');
+	var defaultTabButton = document.getElementById('defaultTabButton');
+	openTab(event, 'Active');
+	defaultTabButton.dispatchEvent(event);
+};
+
+function openTab(evt, tabName) {
+	var i, tabcontent, tablinks;
+	
+	tabcontent = document.getElementsByClassName("tabcontent");
+	for (i = 0; i < tabcontent.length; i++) {
+		tabcontent[i].style.display = "none";
+	}
+	tablinks = document.getElementsByClassName("tablinks");
+	for (i = 0; i < tablinks.length; i++) {
+		tablinks[i].className = tablinks[i].className.replace(" active", "");
+	}
+	document.getElementById(tabName).style.display = "block";
+	evt.currentTarget.className += " active";
+}
+</script>
+
+<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
 
 <x-layout>
   {{-- Title  --}}
@@ -24,11 +49,17 @@
 		<div class="mt-20 flex flex-col space-y-10">
 			<div class="flex items-center relative h-20">
 				<div class="flex items-center mr-auto z-20 tab">
-					<button id="defaultTabButton" class="relative px-10 group border-b-8 py-[22px] cursor-pointer hover:border-indigo-500 tablinks" onclick="openTab(event, 'Active')">
+					<button 
+						id="defaultTabButton" 
+						class="relative px-10 group border-b-8 py-[22px] cursor-pointer hover:border-indigo-500 tablinks" onclick="openTab(event, 'Active')"
+					>
 						<p class="text-xl font-semibold group-hover:text-indigo-500">Active</p>
 					</button>
 
-					<button class="relative px-10 justify-center border-b-8 group py-[22px] cursor-pointer hover:border-indigo-400 tablinks" onclick="openTab(event, 'Archive')">
+					<button 
+						class="relative px-10 justify-center border-b-8 group py-[22px] cursor-pointer hover:border-indigo-400 tablinks" 
+						onclick="openTab(event, 'Archive')"
+					>
 						<p class="text-xl font-medium group-hover:text-indigo-400">Archive</p>
 					</button>
 				</div>
@@ -158,27 +189,3 @@
     </x-app.toaster>
   @endif
 </x-layout>
-
-<script>
-window.onload = function() {
-	var event = new Event('click');
-	var defaultTabButton = document.getElementById('defaultTabButton');
-	openTab(event, 'Active');
-	defaultTabButton.dispatchEvent(event);
-};
-
-function openTab(evt, tabName) {
-  var i, tabcontent, tablinks;
-  
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-  document.getElementById(tabName).style.display = "block";
-  evt.currentTarget.className += " active";
-}
-</script>

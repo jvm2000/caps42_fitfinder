@@ -22,15 +22,15 @@
 
       <nav class="col-span-2 py-24">
         <div class="relative h-full w-full">
-          <div class="grid place-items-center">
+          <div class="flex flex-col items-center">
             <img src="/dashboard/logo-sidebar.svg" alt="Sidebar Logo">
           </div>
 
           <div class="mt-36 w-full">
             <a href="/main" class="flex items-center relative group z-0">
-              <span class="w-2 h-9 rounded-r-md mr-[110px] z-10"></span>
+              <span class="w-2 h-9 rounded-r-md mr-32 z-10"></span>
               @if(Route::is('matchmaking.index') )
-                <span class="w-2 h-9 rounded-r-md mr-[110px] absolute z-20 bg-white"></span>
+                <span class="w-2 h-9 rounded-r-md mr-32 absolute bg-white"></span>
               @endif
               <img src="/dashboard/icons/main.svg" alt="Main" class="w-6 h-6 group-hover:mb-1 mr-14">
               <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Dashboard</p>
@@ -38,9 +38,9 @@
 
             @if (auth()->user()->role === 'Coach')
             <a href="/programs/list" class="flex items-center relative mt-14 group z-0">
-              <span class="w-2 h-9 rounded-r-md mr-[110px] z-10"></span>
+              <span class="w-2 h-9 rounded-r-md mr-32 z-10"></span>
               @if(in_array(Route::currentRouteName(), ['programs.index', 'programs.make']))
-                <span class="w-2 h-9 rounded-r-md mr-[110px] absolute z-20 bg-white"></span>
+                <span class="w-2 h-9 rounded-r-md mr-32 absolute bg-white"></span>
               @endif
               <img src="/dashboard/icons/programs.svg" alt="Main" class="w-6 h-6 mr-14 group-hover:mb-1">
               <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Programs</p>
@@ -49,7 +49,7 @@
 
             @if (auth()->user()->role === 'Coach')
             <div class="flex items-center relative mt-14 group">
-              <span class="w-2 h-9 rounded-r-md mr-[110px]"></span>
+              <span class="w-2 h-9 rounded-r-md mr-32"></span>
               <img src="/dashboard/icons/contracts.svg" alt="Main" class="w-6 h-6 mr-14 group-hover:mb-1">
               <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Contracts</p>
             </div>
@@ -58,9 +58,9 @@
 
           <div class="absolute bottom-0">
             <a href="/auth/profile/{{auth()->user()->id}}" class="flex items-center relative group">
-              <span class="w-2 h-9 rounded-r-md mr-[110px] z-10"></span>
+              <span class="w-2 h-9 rounded-r-md mr-32 z-10"></span>
               @if(in_array(Route::currentRouteName(), ['user.show']))
-                <span class="w-2 h-9 rounded-r-md mr-[110px] absolute z-20 bg-white"></span>
+                <span class="w-2 h-9 rounded-r-md mr-32 absolute bg-white"></span>
               @endif
               <img src="/dashboard/icons/settings.svg" alt="Main" class="w-8 h-8 group-hover:mb-1 mr-14">
               <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Settings</p>

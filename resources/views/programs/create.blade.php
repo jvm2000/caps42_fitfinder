@@ -1,3 +1,5 @@
+<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+
 <x-layout>
   {{-- Title  --}}
   <x-slot:title>
