@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -47,6 +48,7 @@ class MatchmakingController extends Controller
                 'matching' => $matching,
                 'tag_id' => $tag_id,
             ]);
+           
         }
     }
 
@@ -54,20 +56,41 @@ class MatchmakingController extends Controller
     public function sendRequest(Request $request)
     {
         if ($request->has('sendRequest')) {
-            $t_id = $request->input('trainee_id');
-            $trainerId = $request->input('trainer_id');
-            $requestDate = now();
+            $traineeId = $request->input('trainee_id');
+            $coachId = $request->input('coach_id');
+            
+            // Check if a request already exists
+            $existingRequest = DB::table('requests')
+                ->where('trainee_id', $traineeId)
+                ->where('coach_id', $coachId)
+                ->first();
+    
+            if ($existingRequest) {
+                return "A request has already been sent to this user.";
+            }
 
-            // Insert the request into the "requests" table directly
             DB::table('requests')->insert([
-                'trainee_id' => $t_id,
-                'trainer_id' => $trainerId,
-                'request_date' => $requestDate,
+                'trainee_id' => $traineeId,
+                'coach_id' => $coachId,
             ]);
-
-            return "REQUEST SENT SUCCESSFULLY";
+    
+            return "Request sent successfully.";
         } else {
-            return "SOMETHING IS WRONG";
+            return "Something is wrong.";
         }
+    }
+
+    public function show($id)
+    {
+        // Fetch the user's data using the $id parameter
+        $user = User::find($id);
+        // Check if the user was found
+        if (!$user) {
+            // You can handle the case where the user is not found, such as showing an error message or redirecting.
+            return redirect()->route('notfound');
+        }
+        
+        // Pass the user data to the view
+        return view('viewprofile', ['user' => $user]);
     }
 }
