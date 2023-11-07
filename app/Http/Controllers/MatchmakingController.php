@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\User;
+use App\Models\Status;
+use App\Models\UserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -72,25 +73,30 @@ class MatchmakingController extends Controller
             DB::table('requests')->insert([
                 'trainee_id' => $traineeId,
                 'coach_id' => $coachId,
+                'status' => 'Pending', // Set the initial status to "Pending"
             ]);
+
+            $status ='Pending';
     
-            return "Request sent successfully.";
+            return view('request.test', ['status' => 'Pending']); // You can adjust the status as needed
         } else {
             return "Something is wrong.";
-        }
+        }   
     }
 
     public function show($id)
     {
-        // Fetch the user's data using the $id parameter
-        $user = User::find($id);
-        // Check if the user was found
-        if (!$user) {
-            // You can handle the case where the user is not found, such as showing an error message or redirecting.
-            return redirect()->route('notfound');
-        }
-        
-        // Pass the user data to the view
-        return view('request.profile', ['user' => $user]);
+    // Fetch the user's data using the $id parameter
+    $user = User::with('portfolio')->find($id);
+
+    // Check if the user was found
+    if (!$user) {
+        // You can handle the case where the user is not found, such as showing an error message or redirecting.
+        return redirect()->route('notfound');
     }
+
+    // Pass the user data and related profile data to the view
+    return view('request.profile', compact('user'));
+    }
+    
 }

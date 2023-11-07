@@ -9,7 +9,7 @@
       <p class="text-3xl font-semibold mr-auto">Profile</p>
       <x-menu-dropdown />
     </div>
-
+    
     <div class="py-7 flex items-center relative w-full border-b-8">
       <div class="flex items-center space-x-6 mr-auto">
         <img src="{{auth()->user()->getImageURL()}}" alt="Profile" class="w-36 h-36 rounded-full">

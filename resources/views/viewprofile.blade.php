@@ -12,6 +12,7 @@
             <p class="text-2xl font-bold capitalize">
                 {{ $user->first_name }} {{ $user->last_name }} 
             </p>
+            <p>Status: {{ $status }}</p>
             <p class="text-base text-gray-600">Summary sample</p>
             <p><span class="font-medium">Tags</span>: <span class="font-light">{{ $user->tags }}</span></p>
 

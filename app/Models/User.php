@@ -80,4 +80,28 @@ class User extends Authenticatable
     {
         return $this->hasMany(Program::class);
     }
+   // Define a relationship for users making requests.
+   public function requestsMade()
+   {
+       return $this->hasMany(UserRequest::class, 'trainee_id');
+   }
+
+   // Define a relationship for users receiving requests.
+   public function requestsReceived()
+   {
+       return $this->hasMany(UserRequest::class, 'coach_id');
+   }
+
+   // Helper method to create a new request.
+   public function sendRequestToCoach($coach)
+   {
+       return $this->requestsMade()->create([
+           'coach_id' => $coach->id,
+           'status' => 'Pending', // Set the initial status to "Pending"
+       ]);
+   }
+   public function status()
+    {
+    return $this->belongsTo(Status::class);
+    }
 }

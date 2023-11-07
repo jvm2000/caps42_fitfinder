@@ -54,6 +54,7 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/viewprofile/{id}', [MatchmakingController::class, 'show'])->name('viewprofile');
    //SendRequest
   Route::post('/send-request', [MatchmakingController::class, 'sendRequest'])->name('sendRequest');
+  Route::post('/send-request', [MatchmakingController::class, 'sendRequest'])->name('sendRequest');
   
 });
 
