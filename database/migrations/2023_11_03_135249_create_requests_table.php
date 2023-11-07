@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('trainee_id');
             $table->unsignedBigInteger('coach_id');
+            $table->string('status')->default('Pending');
             $table->timestamps();
 
             $table->foreign('trainee_id')->references('id')->on('users');
