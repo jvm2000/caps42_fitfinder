@@ -46,7 +46,9 @@
         </div>
       @endif
     </div>
-
+    <form action="">
+      <a href="{{route('contracts')}}">Go to Contracts</a>
+    </form>
     {{-- Right Tab  --}}
     <div class="absolute top-0 right-0 bg-[#F6F6F6] w-full max-w-md h-[860px] z-10 rounded-r-3xl"></div>
   </div>

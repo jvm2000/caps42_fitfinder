@@ -3,6 +3,7 @@
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContractController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\MatchmakingController;
@@ -51,7 +52,10 @@ Route::middleware(['auth'])->group(function () {
    //SendRequest
   Route::post('/send-request', [MatchmakingController::class, 'sendRequest'])->name('sendRequest');
   Route::post('/send-request', [MatchmakingController::class, 'sendRequest'])->name('sendRequest');
-  
+  //contracts
+  Route::get('/contracts', [ContractController::class, 'index'])->name('contracts');
+  Route::post('/contracts', [ContractController::class, 'store']);
+
 });
 
 
