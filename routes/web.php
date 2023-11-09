@@ -50,6 +50,13 @@ Route::middleware(['auth'])->group(function () {
 	Route::post('/medcert/create/{user}', [MedicalCertificateController::class, 'store'])->name('medcert.create');
 	Route::put('/medcert/update/{medcert}', [MedicalCertificateController::class, 'update'])->name('medcert.update');
 
+	// Modules 
+	// UPDATE FOR BLADE FRONTEND
+	Route::get('/modules/{module}',[ModuleController::class, 'show'])->name('');
+	Route::post('/modules/create/{module}', [ModuleController::class, 'store'])->name('');
+	Route::put('/modules/update/{module_id}', [ModuleController::class, 'update'])->name('');
+	Route::delete('/modules/delete/{module_id}', [ModuleController::class, 'destroy'])->name('');
+
 	// Matchmake 
 	Route::get('/matchmakes', [MatchmakingController::class, 'index'])->name('matchmaking.index');
 	//viewprofile
