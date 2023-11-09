@@ -24,8 +24,8 @@ class ModuleController extends Controller
             'schedule'=>['required'],
         ]);
 
-        $imagePath = request()->file('file')->store('modules','public');
-        $form['file'] = $imagePath; 
+        $imagePath = request()->file('procedure')->store('modules','public');
+        $form['procedure'] = $imagePath; 
 
 
         $user->module()->create($form);
@@ -66,9 +66,9 @@ class ModuleController extends Controller
             'schedule'=>['required'],
         ]);
 
-        if(request()->has('file')){
-            $filePath = request()->file('file')->store('modules','public');
-            $form['file'] = $filePath;
+        if(request()->has('procedure')){
+            $filePath = request()->file('procedure')->update('modules','public');
+            $form['procedure'] = $filePath;
           }
 
           
