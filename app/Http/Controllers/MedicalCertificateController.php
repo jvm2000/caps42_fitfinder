@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Portfolio;
 use App\Models\User;
+use App\Models\MedCert;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
-class PortfolioController extends Controller
+class MedicalCertificateController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +17,9 @@ class PortfolioController extends Controller
     {
         $user = Auth::user();
 
-        $portfolio = $user->portfolio()->with('user')->latest();
+        $medcert = $user->medcert()->with('user')->latest();
 
-        return view('user.coach', compact('portfolio'));
+        return view('user.trainee', compact('medcert'));
     }
 
     /**
@@ -28,11 +29,12 @@ class PortfolioController extends Controller
     {
         $form = $request->validate([
             'description'=>['required','string','min:12'],
-            'recent_works'=>['required','string'],
-            'hobbies'=>['required', 'min:6'],
+            'status'=>['required','string'],
+            'started_fitness'=>['required'],
+            'cert_file'=>['nullable'],
         ]);
 
-        Portfolio::create(['user_id' => $user->id] + $form);
+        MedCert::create(['user_id' => $user->id] + $form);
 
         return back()->with('success', 'User Updated successfully');
     }
@@ -40,17 +42,18 @@ class PortfolioController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Portfolio $portfolio)
+    public function update(Request $request, MedCert $medcert)
     {
         // Get the currently authenticated user
         $form = $request->validate([
             'description'=>['nullable','string','min:12'],
-            'recent_works'=>['nullable','string'],
-            'hobbies'=>['nullable', 'min:6'],
+            'status'=>['nullable','string'],
+            'started_fitness'=>['nullable'],
+            'cert_file'=>['nullable'],
         ]);
         
         // Update the user's fields
-        $portfolio->update($form);
+        $medcert->update($form);
 
         return back()->with('success', 'Portfolio Updated successfully');
     }

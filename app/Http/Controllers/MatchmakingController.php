@@ -11,8 +11,7 @@ use App\Http\Controllers\Controller;
 class MatchmakingController extends Controller
 {
 
-    public function index(Request $request)
-
+    public function index(User $id)
     {
  
         $role = auth()->user()->role;
@@ -20,7 +19,8 @@ class MatchmakingController extends Controller
         if ($role == "Trainee") {
             $tagsJson = DB::table('users')->where('id', $tag_id)->value('tags');
             $tags = json_decode($tagsJson);
-            $matching = DB::table('users')
+        
+            $matching = User::with('portfolio')
                 ->where('role', 'coach') // Replace 'role' with the actual column name storing user roles
                 ->where('id', '!=', $tag_id) // Exclude the trainee from the results
                 ->where(function ($query) use ($tags) {
@@ -29,16 +29,18 @@ class MatchmakingController extends Controller
                     }
                 })
                 ->get();
-            
-            return view('dashboard.main', [
+        
+            return view('matchmake.list', [
                 'matching' => $matching,
                 'tag_id' => $tag_id,
             ]);
         }
-        else{
+        
+        else {
             $tagsJson = DB::table('users')->where('id', $tag_id)->value('tags');
             $tags = json_decode($tagsJson);
-            $matching = DB::table('users')
+        
+            $matching = User::with('medcert')
                 ->where('role', 'trainee') // Replace 'role' with the actual column name storing user roles
                 ->where('id', '!=', $tag_id) // Exclude the trainee from the results
                 ->where(function ($query) use ($tags) {
@@ -47,11 +49,11 @@ class MatchmakingController extends Controller
                     }
                 })
                 ->get();
-            return view('dashboard.main', [
+        
+            return view('matchmake.list', [
                 'matching' => $matching,
                 'tag_id' => $tag_id,
             ]);
-           
         }
     }
 
@@ -88,17 +90,28 @@ class MatchmakingController extends Controller
 
     public function show($id)
     {
-    // Fetch the user's data using the $id parameter
-    $user = User::with('portfolio')->find($id);
+        $role = auth()->user()->role;
 
-    // Check if the user was found
-    if (!$user) {
-        // You can handle the case where the user is not found, such as showing an error message or redirecting.
-        return redirect()->route('notfound');
-    }
+        if ($role == "Coach") {
+            $user = User::with('portfolio')->find($id);
 
-    // Pass the user data and related profile data to the view
-    return view('request.profile', compact('user'));
+            // Check if the user was found
+            if (!$user) {
+                return redirect()->route('notfound');
+            }
+
+            return view('request.profile', compact('user'));
+        }
+        else {
+            $user = User::with('medcert')->find($id);
+
+            // Check if the user was found
+            if (!$user) {
+                return redirect()->route('notfound');
+            }
+
+            return view('request.profile', compact('user'));
+        }
     }
     
 }

@@ -26,6 +26,10 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'phone_number',
+        'address',
+        'city',
+        'province',
+        'zip_code',
         'gender',
         'role',
         'birthdate',
@@ -65,6 +69,11 @@ class User extends Authenticatable
             return url('storage/'. $this->image);
         }
         return '/icons/settings/profile-icon.svg';
+    }
+
+    public function medcert()
+    {
+        return $this->hasOne(MedCert::class);
     }
 
     public function portfolio()

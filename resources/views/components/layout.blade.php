@@ -13,6 +13,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="{{ asset('icon.ico') }}">
 
     <title>{{ $title ?? 'FitFinder' }}</title>
   </head>
@@ -27,13 +28,22 @@
           </div>
 
           <div class="mt-36 w-full">
-            <a href="/main" class="flex items-center relative group z-0">
+            <a href="/home" class="flex items-center relative group z-0">
               <span class="w-2 h-9 rounded-r-md mr-32 z-10"></span>
-              @if(Route::is('matchmaking.index') )
+              @if(Route::is('home.index') )
+                <span class="w-2 h-9 rounded-r-md mr-32 absolute bg-white"></span>
+              @endif
+              <img src="/icons/home.svg" alt="Main" class="w-7 h-7 group-hover:mb-1 mr-14">
+              <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Dashboard</p>
+            </a>
+
+            <a href="/matchmakes" class="flex items-center relative mt-14 group z-0">
+              <span class="w-2 h-9 rounded-r-md mr-32 z-10"></span>
+              @if(Route::is(['matchmaking.index', 'matchmaking.show']))
                 <span class="w-2 h-9 rounded-r-md mr-32 absolute bg-white"></span>
               @endif
               <img src="/dashboard/icons/main.svg" alt="Main" class="w-6 h-6 group-hover:mb-1 mr-14">
-              <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Dashboard</p>
+              <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Matchmakes</p>
             </a>
 
             @if (auth()->user()->role === 'Coach')
