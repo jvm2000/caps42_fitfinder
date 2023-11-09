@@ -25,6 +25,8 @@ Route::get('/login', function () {return view('auth/login');})->name('login');
 Route::get('/register', function () {return view('auth/register');});
 Route::post('/auth-register', [AuthController::class, 'store'])->name('user.register');
 Route::post('/auth-login', [AuthController::class, 'login'])->name('user.login');
+Route::get('/verification', function () {return view('verify');})->name('verify');
+Route::post('/verify-login', [AuthController::class, 'verify'])->name('verify.login');
 
 Route::middleware(['auth'])->group(function () {
   // General 
@@ -46,6 +48,7 @@ Route::middleware(['auth'])->group(function () {
    
   // Matchmake 
   Route::get('/main', [MatchmakingController::class, 'index'])->name('matchmaking.index');
+
   //viewprofile
   Route::get('/viewprofile/{id}', [MatchmakingController::class, 'show'])->name('viewprofile');
    //SendRequest

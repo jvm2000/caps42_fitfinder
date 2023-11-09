@@ -19,8 +19,8 @@ class MatchmakingController extends Controller
             $tagsJson = DB::table('users')->where('id', $tag_id)->value('tags');
             $tags = json_decode($tagsJson);
             $matching = DB::table('users')
-                ->where('role', 'coach') // Replace 'role' with the actual column name storing user roles
-                ->where('id', '!=', $tag_id) // Exclude the trainee from the results
+                ->where('role', 'coach') 
+                ->where('id', '!=', $tag_id)
                 ->where(function ($query) use ($tags) {
                     foreach ($tags as $tag) {
                         $query->orWhereJsonContains('tags', $tag);
