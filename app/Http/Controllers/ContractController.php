@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Contract;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -10,13 +11,20 @@ class ContractController extends Controller
 {
     //
     public function index(){
-        $contract = Contract::get();
-        return view('contracts.index',[
-            'contract'=> $contract
-        ]);
+        $contract = Contract::all();
         
-   
+        $address = User::where('role', 'trainee')->pluck('address');
+        
+        
+        $trainees = User::where('role', 'trainee')->get();
+
+        return view('contracts.index', [
+            'contract' => $contract,
+            'trainees' => $trainees,
+            'address' =>  $address->toArray(),
+        ]);
     }
+    
     public function store(Request $request){
         $this->validate($request, [
             'address'=> 'required'
@@ -26,6 +34,7 @@ class ContractController extends Controller
 
         $request->user()->contract()->create([
             'address' => $request->address,
+           
         ]);
         return back();
         // Contract::create([

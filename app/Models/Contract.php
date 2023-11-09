@@ -10,10 +10,17 @@ class Contract extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'address'
+        'address',
+        'coach_id',
+        'trainee_id',
     ];
 
-    public function user(){
-        return $this->belongsTo(User::class);
+    public function coach() {
+        return $this->belongsTo(User::class, 'coach_id');
+    }
+
+    // Define a belongsTo relationship with the User model for trainee
+    public function trainee() {
+        return $this->belongsTo(User::class, 'trainee_id');
     }
 }

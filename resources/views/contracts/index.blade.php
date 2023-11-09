@@ -4,7 +4,15 @@
     <form action="{{route('contracts')}}" method="POST">
         @csrf
          Enter Address <input type="text" name="address" id="address">
-         <button type="submit">generate address</button>
+         <br>
+         <select>
+            <option value="">Select a Trainee</option>
+            @foreach ($trainees as $trainee)
+                <option value="{{ $trainee->id }}">{{ $trainee->username }}</option>
+            @endforeach
+        </select>
+        <p>{{$address}}</p>
+         <button type="submit">submit</button>
         <br>
         
     </form>
