@@ -35,6 +35,7 @@
         disabled
         class="rounded-lg text-center px-6 py-3 text-sm text-white bg-red-500 cursor-pointer disabled:bg-red-400 disabled:cursor-not-allowed"
       >Archive</button>
+      <input type="hidden" name="password" id="password" value="{{ auth()->user()->password }}">
     </div>
   </form>
 </x-app.modal>
@@ -43,8 +44,10 @@
 const inputText = document.getElementById('inputText');
 const submitButton = document.getElementById('submitButton');
 
-// Add input event listener to the input field
 inputText.addEventListener('input', function() {
-  submitButton.disabled = inputText.value.trim() !== 'archive';
+    // Get the authenticated user's password from a hidden input (replace 'userPassword' with the actual field name)
+    const password = document.getElementById('password').value;
+    
+    submitButton.disabled = inputText.value.trim() !== password;
 });
 </script>

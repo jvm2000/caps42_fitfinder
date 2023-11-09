@@ -22,6 +22,7 @@ class AuthController extends Controller
       'first_name'=>['required'],
       'last_name'=>['required'],
       'phone_number'=>['required', 'min:11'],
+      'birthdate' => ['required'],
       'gender'=>['required'],
       'birthdate'=>['required'],
       'tags'=>['required'],
@@ -33,7 +34,7 @@ class AuthController extends Controller
 
     auth()->login($user);
     
-    return redirect('/main')->with('loading', true);
+    return redirect('/home')->with('loading', true);
   }
 
   /**
@@ -48,7 +49,7 @@ class AuthController extends Controller
 
     if (auth()->attempt($form)) {
       $request->session()->regenerate();
-      return redirect('/main')->with('loading', true);
+      return redirect('/home')->with('loading', true);
     } 
     
     return back()->withErrors(['email' => 'Entered email and password is incorrect.'])->onlyInput('email')->withInput();
@@ -72,7 +73,11 @@ public function update(Request $request, User $user)
         'first_name' => ['nullable', 'string'],
         'last_name' => ['nullable', 'string'],
         'phone_number' => ['nullable', 'size:11'], // Ensure exactly 11 characters
-        'birthdate' => 'nullable',
+        'address' => ['nullable'],
+        'city' => ['nullable'],
+        'province' => ['nullable'],
+        'zip_code' => ['nullable'],
+        'birthdate' => ['nullable'],
         'gender' => ['nullable'],
         'role' => ['nullable'],
         'tags' => 'nullable',
@@ -87,7 +92,7 @@ public function update(Request $request, User $user)
     // Update the user's fields
     $user->update($form);
 
-    return redirect('/main')->with('loading', true);  
+    return back()->with('loading', true);  
 }
 
   public function logout(Request $request) {

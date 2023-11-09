@@ -19,7 +19,7 @@ class MedicalCertificateController extends Controller
 
         $medcert = $user->medcert()->with('user')->latest();
 
-        return view('user.profile', compact('medcert'));
+        return view('user.trainee', compact('medcert'));
     }
 
     /**
@@ -40,27 +40,22 @@ class MedicalCertificateController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, MedCert $medcert)
     {
-        //
+        // Get the currently authenticated user
+        $form = $request->validate([
+            'description'=>['nullable','string','min:12'],
+            'status'=>['nullable','string'],
+            'started_fitness'=>['nullable'],
+            'cert_file'=>['nullable'],
+        ]);
+        
+        // Update the user's fields
+        $medcert->update($form);
+
+        return back()->with('success', 'Portfolio Updated successfully');
     }
 
     /**

@@ -18,7 +18,7 @@ class PortfolioController extends Controller
 
         $portfolio = $user->portfolio()->with('user')->latest();
 
-        return view('user.profile', compact('portfolio'));
+        return view('user.coach', compact('portfolio'));
     }
 
     /**
