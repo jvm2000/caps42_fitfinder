@@ -28,6 +28,6 @@
       }, 0); // Add a slight delay to allow smooth fade in
       setTimeout(function(){
           $("#container").removeClass("show");
-      }, 1500); // Remove the class after 3 seconds for fade out
+      }, 1000); // Remove the class after 3 seconds for fade out
   });
   </script>

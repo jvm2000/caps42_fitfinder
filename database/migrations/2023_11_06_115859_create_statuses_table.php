@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('requests', function (Blueprint $table) {
+        Schema::create('statuses', function (Blueprint $table) {
             $table->id();
+            $table->string('name'); // e.g., "Accepted," "Declined," "Pending"
+            $table->string('color'); // e.g., "Green," "Red," "Yellow"
             $table->timestamps();
-        });
+        });        
     }
 
     /**
@@ -22,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('requests');
+        Schema::dropIfExists('statuses');
     }
 };

@@ -1,6 +1,3 @@
-<script>
-</script>
-
 <x-layout>
   {{-- Title  --}}
   <x-slot:title>
@@ -64,44 +61,6 @@
               value="{{$user->phone_number}}"
             >
           </div>
-  
-          <div class="grid grid-cols-3 items-center">
-            <label class="text-base font-medium col-span-1 text-black">Birthdate<span class="text-red-500 font-light">*</span></label>
-            <input 
-              type="date" 
-              class="bg-inherit text-sm px-6 py-2 w-full border-gray-500 border rounded-md col-span-2" 
-              placeholder="MM/DD/YY"
-              name="birthdate"
-            >
-          </div>
-  
-          <div class="grid grid-cols-3 items-center">
-            <label class="text-base font-medium col-span-1 text-black">Gender<span class="text-red-500 font-light">*</span></label>
-            <select 
-              type="text" 
-              class="bg-inherit text-sm px-6 py-2 w-full border-gray-500 border rounded-md col-span-2 appearance-none" 
-              name="gender"
-              value="{{$user->gender}}"
-            >
-              <option value="" selected disabled>Enter Gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
-          </div>
-
-          <div class="flex flex-col space-y-6 col-span-3">
-            <div class="grid grid-cols-3 items-center">
-              <label class="text-base font-medium col-span-1 text-black">Tags</span></label>
-              <input 
-                type="text" 
-                class="bg-inherit text-sm px-6 py-2 w-full border-gray-500 border rounded-md col-span-2" 
-                placeholder="Enter Tags"
-                name="tags"
-                value="{{$user->tags}}"
-              >
-            </div>
-          </div>
-          
         </div>
         {{-- Right Panel  --}}
         <div class="space-y-4 col-span-1 pl-20 grid place-items-center">
@@ -127,24 +86,55 @@
           <p class="text-sm">Upload your image here.</p>
         </div>
       </div>
-      {{-- Navigation Panel  --}}
-      <div class="mt-6 grid grid-cols-5 gap-x-16 px-12">
-        {{-- Main Panel  --}}
+  
+      <div class="mt-0 grid grid-cols-5 gap-x-16 px-12">
         <div class="flex flex-col space-y-6 col-span-3">
-          <div class="grid grid-cols-3 items-center">
-            <label class="text-base font-medium col-span-1 text-black">Tags</span></label>
+          <div class="grid grid-cols-3 items-center mt-6">
+            <label class="text-base font-medium col-span-1 text-black">Address<span class="text-red-500 font-light">*</span></label>
             <input 
               type="text" 
               class="bg-inherit text-sm px-6 py-2 w-full border-gray-500 border rounded-md col-span-2" 
-              placeholder="Enter Tags"
-              name="tags"
-              value="{{$user->tags}}"
+              placeholder="Enter Address"
+              name="address"
+              value="{{$user->address}}"
+            >
+          </div>
+
+          <div class="grid grid-cols-3 items-center">
+            <label class="text-base font-medium col-span-1 text-black">City<span class="text-red-500 font-light">*</span></label>
+            <input 
+              type="text" 
+              class="bg-inherit text-sm px-6 py-2 w-full border-gray-500 border rounded-md col-span-2" 
+              placeholder="Enter City"
+              name="city"
+              value="{{$user->city}}"
+            >
+          </div>
+
+          <div class="grid grid-cols-3 items-center">
+            <label class="text-base font-medium col-span-1 text-black">Province<span class="text-red-500 font-light">*</span></label>
+            <input 
+              type="text" 
+              class="bg-inherit text-sm px-6 py-2 w-full border-gray-500 border rounded-md col-span-2" 
+              placeholder="Enter Province"
+              name="province"
+              value="{{$user->province}}"
+            >
+          </div>
+
+          <div class="grid grid-cols-3 items-center">
+            <label class="text-base font-medium col-span-1 text-black">Zip Code<span class="text-red-500 font-light">*</span></label>
+            <input 
+              type="text" 
+              class="bg-inherit text-sm px-6 py-2 w-full border-gray-500 border rounded-md col-span-2" 
+              placeholder="Enter Zip Code"
+              name="zip_code"
+              value="{{$user->zip_code}}"
             >
           </div>
         </div>
-  
       </div>
-  
+
       <div class="mt-20 grid grid-cols-5 gap-x-16 px-12">
         {{-- Main Panel  --}}
         <div class="flex flex-col space-y-6 col-span-3">
@@ -166,13 +156,13 @@
           </div>
         </div>
   
-      </div>
-      <div class="pt-16 w-full max-w-2xl flex items-center relative pl-11 pr-10">
-        <div class="mr-auto"></div>
-        <button 
-          type="submit"
-          class="rounded-md text-center px-6 py-3 text-md text-white bg-black cursor-pointer w-36"
-        >Update</button>
+        <div class="mt-16 col-span-3 flex items-center relative">
+          <div class="mr-auto"></div>
+          <button 
+            type="submit"
+            class="rounded-md text-center px-6 py-3 text-md text-white bg-black cursor-pointer w-36"
+          >Update</button>
+        </div>
       </div>
 
     </form>

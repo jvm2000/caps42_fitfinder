@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\User;
+use App\Models\Status;
+use App\Models\UserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -9,35 +11,45 @@ use App\Http\Controllers\Controller;
 class MatchmakingController extends Controller
 {
 
-    public function index(Request $request)
+    public function index(User $id)
     {
         $role = auth()->user()->role;
         $tag_id = auth()->user()->id;
         if ($role == "Trainee") {
-            $tags = DB::table('users')->where('id', $tag_id)->value('tags');
-            $matching = DB::table('users')
+            $tagsJson = DB::table('users')->where('id', $tag_id)->value('tags');
+            $tags = json_decode($tagsJson);
+        
+            $matching = User::with('portfolio')
                 ->where('role', 'coach') // Replace 'role' with the actual column name storing user roles
                 ->where('id', '!=', $tag_id) // Exclude the trainee from the results
                 ->where(function ($query) use ($tags) {
-                    $query->whereRaw("FIND_IN_SET('$tags', tags) > 0");
+                    foreach ($tags as $tag) {
+                        $query->orWhereJsonContains('tags', $tag);
+                    }
                 })
                 ->get();
-            
-            return view('dashboard.main', [
+        
+            return view('matchmake.list', [
                 'matching' => $matching,
                 'tag_id' => $tag_id,
             ]);
         }
-        else{
-            $tags = DB::table('users')->where('id', $tag_id)->value('tags');
-            $matching = DB::table('users')
+        
+        else {
+            $tagsJson = DB::table('users')->where('id', $tag_id)->value('tags');
+            $tags = json_decode($tagsJson);
+        
+            $matching = User::with('medcert')
                 ->where('role', 'trainee') // Replace 'role' with the actual column name storing user roles
                 ->where('id', '!=', $tag_id) // Exclude the trainee from the results
                 ->where(function ($query) use ($tags) {
-                    $query->whereRaw("FIND_IN_SET('$tags', tags) > 0");
+                    foreach ($tags as $tag) {
+                        $query->orWhereJsonContains('tags', $tag);
+                    }
                 })
                 ->get();
-            return view('dashboard.main', [
+        
+            return view('matchmake.list', [
                 'matching' => $matching,
                 'tag_id' => $tag_id,
             ]);
@@ -48,20 +60,57 @@ class MatchmakingController extends Controller
     public function sendRequest(Request $request)
     {
         if ($request->has('sendRequest')) {
-            $t_id = $request->input('trainee_id');
-            $trainerId = $request->input('trainer_id');
-            $requestDate = now();
+            $traineeId = $request->input('trainee_id');
+            $coachId = $request->input('coach_id');
+            
+            // Check if a request already exists
+            $existingRequest = DB::table('requests')
+                ->where('trainee_id', $traineeId)
+                ->where('coach_id', $coachId)
+                ->first();
+    
+            if ($existingRequest) {
+                return "A request has already been sent to this user.";
+            }
 
-            // Insert the request into the "requests" table directly
             DB::table('requests')->insert([
-                'trainee_id' => $t_id,
-                'trainer_id' => $trainerId,
-                'request_date' => $requestDate,
+                'trainee_id' => $traineeId,
+                'coach_id' => $coachId,
+                'status' => 'Pending', // Set the initial status to "Pending"
             ]);
 
-            return "REQUEST SENT SUCCESSFULLY";
+            $status ='Pending';
+    
+            return view('request.test', ['status' => 'Pending']); // You can adjust the status as needed
         } else {
-            return "SOMETHING IS WRONG";
+            return "Something is wrong.";
+        }   
+    }
+
+    public function show($id)
+    {
+        $role = auth()->user()->role;
+
+        if ($role == "Coach") {
+            $user = User::with('portfolio')->find($id);
+
+            // Check if the user was found
+            if (!$user) {
+                return redirect()->route('notfound');
+            }
+
+            return view('request.profile', compact('user'));
+        }
+        else {
+            $user = User::with('medcert')->find($id);
+
+            // Check if the user was found
+            if (!$user) {
+                return redirect()->route('notfound');
+            }
+
+            return view('request.profile', compact('user'));
         }
     }
+    
 }

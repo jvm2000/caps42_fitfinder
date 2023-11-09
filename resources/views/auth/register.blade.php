@@ -67,7 +67,34 @@
                 @enderror
               </x-slot>
             </x-app.input>
-  
+
+            {{-- Custom Select Tag --}}
+            <x-app.custom-select label="Tags">
+              <x-slot name="data">
+                <p class="text-lg capitalize text-ellipsis overflow-hidden" id="selectedTags"><span class="text-gray-400">Select Tags</span></p>
+              </x-slot>
+
+              @php
+                  $options = [
+                    0 => 'karate',
+                    1 => 'taekwando',
+                    2 => 'boxing',
+                    4 => 'muay thai',
+                  ];
+              @endphp
+
+              @foreach ($options as $value)
+              <label for="{{ $value }}" class="flex items-center space-x-2 indent-5 hover:bg-gray-200 py-1 cursor-pointer relative w-full pr-10">
+                <p class="text-lg text-black font-norma capitalize mr-auto">{{ $value }}</p>
+                <input id="{{ $value }}" name="tags[]" type="checkbox" class="w-4 h-4" value="{{ $value }}">
+              </label>
+              @endforeach
+
+              <x-slot name="input">
+                <p class="text-lg" id="checkboxValue"></p>
+              </x-slot>
+            </x-app.custom-select>
+
             <div class="space-y-2">
               <label class="text-md text-gray-600">Gender</label>
               <select 
@@ -140,17 +167,6 @@
                 <option value="Trainee">Trainee</option>
               </select>
             </div>
-
-          <div class="space-y-2">
-            <label class="text-md text-gray-600">Tags</span></label>
-            <input 
-              type="text" 
-              class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" 
-              placeholder="Enter your Tags"
-              name="tags"
-            >
-          </div>
-
         </div>
   
         <div class="pt-8 w-full flex items-center relative">
@@ -176,9 +192,26 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {
-    $('input').click(function() {
-        $('.error').hide();
+  $('input').click(function() {
+      $('.error').hide();
+  });
+});
+
+var checkboxes = document.querySelectorAll('input[name="tags[]"]');
+
+var selectedTagsParagraph = document.getElementById('selectedTags');
+
+// Add change event listener to each checkbox
+checkboxes.forEach(function(checkbox) {
+  checkbox.addEventListener('change', function() {
+    // Get all selected checkbox values
+    var selectedTags = Array.from(document.querySelectorAll('input[name="tags[]"]:checked')).map(function(checkbox) {
+        return checkbox.value;
     });
+
+    // Update the paragraph element with selected tags
+    selectedTagsParagraph.innerText = 'tags: ' + selectedTags.join(', ');
+  });
 });
 </script>
 </html>
