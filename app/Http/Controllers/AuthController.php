@@ -49,10 +49,14 @@ class AuthController extends Controller
       'email' => ['required', 'email'],
       'password' => 'required'
     ]);
+    $code = mt_rand(100000, 999999);
 
-    if (auth()->attempt($form)) {
-      $request->session()->regenerate();
+    session(['code' => $code]);
 
+    session(['form_data' => $form]);
+
+    
+    if (auth()->attempt($form,false,false)) {    
     $mail = new PHPMailer(true);
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
@@ -64,7 +68,7 @@ class AuthController extends Controller
 
 
     $mail->setFrom('llagunocarl@gmail.com', 'FitFinder');
-    $mail->addAddress('cllaguno@ace1it.com'); 
+    $mail->addAddress($email = $form['email']);
 	
  
     $mail->isHTML(true);
@@ -83,11 +87,10 @@ class AuthController extends Controller
 	 </head>
 	  <body>
         <div class='content'>
-			<h1>Register Verification</h1><br>"
+			<h1>Verify Log-In</h1><br>"
 			."Your verification code<br>"
-			."<h3>12345</h3><br>"
+			."<h3>$code</h3><br>"
 			."The verification code will be valid for 30 minutes. Please do not share this code with anyone.<br>"
-			."Thank you for your registration at FitFinder<br><br>"
 			."<i>This is an automated message, please do not reply.</i>
 			</div>
 	   </body>
@@ -97,19 +100,24 @@ class AuthController extends Controller
     $mail->send();
 
       return redirect('/verification')->with('loading', true);
-    } 
+          }
     
     return back()->withErrors(['email' => 'Entered email and password is incorrect.'])->onlyInput('email')->withInput();
   }
-  public function verify(Request $request)
+public function verify(Request $request)
 {
     $userInput = $request->input('verification_code'); 
+    $form = session('form_data');
+    $code = session('code');
+    $stringCode = (string)$code;
+    if ($userInput === $stringCode ) {
+        
+      if (auth()->attempt($form)) {
+        $request->session()->regenerate();  
 
-    if ($userInput === '12345' ) {
-        // Code matches, redirect to a success view.
         return redirect('/main')->with('loading', true);
+      }
     } else {
-        // Code does not match, redirect to an error view.
         return back();
     }
 }
