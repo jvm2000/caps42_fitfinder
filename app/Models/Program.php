@@ -37,4 +37,10 @@ class Program extends Model
         }
         return '/programs/default.svg';
     }
+
+    public function module()
+    {
+        return $this->hasMany(Module::class);
+    }
+
 }

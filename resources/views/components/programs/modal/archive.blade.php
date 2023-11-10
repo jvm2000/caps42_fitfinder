@@ -146,6 +146,7 @@
         disabled
         class="rounded-lg text-center px-6 py-3 text-sm text-white bg-red-500 cursor-pointer disabled:bg-red-400 disabled:cursor-not-allowed"
       >Archive</button>
+      <input type="hidden" name="password" id="password" value="{{ auth()->user()->password }}">
     </div>
   </form>
 </x-app.modal> --}}
