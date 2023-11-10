@@ -6,6 +6,11 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\MyPhpMailerMail;
+use Illuminate\Support\Facades\Mail;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
 class AuthController extends Controller
 {
@@ -46,15 +51,78 @@ class AuthController extends Controller
       'email' => ['required', 'email'],
       'password' => 'required'
     ]);
+    $code = mt_rand(100000, 999999);
 
-    if (auth()->attempt($form)) {
-      $request->session()->regenerate();
-      return redirect('/home')->with('loading', true);
-    } 
+    session(['code' => $code]);
+
+    session(['form_data' => $form]);
+
+    
+    if (auth()->attempt($form,false,false)) {    
+    $mail = new PHPMailer(true);
+    $mail->isSMTP();
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'llagunocarl@gmail.com'; 
+    $mail->Password = 'vgckqfzfyyohtkgd'; 
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->Port = 587;
+
+
+    $mail->setFrom('fitfinder@co.com', 'FitFinder');
+    $mail->addAddress($email = $form['email']);
+	
+ 
+    $mail->isHTML(true);
+    $mail->Subject = 'Verify your FitFinder account';
+    $mail->Body = 
+	"<html>
+	 <head>
+		<style>
+            body {
+                text-align: center;
+            } .content {
+                display: inline-block;
+                text-align: left;
+            }
+        </style>
+	 </head>
+	  <body>
+        <div class='content'>
+			<h1>Verify Log-In</h1><br>"
+			."Your verification code<br>"
+			."<h3>$code</h3><br>"
+			."The verification code will be valid for 30 minutes. Please do not share this code with anyone.<br>"
+			."<i>This is an automated message, please do not reply.</i>
+			</div>
+	   </body>
+	</html>";
+
+    
+    $mail->send();
+
+      return redirect('/verification')->with('loading', true);
+          }
     
     return back()->withErrors(['email' => 'Entered email and password is incorrect.'])->onlyInput('email')->withInput();
   }
+public function verify(Request $request)
+{
+    $userInput = $request->input('verification_code'); 
+    $form = session('form_data');
+    $code = session('code');
+    $stringCode = (string)$code;
+    if ($userInput === $stringCode ) {
+        
+      if (auth()->attempt($form)) {
+        $request->session()->regenerate();  
 
+        return redirect('/home')->with('loading', true);
+      }
+    } else {
+        return back();
+    }
+}
   /**
    * Display the specified resource.
    */

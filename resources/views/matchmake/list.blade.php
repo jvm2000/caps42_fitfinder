@@ -26,6 +26,7 @@
           <div class="p-6 relative h-44">
             <div class="space-y-4">
               <p class="text-2xl font-bold capitalize">{{ $match->first_name }} {{ $match->last_name }}</p>
+
               @if(auth()->user()->role === 'Trainee')
               <p class="text-base text-gray-600">{{$match->portfolio->description}}</p>
 

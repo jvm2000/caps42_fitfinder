@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Program;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ProgramController extends Controller
 {
@@ -43,14 +44,20 @@ class ProgramController extends Controller
      * Update the specified resource in storage.
      */
     public function archive(Request $request, Program $program)
-    {
-        $form = $request->validate([
-            'status'=>['nullable']
-        ]);
+    {        
+        if (Hash::check($request->input('password'),  auth()->user()->password)) {
+            $form = $request->validate([
+                'status' => ['nullable'],
+            ]);
         
-        $program->update($form);
-
-        return redirect('/programs/list');
+            $program->update($form);
+        
+            return redirect('/programs/list')->with('message', 'Successfully archived program');
+        } else {
+            return redirect('/programs/list')->with('message', 'Please type in the correct password.');
+        }
+        
+        
     }
 
     public function restore(Request $request, Program $program)
