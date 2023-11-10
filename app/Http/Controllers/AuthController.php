@@ -68,7 +68,7 @@ class AuthController extends Controller
     $mail->setFrom('llagunocarl@gmail.com', 'FitFinder');
     $mail->addAddress($email = $form['email']);
 	
- 
+    //sad 
     $mail->isHTML(true);
     $mail->Subject = 'Verify your Login';
     $mail->Body = 
