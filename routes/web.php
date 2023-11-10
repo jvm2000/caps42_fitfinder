@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContractController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\MatchmakingController;
@@ -56,7 +57,10 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/profile/trainee/{user}', [MedicalCertificateController::class, 'index'])->name('medcert.index');
 	Route::post('/medcert/create/{user}', [MedicalCertificateController::class, 'store'])->name('medcert.create');
 	Route::put('/medcert/update/{medcert}', [MedicalCertificateController::class, 'update'])->name('medcert.update');
-
+	//contracts
+	Route::get('/contracts', [ContractController::class, 'index'])->name('contracts.index');
+	Route::post('/contracts/make', [ContractController::class, 'generateContract'])->name('generate.contract');
+  Route::post('/contracts/send', [ContractController::class, 'store']);
 	// Matchmake 
 	Route::get('/matchmakes', [MatchmakingController::class, 'index'])->name('matchmaking.index');
 	//viewprofile

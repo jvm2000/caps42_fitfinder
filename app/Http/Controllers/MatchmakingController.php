@@ -13,6 +13,7 @@ class MatchmakingController extends Controller
 
     public function index(User $id)
     {
+ 
         $role = auth()->user()->role;
         $tag_id = auth()->user()->id;
         if ($role == "Trainee") {
