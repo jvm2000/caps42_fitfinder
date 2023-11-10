@@ -51,8 +51,9 @@ Route::middleware(['auth'])->group(function () {
 	Route::post('/medcert/create/{user}', [MedicalCertificateController::class, 'store'])->name('medcert.create');
 	Route::put('/medcert/update/{medcert}', [MedicalCertificateController::class, 'update'])->name('medcert.update');
 	//contracts
-	Route::get('/contracts', [ContractController::class, 'index'])->name('contracts');
-  Route::post('/contracts', [ContractController::class, 'store']);
+	Route::get('/contracts', [ContractController::class, 'index'])->name('contracts.index');
+	Route::post('/contracts/make', [ContractController::class, 'generateContract'])->name('contracts.make');
+  Route::post('/contracts/send', [ContractController::class, 'store']);
 	// Matchmake 
 	Route::get('/matchmakes', [MatchmakingController::class, 'index'])->name('matchmaking.index');
 	//viewprofile
