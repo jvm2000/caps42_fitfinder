@@ -50,13 +50,11 @@ class AuthController extends Controller
       'password' => 'required'
     ]);
     $code = mt_rand(100000, 999999);
-
     session(['code' => $code]);
-
     session(['form_data' => $form]);
-
     
-    if (auth()->attempt($form,false,false)) {    
+    if (auth()->attempt($form)) {   
+
     $mail = new PHPMailer(true);
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
@@ -72,7 +70,7 @@ class AuthController extends Controller
 	
  
     $mail->isHTML(true);
-    $mail->Subject = 'Verify your FitFinder account';
+    $mail->Subject = 'Verify your Login';
     $mail->Body = 
 	"<html>
 	 <head>
@@ -98,6 +96,7 @@ class AuthController extends Controller
 
     
     $mail->send();
+    Auth::logout();   
 
       return redirect('/verification')->with('loading', true);
           }
