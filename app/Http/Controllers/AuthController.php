@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+
 class AuthController extends Controller
 {
   /**
@@ -51,27 +52,29 @@ class AuthController extends Controller
       'password' => 'required'
     ]);
     $code = mt_rand(100000, 999999);
-    session(['code' => $code]);
-    session(['form_data' => $form]);
-    
-    if (auth()->attempt($form)) {   
 
+    session(['code' => $code]);
+
+    session(['form_data' => $form]);
+
+    
+    if (auth()->attempt($form,false,false)) {    
     $mail = new PHPMailer(true);
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
-    $mail->Username = 'minozajohnvincent2000@gmail.com'; 
-    $mail->Password = 'Umbikweak123456'; 
+    $mail->Username = 'llagunocarl@gmail.com'; 
+    $mail->Password = 'vgckqfzfyyohtkgd'; 
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port = 587;
 
 
-    $mail->setFrom('minozajohnvincent2000@gmail.com', 'FitFinder');
+    $mail->setFrom('fitfinder@co.com', 'FitFinder');
     $mail->addAddress($email = $form['email']);
 	
-    //sad 
+ 
     $mail->isHTML(true);
-    $mail->Subject = 'Verify your Login';
+    $mail->Subject = 'Verify your FitFinder account';
     $mail->Body = 
 	"<html>
 	 <head>
@@ -97,7 +100,6 @@ class AuthController extends Controller
 
     
     $mail->send();
-    Auth::logout();   
 
       return redirect('/verification')->with('loading', true);
           }
@@ -115,7 +117,7 @@ public function verify(Request $request)
       if (auth()->attempt($form)) {
         $request->session()->regenerate();  
 
-        return redirect('/main')->with('loading', true);
+        return redirect('/home')->with('loading', true);
       }
     } else {
         return back();
