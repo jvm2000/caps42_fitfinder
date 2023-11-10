@@ -52,7 +52,7 @@ Route::middleware(['auth'])->group(function () {
 	Route::put('/medcert/update/{medcert}', [MedicalCertificateController::class, 'update'])->name('medcert.update');
 	//contracts
 	Route::get('/contracts', [ContractController::class, 'index'])->name('contracts.index');
-	Route::post('/contracts/make', [ContractController::class, 'generateContract'])->name('contracts.make');
+	Route::post('/contracts/make', [ContractController::class, 'generateContract'])->name('generate.contract');
   Route::post('/contracts/send', [ContractController::class, 'store']);
 	// Matchmake 
 	Route::get('/matchmakes', [MatchmakingController::class, 'index'])->name('matchmaking.index');

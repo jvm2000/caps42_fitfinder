@@ -8,16 +8,16 @@
 </head>
 
 <body>
-    {{ $coach }}
-
-    <h1>Coaching Contract</h1>
-
-    <p>This Contract ("Contract") is made and entered into as of [Date] between:</p>
-
+<form action="" method="post">
+        <h1>Contract</h1>
     <h2>Coach Details</h2>
     <p>
         @foreach($first_name as $firstName)
-            {{ $firstName }}<br>
+            {{ $firstName }}
+            @foreach($last_name as $lname)
+                {{$lname}}
+            @endforeach
+            <br>
         @endforeach
 
         @foreach($address as $add)
@@ -41,22 +41,22 @@
 
     <h2>Trainee Details</h2>
     <p>
-        [Trainee Name]<br>
-        [Trainee Address]<br>
-        [City, Province, Zip Code]<br>
-        [Contact Email]<br>
-        [Phone Number]
+        {{$traineeUsername}}<br>
+        {{$traineeAddress}}<br>
+        {{$traineeEmailAddress}}<br>
+        {{$traineePhoneNumber}}<br>
     </p>
 
-    <p>WHEREAS, [Coach Name] (the "Coach") provides coaching and training services, and [Trainee Name]
-        (the "Trainee") seeks to engage the Coach to receive coaching and training services;</p>
+    <p>WHEREAS, @foreach($first_name as $firstName)
+            <strong>{{ $firstName }}</strong>
+        @endforeach  provides coaching and training services, and <strong>{{$traineeEmailAddress}}</strong> seeks to engage the Coach to receive coaching and training services;</p>
 
     <p>NOW, THEREFORE, in consideration of the mutual covenants contained herein, the parties agree as
         follows:</p>
 
     <h2>1. COACHING AND TRAINING SERVICES</h2>
     <p>The Coach agrees to provide coaching and training services to the Trainee. These services may include,
-        but are not limited to [describe specific coaching/training services].</p>
+        but are not limited to <strong>{{$programs}}</strong>.</p>
 
     <h2>2. PAYMENT</h2>
     <p>The Trainee agrees to pay the Coach for the coaching and training services at the rate of [Specify Payment Terms,
@@ -64,8 +64,7 @@
         Schedule, e.g., weekly, bi-weekly, or as agreed upon].</p>
 
     <h2>3. TERM</h2>
-    <p>This Contract shall commence on [Start Date] and continue until terminated by either party with [Specify Notice
-        Period, e.g., 30 days] written notice.</p>
+    <p>This Contract shall commence on <strong>{{$startDate}}</strong> and continue until terminated by either party with <strong>{{$endDate}}</strong> written notice.</p>
 
     <h2>4. CONFIDENTIALITY</h2>
     <p>The Coach and Trainee agree to maintain the confidentiality of all information shared during the
@@ -77,24 +76,33 @@
         Section 3. Termination shall not relieve the parties of their obligations and responsibilities under this
         Contract.</p>
 
-    <h2>6. GOVERNING LAW</h2>
-    <p>This Contract shall be governed by and construed in accordance with the laws of [Specify Applicable
-        Jurisdiction].</p>
-
-    <h2>7. ENTIRE AGREEMENT</h2>
+    <h2>6. ENTIRE AGREEMENT</h2>
     <p>This Contract constitutes the entire agreement between the parties and supersedes all prior or
         contemporaneous agreements, understandings, and representations.</p>
 
     <p>IN WITNESS WHEREOF, the parties have executed this Contract as of the date first above written.</p>
 
-    <h2>[Coach Name]</h2>
-    <p>By: [Coach's Name]<br>
-        Date: [Date]</p>
+    <h2> @foreach($first_name as $firstName)
+            {{ $firstName }}
+        @endforeach
+        @foreach($last_name as $lname)
+            {{ $lname }}
+        @endforeach
+    </h2>
+    <p>By:  @foreach($first_name as $firstName)
+            {{ $firstName }}
+        @endforeach
+        @foreach($last_name as $lname)
+            {{ $lname }}
+        @endforeach
+    <br>
+        Date: {{$startDate}}</p>
 
-    <h2>[Trainee Name]</h2>
-    <p>By: [Trainee's Name]<br>
-        Date: [Date]</p>
-
+    <h2>{{$traineeUsername}}</h2>
+    <p>By: {{$traineeUsername}}<br>
+        Date: {{$startDate}}</p>
+    <button type="submit" name="submit">Submit</button>
+</form>
 </body>
 
 </html>

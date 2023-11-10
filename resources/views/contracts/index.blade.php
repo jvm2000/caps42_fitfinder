@@ -1,7 +1,7 @@
 <div>
     <!-- It is not the man who has too little, but the man who craves more, that is poor. - Seneca -->
     <h1>hello</h1>
-    <form action="/contracts/make" method="POST">
+    <form action="{{ route('generate.contract') }}" method="POST">
         @csrf
         <select id="programs" name="programs">
             <option value="">Select a Program</option>
@@ -10,12 +10,16 @@
         @endforeach
         </select>
          <br>
-         <select>
+         <select id="traineeUsername" name="traineeUsername">
             <option value="">Select a Trainee</option>
-            @foreach ($trainees as $trainee)
-                <option value="{{ $trainee->id }}">{{ $trainee->username }}</option>
+            @foreach ($first_name as $key => $fname)
+                @php
+                    $lname = $last_name[$key] ?? ''; // Fetch the corresponding last name
+                @endphp
+                <option value="{{ $fname . $lname }}">{{ $fname . ' ' . $lname }}</option>
             @endforeach
         </select>
+      
         <br>
         <select id="tags" name="tags">
         <option value="">Select a Tag</option>
@@ -25,17 +29,22 @@
         </select>
         <br>
         @foreach ($address as $traineeAddress)
-            Trainee Address: <input type="text" value="{{ $traineeAddress }}">
+            Trainee Address: <input type="text" name="traineeAddress" value="{{ $traineeAddress }}">
         @endforeach
         <br>
         @foreach ($email as $traineeEmailAddress)
-            Trainee Email Address: <input type="text" value="{{$traineeEmailAddress}}">
+            Trainee Email Address: <input type="text" name="traineeEmailAddress" value="{{$traineeEmailAddress}}">
         @endforeach
         <br>
-        @foreach($phone_number as $phoneNumber)
-            Trainee Phone Number: <input type="text" value="{{$phoneNumber}}">
+        @foreach($phone_number as $traineePhoneNumber)
+            Trainee Phone Number: <input type="text" name="traineePhoneNumber" value="{{$traineePhoneNumber}}">
         @endforeach
         <br>
+        <label for="startDate">Start Date:</label>
+         <input type="date" id="startDate" name="startDate"><br>
+
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" name="endDate"><br>
          <button type="submit">submit</button>
         <br>
         <!-- Display Trainee Addresses -->
