@@ -4,14 +4,14 @@
     FitFinder - Profile
   </x-slot>
 
-  <div class="w-full py-10 px-12 overflow-y-auto h-full max-h-[54rem] overflow-x-hidden">
+  <div class="w-full py-10 px-12 h-full max-h-[54rem] overflow-hidden">
     <div class="flex items-center relative">
       <p class="text-3xl font-semibold mr-auto">Profile</p>
       <x-menu-dropdown />
     </div>
-    
-    <div class="py-7 flex items-center relative w-full border-b-8">
-      <div class="flex items-center space-x-6 mr-auto">
+
+    <div class="py-7 flex items-center justify-between relative w-full border-b-8">
+      <div class="flex items-center space-x-6">
         <img src="{{auth()->user()->getImageURL()}}" alt="Profile" class="w-36 h-36 rounded-full">
 
         <div class="space-y-1">
@@ -23,6 +23,29 @@
           <p class="text-3xl font-semibold">{{auth()->user()->first_name}} {{auth()->user()->last_name}}</p>
 
           <p class="text-2xl font-medium text-indigo-500">{{auth()->user()->role}}</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-4 items-center gap-y-5">
+        <div class="col-span-3 items-center">
+          <div class="flex items-center space-x-4">
+            <div class="space-y-1">
+              <p class="text-base font-semibold">Full Address:</p>
+              <p class="text-base font-normal">{{auth()->user()->address}}, {{auth()->user()->city}}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-1 col-span-2 text-left">
+          <p class="text-base font-semibold">Province</p>
+          <p class="text-base font-normal">{{auth()->user()->province}}</p>
+        </div>
+
+        <div class="space-y-1 col-span-2">
+          <p class="text-base font-semibold">Zip Code</p>
+          <div class="flex items-center space-x-2">
+            <p class="text-base font-normal">{{auth()->user()->zip_code}}</p>
+          </div>
         </div>
       </div>
 
@@ -54,6 +77,7 @@
 
     </div>
 
+    {{-- Coach Side  --}}
     @if ($portfolio->count() > 0 && auth()->user()->role === 'Coach') 
     <x-portfolio.edit />
     @elseif (auth()->user()->role === 'Coach')
@@ -134,10 +158,10 @@
 
         </div>
       </div>
-    </div>
 
     </form>
     @endif
+
   </div>
 </x-layout>
 

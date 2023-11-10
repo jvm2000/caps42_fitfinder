@@ -51,12 +51,12 @@ function openTab(evt, tabName) {
 				<div class="flex items-center mr-auto z-20 tab">
 					<button 
 						id="defaultTabButton" 
-						class="relative px-10 group border-b-8 py-[22px] cursor-pointer hover:border-indigo-500 tablinks" onclick="openTab(event, 'Active')"
+						class="relative px-10 group border-b-8 py-[22px] cursor-pointer hover:border-indigo-400 tablinks" onclick="openTab(event, 'Active')"
 					>
-						<p class="text-xl font-semibold group-hover:text-indigo-500">Active</p>
+						<p class="text-xl font-semibold group-hover:text-indigo-400">Active</p>
 					</button>
 
-					<button 
+					<button
 						class="relative px-10 justify-center border-b-8 group py-[22px] cursor-pointer hover:border-indigo-400 tablinks" 
 						onclick="openTab(event, 'Archive')"
 					>
@@ -123,7 +123,7 @@ function openTab(evt, tabName) {
 											<img src="/icons/programs/edit.svg" alt="" class="w-4 h-4">
 										</button>
 
-										<x-programs.modal.archive :program="$program->id"/>
+										<x-programs.modal.archive :program="$program->id" />
 									</div>
 								</td>
 							</tr>
@@ -168,7 +168,9 @@ function openTab(evt, tabName) {
 
 								<td class="py-2">
 									<div class="flex items-center space-x-3 relative">
-										<x-programs.modal.active :program="$program->id" />
+										<button class="w-7 h-7 rounded-full p-1.5 bg-indigo-500">
+											<img src="/icons/programs/restore.svg" alt="" class="w-4 h-4">
+										</button>
 
 										<button class="w-7 h-7 rounded-full p-1.5 bg-indigo-500">
 											<img src="/icons/programs/delete.svg" alt="" class="w-4 h-4">

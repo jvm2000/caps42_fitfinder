@@ -3,10 +3,10 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 
 class User extends Authenticatable
@@ -26,6 +26,10 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'phone_number',
+        'address',
+        'city',
+        'province',
+        'zip_code',
         'gender',
         'role',
         'birthdate',
@@ -65,6 +69,11 @@ class User extends Authenticatable
             return url('storage/'. $this->image);
         }
         return '/icons/settings/profile-icon.svg';
+    }
+
+    public function medcert()
+    {
+        return $this->hasOne(MedCert::class);
     }
 
     public function portfolio()

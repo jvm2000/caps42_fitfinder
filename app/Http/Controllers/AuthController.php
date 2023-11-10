@@ -26,6 +26,7 @@ class AuthController extends Controller
       'first_name'=>['required'],
       'last_name'=>['required'],
       'phone_number'=>['required', 'min:11'],
+      'birthdate' => ['required'],
       'gender'=>['required'],
       'birthdate'=>['required'],
       'tags'=>['required'],
@@ -37,7 +38,7 @@ class AuthController extends Controller
 
     auth()->login($user);
     
-    return redirect('/main')->with('message', 'User Registered successfully!');
+    return redirect('/home')->with('loading', true);
   }
 
   /**
@@ -59,13 +60,13 @@ class AuthController extends Controller
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
-    $mail->Username = 'llagunocarl@gmail.com'; 
-    $mail->Password = 'vgckqfzfyyohtkgd'; 
+    $mail->Username = 'minozajohnvincent2000@gmail.com'; 
+    $mail->Password = 'Umbikweak123456'; 
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port = 587;
 
 
-    $mail->setFrom('llagunocarl@gmail.com', 'FitFinder');
+    $mail->setFrom('minozajohnvincent2000@gmail.com', 'FitFinder');
     $mail->addAddress($email = $form['email']);
 	
     //sad 
@@ -138,7 +139,11 @@ public function update(Request $request, User $user)
         'first_name' => ['nullable', 'string'],
         'last_name' => ['nullable', 'string'],
         'phone_number' => ['nullable', 'size:11'], // Ensure exactly 11 characters
-        'birthdate' => 'nullable',
+        'address' => ['nullable'],
+        'city' => ['nullable'],
+        'province' => ['nullable'],
+        'zip_code' => ['nullable'],
+        'birthdate' => ['nullable'],
         'gender' => ['nullable'],
         'role' => ['nullable'],
         'tags' => 'nullable',
@@ -153,7 +158,7 @@ public function update(Request $request, User $user)
     // Update the user's fields
     $user->update($form);
 
-    return back()->with('message', 'User updated successfully');
+    return back()->with('loading', true);  
 }
 
   public function logout(Request $request) {
