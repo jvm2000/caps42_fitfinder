@@ -76,6 +76,7 @@ class ContractController extends Controller
         $programs = $request->input('programs');
         $startDate = $request->input('startDate');
         $endDate = $request->input('endDate');
+          
 
         return view('contracts.make',[
             'endDate'=>$endDate,

@@ -48,7 +48,7 @@
                 {{$traineeEmailAddress}}<br>
                 {{$traineePhoneNumber}}<br>
             </p>
-        
+            <br>
             <p>WHEREAS, @foreach($first_name as $firstName)
                     <strong>{{ $firstName }}</strong>
                 @endforeach  provides coaching and training services, and <strong>{{$traineeEmailAddress}}</strong> seeks to engage the Coach to receive coaching and training services;</p>
@@ -81,7 +81,12 @@
             <h2 class="mt-10">6. ENTIRE AGREEMENT</h2>
             <p class="mt-10">This Contract constitutes the entire agreement between the parties and supersedes all prior or
                 contemporaneous agreements, understandings, and representations.</p>
-        
+
+            <h2 class="mt-10">DATA PRIVACY</h2> 
+            <p class="mt-10">In compliance with the Republic Act 10173 - Data Privacy Act of 20121, the Company is committed to
+             protecting and respecting the privacy of the personal data collected from the Trainee. 
+             The Company will ensure that all personal data is processed in accordance with the principles of
+              transparency, legitimate purpose, and proportionality. </p>
             <p class="mt-10">IN WITNESS WHEREOF, the parties have executed this Contract as of the date first above written.</p>
         
             <h2 class="mt-10"> @foreach($first_name as $firstName)
