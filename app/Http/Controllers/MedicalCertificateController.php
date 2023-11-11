@@ -33,10 +33,11 @@ class MedicalCertificateController extends Controller
             'started_fitness'=>['required'],
             'cert_file' => ['nullable|file|mimes:pdf,doc,docx,jpeg,png,jpg,gif|max:2048'],
         ]);
-        if($form['cert_file'] != null ){
-            $filePath = request()->file('cert_file')->store('cert_file','public');
-            $form['cert_file'] = $filePath;
-          }
+
+        // if($form['cert_file'] != null ){
+        //     $filePath = request()->file('cert_file')->store('cert_file','public');
+        //     $form['cert_file'] = $filePath;
+        //   }
 
         MedCert::create(['user_id' => $user->id] + $form);
 
@@ -56,10 +57,10 @@ class MedicalCertificateController extends Controller
             'cert_file' => ['nullable|file|mimes:pdf,doc,docx,jpeg,png,jpg,gif|max:2048'],
         ]);
         
-        if(request()->has('cert_file')){
-            $filePath = request()->file('cert_file')->update('cert_file','public');
-            $form['cert_file'] = $filePath;
-          }
+        // if(request()->has('cert_file')){
+        //     $filePath = request()->file('cert_file')->update('cert_file','public');
+        //     $form['cert_file'] = $filePath;
+        //   }
         // Update the user's fields
         $medcert->update($form);
 

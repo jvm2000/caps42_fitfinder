@@ -16,13 +16,13 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name');
             $table->string('summary');
-            $table->timestamp('duration');
+            // $table->timestamp('duration');
             $table->string('procedure');
             $table->string('set');
             $table->smallInteger('setcount');
             $table->string('rep');
             $table->smallInteger('repcount');
-            $table->timestamp('schedule');
+            // $table->timestamp('schedule');
             
         });
     }

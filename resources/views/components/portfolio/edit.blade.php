@@ -57,7 +57,7 @@
   </div>
 </div>
 
-<form method="POST" action="/portfolio/update/{{auth()->user()->portfolio->id}}">
+<form method="POST" action="/portfolio/update/{{auth()->user()->portfolio->id}}" enctype="multipart/form-data" >
   @csrf
   @method('PUT')
   <div class="mt-8 w-full grid place-items-center container" id="updateForm">
@@ -132,6 +132,7 @@
           <button>
             <img src="/icons/portfolio/upload-icon.svg" alt="Upload Icon" class="w-5 h-5">
           </button>
+          <input type="file" name="form_document">
         </div>
         <div class="mt-10 flex items-center space-x-8">
           <div class="w-64 h-[350px] border"></div>

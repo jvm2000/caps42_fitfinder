@@ -66,7 +66,7 @@
         </div>
 
         <div class="space-y-1 col-span-4">
-          <p class="text-base font-semibold">Tags</p>
+          <p class="text-base font-semibold">Interests</p>
           <div class="flex items-center space-x-2">
             @foreach(auth()->user()->tags as $tag)
               <p class="text-base font-normal capitalize">{{ $tag }},</p>

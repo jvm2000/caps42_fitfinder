@@ -30,11 +30,11 @@ class PortfolioController extends Controller
             'description'=>['required','string','min:12'],
             'recent_works'=>['required','string'],
             'hobbies'=>['required', 'min:6'],
-            'form_document' =>['nullable','image'],
+            'form_document' =>['nullable','file'],
         ]);
 
 
-        $imagePath = request()->file('image')->store('portfolio','public');
+        $imagePath = request()->file('file')->store('portfolio','public');
         $form['form_document'] = $imagePath;
 
         Portfolio::create(['user_id' => $user->id] + $form);
@@ -52,13 +52,13 @@ class PortfolioController extends Controller
             'description'=>['nullable','string','min:12'],
             'recent_works'=>['nullable','string'],
             'hobbies'=>['nullable', 'min:6'],
-            'form_document' =>['nullable','image'],
+            'form_document' =>['nullable','file'],
         ]);
         
         if(request()->has('form_document')){
-            $imagePath = request()->file('image')->store('portfolio','public');
-            $form['form_document'] = $imagePath;
-          }
+            $filePath = request()->file('file')->store('portfolio','public');
+            $form['form_document'] = $filePath;
+        }
         // Update the user's fields
         $portfolio->update($form);
 

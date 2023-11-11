@@ -66,7 +66,7 @@
         </div>
 
         <div class="space-y-1 col-span-4">
-          <p class="text-base font-semibold">Tags</p>
+          <p class="text-base font-semibold">Interests</p>
           <div class="flex items-center space-x-2">
             @foreach(auth()->user()->tags as $tag)
               <p class="text-base font-normal capitalize">{{ $tag }},</p>
@@ -129,7 +129,7 @@
                       name="status"
                       value="no"
                     />
-                    <label for="no" class="text-md text-gray-600">No</label>
+                    <label for="no" class="text-md text-gray-600">No, not yet</label>
                   </div>
                 </div>
                 @error('status')

@@ -22,7 +22,7 @@
       
         <br>
         <select id="tags" name="tags">
-        <option value="">Select a Tag</option>
+        <option value="">Select an Interest</option>
         @foreach ($tags as $traineeTags)
             <option value="{{ $traineeTags }}">{{ $traineeTags }}</option>
         @endforeach

@@ -147,13 +147,6 @@
               value="{{$user->email}}"
             >
           </div>
-          <div class="grid grid-cols-3 items-center">
-            <label class="text-base font-medium col-span-1 text-black">Verification code</span></label>
-            <input 
-              type="text" 
-              class="bg-inherit text-sm px-6 py-2 w-full border-gray-500 border rounded-md col-span-2" 
-            >
-          </div>
         </div>
   
         <div class="mt-16 col-span-3 flex items-center relative">

@@ -20,13 +20,13 @@ use App\Http\Controllers\MedicalCertificateController;
 */
 
 Route::get('/', function () {return view('welcome');})->middleware('guest')->name('welcome');
+Route::get('/verification', function () {return view('verify');})->name('verify');
 
 // Auth
 Route::get('/login', function () {return view('auth/login');})->name('login');
 Route::get('/register', function () {return view('auth/register');});
 Route::post('/auth-register', [AuthController::class, 'store'])->name('user.register');
 Route::post('/auth-login', [AuthController::class, 'login'])->name('user.login');
-Route::get('/verification', function () {return view('verify');})->name('verify');
 Route::post('/verify-login', [AuthController::class, 'verify'])->name('verify.login');
 
 Route::middleware(['auth'])->group(function () {

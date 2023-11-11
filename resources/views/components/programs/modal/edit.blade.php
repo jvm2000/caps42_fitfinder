@@ -14,11 +14,11 @@
       </div>
       {{-- Slot  --}}
       <div class="px-8 pt-6 pb-4">
-        <form method ="POST" action="/programs/archive/{{$active->id}}" enctype="multipart/form-data" >
+        <form method ="POST" action="/programs/archive/{{$active}}" enctype="multipart/form-data" >
           @csrf
           @method('PUT')
           <div class="space-y-8">
-            <p class="text-sm"><span class="font-semibold">WARNING!</span> you are now archiving the program <span class="font-semibold">{{ $active->name }} </span>. Please keep in note that this will affect all trainees that are currently enroleld.</p>
+            <p class="text-sm"><span class="font-semibold">WARNING!</span> you are now archiving the program "sample". Please keep in note that this will affect all trainees that are currently enroleld.</p>
             <div class="space-y-2">
               <span class="text-md">type your <span class="font-semibold">"password"</span> in order to complete processing.</span>
               <input 

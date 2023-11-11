@@ -1,24 +1,23 @@
-<button onclick="openArchiveModal({{ $index }})" class="w-7 h-7 rounded-full p-1.5 bg-indigo-500">
-  <img src="/icons/programs/archive.svg" alt="" class="w-4 h-4">
+<button onclick="openDeleteModal({{ $index }})" class="w-7 h-7 rounded-full p-1.5 bg-indigo-500">
+  <img src="/icons/programs/delete.svg" alt="" class="w-4 h-4">
 </button>
 
-<div id="archiveModal_{{ $index }}" class="fixed inset-0 bg-black/25 z-50 hidden mx-auto">
+<div id="deleteModal_{{ $index }}" class="fixed inset-0 bg-black/25 z-50 hidden mx-auto">
 
   <div class="flex items-center justify-center h-full">
     <div class="w-full max-w-lg bg-white rounded-xl absolute z-[9999]">
       <div class="w-full relative flex items-center py-5 indent-6 border-b">
-        <p class="text-xl font-medium">Restore Program</p>
-        <button onclick="closeArchiveModal({{ $index }})" class="absolute right-8 ">
-          <img id="closeArchive" src="/icons/programs/close.svg" alt="" class="w-4 h-4cursor-pointer active:mt-1">
+        <p class="text-xl font-medium">Delete Program</p>
+        <button onclick="closeDeleteModal({{ $index }})" class="absolute right-8 ">
+          <img src="/icons/programs/close.svg" alt="" class="w-4 h-4 cursor-pointer active:mt-1">
         </button>
       </div>
-      {{-- Slot  --}}
+
       <div class="px-8 pt-6 pb-4">
-        <form method ="POST" action="/programs/archive/{{$active->id}}" enctype="multipart/form-data" >
+        <form method ="POST" action="" >
           @csrf
-          @method('PUT')
           <div class="space-y-8">
-            <p class="text-sm"><span class="font-semibold">WARNING!</span> you are now archiving the program <span class="font-semibold">{{ $active->name }} </span>. Please keep in note that this will affect all trainees that are currently enroleld.</p>
+            <p class="text-sm"><span class="font-semibold">WARNING!</span> you are now deleting the program "sample". Please keep in note that this will affect all trainees that are currently enroleld.</p>
             <div class="space-y-2">
               <span class="text-md">type your <span class="font-semibold">"password"</span> in order to complete processing.</span>
               <input 
@@ -37,7 +36,7 @@
               <button 
                 type="submit"
                 class="rounded-lg text-center px-6 py-3 text-sm text-white bg-red-500 cursor-pointer disabled:bg-red-400 disabled:cursor-not-allowed"
-              >Archive</button>
+              >Delete</button>
           </div>
         </form>
       </div>
@@ -47,13 +46,18 @@
 </div>
 
 <script>
-function openArchiveModal(index){
-  var archiveModal = document.getElementById('archiveModal_' + index);
-  archiveModal.style.display = 'block';
+function openDeleteModal(index){
+  var deleteModal = document.getElementById('deleteModal_' + index);
+  if (deleteModal) {
+    deleteModal.style.display = 'block';
+  }
 }
 
-function closeArchiveModal(index){
-  var archiveModal = document.getElementById('archiveModal_' + index);
-  archiveModal.style.display = 'none';
+function closeDeleteModal(index){
+  var deleteModal = document.getElementById('deleteModal_' + index);
+  if (deleteModal) {
+    deleteModal.style.display = 'block';
+  }
+  deleteModal.style.display = 'none';
 }
 </script>

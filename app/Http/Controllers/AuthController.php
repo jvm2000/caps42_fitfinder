@@ -23,23 +23,21 @@ class AuthController extends Controller
       'username' => ['required', 'min:3'],
       'email' => ['required', 'email', Rule::unique('users', 'email')],
       'password' => ['required', 'min:8'],
-      'role'=>['required'],
-      'first_name'=>['required'],
-      'last_name'=>['required'],
-      'phone_number'=>['required', 'min:11'],
+      'role' => ['required'],
+      'first_name' => ['required'],
+      'last_name' => ['required'],
+      'phone_number' => ['required', 'min:11'],
       'birthdate' => ['required'],
-      'gender'=>['required'],
-      'birthdate'=>['required'],
-      'tags'=>['required'],
+      'gender' => ['required'],
+      'birthdate' => ['required'],
+      'tags' => ['required'],
     ]);
 
     $form['password'] = bcrypt($form['password']);
 
     $user = User::create($form);
 
-    auth()->login($user);
-    
-    return redirect('/home')->with('loading', true);
+    return redirect('/login')->with('message', 'User Registration Successful');
   }
 
   /**
@@ -57,117 +55,119 @@ class AuthController extends Controller
 
     session(['form_data' => $form]);
 
-    
-    if (auth()->attempt($form,false,false)) {    
-    $mail = new PHPMailer(true);
-    $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com';
-    $mail->SMTPAuth = true;
-    $mail->Username = 'llagunocarl@gmail.com'; 
-    $mail->Password = 'vgckqfzfyyohtkgd'; 
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-    $mail->Port = 587;
+
+    if (auth()->attempt($form)) {
+      $mail = new PHPMailer(true);
+      $mail->isSMTP();
+      $mail->Host = 'smtp.gmail.com';
+      $mail->SMTPAuth = true;
+      $mail->Username = 'llagunocarl@gmail.com';
+      $mail->Password = 'vgckqfzfyyohtkgd';
+      $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+      $mail->Port = 587;
+
+      $mail->setFrom('fitfinder@co.com', 'FitFinder');
+      $mail->addAddress($email = $form['email']);
 
 
-    $mail->setFrom('fitfinder@co.com', 'FitFinder');
-    $mail->addAddress($email = $form['email']);
-	
- 
-    $mail->isHTML(true);
-    $mail->Subject = 'Verify your FitFinder account';
-    $mail->Body = 
-	"<html>
-	 <head>
-		<style>
-            body {
-                text-align: center;
-            } .content {
-                display: inline-block;
-                text-align: left;
-            }
-        </style>
-	 </head>
-	  <body>
-        <div class='content'>
-			<h1>Verify Log-In</h1><br>"
-			."Your verification code<br>"
-			."<h3>$code</h3><br>"
-			."The verification code will be valid for 30 minutes. Please do not share this code with anyone.<br>"
-			."<i>This is an automated message, please do not reply.</i>
-			</div>
-	   </body>
-	</html>";
+      $mail->isHTML(true);
+      $mail->Subject = 'Verify your FitFinder account';
+      $mail->Body =
+        "<html>
+          <head>
+            <style>
+                    body {
+                        text-align: center;
+                    } .content {
+                        display: inline-block;
+                        text-align: left;
+                    }
+                </style>
+          </head>
+          <body>
+              <div class='content'>
+            <h1>Verify Log-In</h1><br>"
+              . "Your verification code<br>"
+              . "<h3>$code</h3><br>"
+              . "The verification code will be valid for 30 minutes. Please do not share this code with anyone.<br>"
+              . "<i>This is an automated message, please do not reply.</i>
+            </div>
+          </body>
+        </html>";
 
-    
-    $mail->send();
+
+      $mail->send();
+
+      Auth::logout();
 
       return redirect('/verification')->with('loading', true);
-          }
-    
+    }
+
     return back()->withErrors(['email' => 'Entered email and password is incorrect.'])->onlyInput('email')->withInput();
   }
-public function verify(Request $request)
-{
-    $userInput = $request->input('verification_code'); 
+  public function verify(Request $request)
+  {
+    $userInput = $request->input('verification_code');
     $form = session('form_data');
     $code = session('code');
     $stringCode = (string)$code;
-    if ($userInput === $stringCode ) {
-        
+    if ($userInput === $stringCode) {
+
       if (auth()->attempt($form)) {
-        $request->session()->regenerate();  
+        $request->session()->regenerate();
 
         return redirect('/home')->with('loading', true);
       }
     } else {
-        return back();
+      return back();
     }
-}
+  }
   /**
    * Display the specified resource.
    */
   public function show(User $user)
   {
-    return view('dashboard.settings',['user' => $user]);
+    return view('dashboard.settings', ['user' => $user]);
   }
 
   /**
    * Update the specified resource in storage.
    */
-public function update(Request $request, User $user)
-{
+  public function update(Request $request, User $user)
+  {
     // Get the currently authenticated user
     $form = $request->validate([
-        'first_name' => ['nullable', 'string'],
-        'last_name' => ['nullable', 'string'],
-        'phone_number' => ['nullable', 'size:11'], // Ensure exactly 11 characters
-        'address' => ['nullable'],
-        'city' => ['nullable'],
-        'province' => ['nullable'],
-        'zip_code' => ['nullable'],
-        'birthdate' => ['nullable'],
-        'gender' => ['nullable'],
-        'role' => ['nullable'],
-        'tags' => 'nullable',
-        'image' => ['nullable', 'image'],
+      'first_name' => ['nullable', 'string'],
+      'last_name' => ['nullable', 'string'],
+      'phone_number' => ['nullable', 'size:11'], // Ensure exactly 11 characters
+      'address' => ['nullable'],
+      'city' => ['nullable'],
+      'province' => ['nullable'],
+      'zip_code' => ['nullable'],
+      'birthdate' => ['nullable'],
+      'gender' => ['nullable'],
+      'role' => ['nullable'],
+      'tags' => 'nullable',
+      'image' => ['nullable', 'image'],
     ]);
 
-    if(request()->has('image')){
-      $imagePath = request()->file('image')->store('profile','public');
+    if (request()->has('image')) {
+      $imagePath = request()->file('image')->store('profile', 'public');
       $form['image'] = $imagePath;
     }
-    
+
     // Update the user's fields
     $user->update($form);
 
-    return back()->with('loading', true);  
-}
+    return back()->with('loading', true);
+  }
 
-  public function logout(Request $request) {
+  public function logout(Request $request)
+  {
     auth()->logout();
     $request->session()->invalidate();
     $request->session()->regenerateToken();
 
-    return redirect('/login')->with('message','User logged out successfully!');
+    return redirect('/login')->with('message', 'User logged out successfully!');
   }
 }

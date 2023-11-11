@@ -10,11 +10,15 @@
 </style>
 
 <script>
-window.onload = function() {
-	var event = new Event('click');
-	var defaultTabButton = document.getElementById('defaultTabButton');
-	openTab(event, 'Active');
-	defaultTabButton.dispatchEvent(event);
+ window.onload = function() {
+	// Find the element by its ID
+	var button = document.getElementById('myButton');
+
+	// Check if the element exists
+	if (button) {
+			// Programmatically trigger the click event
+			button.click();
+	}
 };
 
 function openTab(evt, tabName) {
@@ -50,7 +54,7 @@ function openTab(evt, tabName) {
 			<div class="flex items-center relative h-20">
 				<div class="flex items-center mr-auto z-20 tab">
 					<button 
-						id="defaultTabButton" 
+						id="myButton"
 						class="relative px-10 group border-b-8 py-[22px] cursor-pointer hover:border-indigo-400 tablinks" onclick="openTab(event, 'Active')"
 					>
 						<p class="text-xl font-semibold group-hover:text-indigo-400">Active</p>
@@ -93,21 +97,21 @@ function openTab(evt, tabName) {
 						</tr>
 					</thead>
 					<tbody>
-						@foreach($programs as $program)
-							@if($program->status === 'active')
+						@foreach($programs as $index => $active)
+							@if($active->status === 'active')
 							<tr class="">
 								<td class="border-l-8 border-indigo-500 py-1">
 									<div class="ml-4 flex items-center space-x-4">
-										<img src="{{$program->getImageURL()}}" class="w-9 h-9 rounded-full">
+										<img src="{{$active->getImageURL()}}" class="w-9 h-9 rounded-full">
 										<div class="text-left">
-											<p class="text-black text-sm font-medium">{{$program->name}}</p>
-											<p class="text-xs text-zinc-400">{{$program->category}}</p>
+											<p class="text-black text-sm font-medium">{{$active->name}}</p>
+											<p class="text-xs text-zinc-400">{{$active->category}}</p>
 										</div>
 									</div>
 								</td>
 
 								<td class="py-1">
-									<p class="text-sm text-ellipsis">{{$program->summary}}</p>
+									<p class="text-sm text-ellipsis">{{$active->summary}}</p>
 								</td>
 								<td class="py-2">
 									<p class="text-sm"><span class="text-red-500">10</span> / 30</p>
@@ -123,7 +127,9 @@ function openTab(evt, tabName) {
 											<img src="/icons/programs/edit.svg" alt="" class="w-4 h-4">
 										</button>
 
-										<x-programs.modal.archive :program="$program->id" />
+										{{-- Archive  --}}
+										<x-programs.modal.archive :active="$active" :index="$index" />
+
 									</div>
 								</td>
 							</tr>
@@ -146,21 +152,21 @@ function openTab(evt, tabName) {
 						</tr>
 					</thead>
 					<tbody>
-						@foreach($programs as $program)
-							@if($program->status === 'archive')
+						@foreach($programs as $index => $archived)
+							@if($archived->status === 'archive')
 							<tr class="">
 								<td class="border-l-8 border-indigo-500 py-1">
 									<div class="ml-4 flex items-center space-x-4">
-										<img src="{{$program->getImageURL()}}" class="w-9 h-9 rounded-full">
+										<img src="{{$archived->getImageURL()}}" class="w-9 h-9 rounded-full">
 										<div class="text-left">
-											<p class="text-black text-sm font-medium">{{$program->name}}</p>
-											<p class="text-xs text-zinc-400">{{$program->category}}</p>
+											<p class="text-black text-sm font-medium">{{$archived->name}}</p>
+											<p class="text-xs text-zinc-400">{{$archived->category}}</p>
 										</div>
 									</div>
 								</td>
 
 								<td class="py-1">
-									<p class="text-sm text-ellipsis">{{$program->summary}}</p>
+									<p class="text-sm text-ellipsis">{{$archived->summary}}</p>
 								</td>
 								<td class="py-2">
 									<p class="text-sm"><span class="text-red-500">10</span> / 30</p>
@@ -168,13 +174,9 @@ function openTab(evt, tabName) {
 
 								<td class="py-2">
 									<div class="flex items-center space-x-3 relative">
-										<button class="w-7 h-7 rounded-full p-1.5 bg-indigo-500">
-											<img src="/icons/programs/restore.svg" alt="" class="w-4 h-4">
-										</button>
-
-										<button class="w-7 h-7 rounded-full p-1.5 bg-indigo-500">
-											<img src="/icons/programs/delete.svg" alt="" class="w-4 h-4">
-										</button>
+										
+										{{-- Modals  --}}
+										<x-programs.modal.archive-modals :archived="$archived" :index="$index"/>
 									</div>
 								</td>
 							</tr>
