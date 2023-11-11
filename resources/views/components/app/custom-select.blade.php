@@ -1,6 +1,6 @@
 @props(['label'])
 
-<div class="space-y-1 relative">
+<div class="space-y-2 relative">
   <span class="text-md text-gray-600">{{ $label }}</span>
   <div id="dropdown-button" class="bg-inherit text-lg px-8 py-2 w-full flex items-center border-gray-500 border relative rounded-md cursor-default">
     {{ $data }}

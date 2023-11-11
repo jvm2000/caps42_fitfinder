@@ -1,7 +1,7 @@
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const dropdownButton = document.getElementById('dropdown-button');
-    const dropdownMenu = document.getElementById('dropdown-menu');
+    const dropdownButton = document.getElementById('menu-button');
+    const dropdownMenu = document.getElementById('menu-dropdown');
 
     dropdownButton.addEventListener('click', function () {
         dropdownMenu.classList.toggle('hidden');
@@ -19,12 +19,12 @@
 <div class="relative inline-block text-left">
   <div class="flex items-center space-x-4">
     <div class="text-right">
-        <p class="text-base font-bold">{{auth()->user()->first_name}} {{auth()->user()->last_name}}</p>
+        <p class="text-base font-bold"><span>@</span>{{auth()->user()->username}}</p>
         <p class="text-base text-neutral-400">{{auth()->user()->role}}</p>
     </div>
     <button 
       class="w-11 h-11 rounded-full border"
-      id="dropdown-button"
+      id="menu-button"
       aria-haspopup="true"
       aria-expanded="true"  
     >
@@ -35,8 +35,8 @@
   <form method="POST" action="/auth-logout">
     @csrf
     <div
-      id="dropdown-menu"
-      class="origin-top-right absolute right-0 mt-4 w-full rounded-md shadow-lg hidden py-2 z-[9999] bg-white"
+      id="menu-dropdown"
+      class="origin-top-right absolute right-0 mt-4 w-40 rounded-md shadow-lg hidden py-2 z-[9999] bg-white"
     >
       {{-- View Profile if Coach  --}}
       @if(auth()->user()->role === 'Coach')

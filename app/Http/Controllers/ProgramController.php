@@ -40,6 +40,16 @@ class ProgramController extends Controller
         return redirect('/programs/list')->with('message', 'Program created successfully!');
     }
 
+    public function show(Program $program){
+        return view('programs.edit',['program' => $program]);
+    }
+
+    public function showProgram(Program $program){
+        $programWithModules = Program::with('modules')->find($program->id);
+
+        return view('modules.main', ['program' => $programWithModules]);
+    }
+
     /**
      * Update the specified resource in storage.
      */
@@ -74,8 +84,34 @@ class ProgramController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, Program $program)
     {
-        //
+        if (Hash::check($request->input('password'),  auth()->user()->password)) {
+            $program->delete();
+            return back()->with('message', 'Successfully deleted program');
+        } else {
+            return back()->with('message', 'Please type in the correct password.');
+        }
     }
+
+    public function update(Request $request, Program $program)
+    {
+        $form = $request->validate([
+            'name'=>['nullable','string'],
+            'category'=>['nullable','string'],
+            'summary'=>['nullable', 'min:6'],
+            'status'=>['nullable'],
+            'image' => ['nullable','image'],
+        ]);
+        if(request()->has('image')){
+            $imagePath = request()->file('image')->store('programs','public');
+        $form['image'] = $imagePath;
+          }
+
+        $program->update($form);
+
+        return redirect('/programs/list')->with('message', 'Program updated successfully!');
+    }
+
+
 }

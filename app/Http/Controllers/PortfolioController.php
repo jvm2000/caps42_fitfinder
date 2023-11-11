@@ -34,8 +34,8 @@ class PortfolioController extends Controller
         ]);
 
 
-        $imagePath = request()->file('file')->store('portfolio','public');
-        $form['form_document'] = $imagePath;
+        // $imagePath = request()->file('file')->store('portfolio','public');
+        // $form['form_document'] = $imagePath;
 
         Portfolio::create(['user_id' => $user->id] + $form);
 
@@ -55,10 +55,11 @@ class PortfolioController extends Controller
             'form_document' =>['nullable','file'],
         ]);
         
-        if(request()->has('form_document')){
-            $filePath = request()->file('file')->store('portfolio','public');
-            $form['form_document'] = $filePath;
-        }
+        // if(request()->has('form_document')){
+        //     $filePath = request()->file('file')->store('portfolio','public');
+        //     $form['form_document'] = $filePath;
+        // }
+
         // Update the user's fields
         $portfolio->update($form);
 

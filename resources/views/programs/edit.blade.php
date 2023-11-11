@@ -5,16 +5,17 @@
   </x-slot>
   <div class="w-full py-10 px-12">
     <div class="flex items-center relative">
-      <p class="text-3xl font-semibold mr-auto">Create Program</p>
+      <p class="text-3xl font-semibold mr-auto">Edit Program</p>
       <x-menu-dropdown />
     </div>
 
-    <form method="POST" action="/programs/create/{{auth()->user()->id}}" enctype="multipart/form-data">
+    <form method="POST" action="/programs/update/{{$program->id}}" enctype="multipart/form-data">
       @csrf
+      @method('PUT')
       <div class="mt-24 w-full grid place-items-center">
         <div class="max-w-4xl w-full">
           <div class="grid grid-cols-2 items-start w-full">
-            <div class="flex flex-col space-y-3">
+            <div class="flex flex-col space-y-6">
               <div class="space-y-2 w-full">
                 <span class="text-md text-gray-600">Name</span>
                 <input 
@@ -22,6 +23,7 @@
                   class="bg-inherit text-sm px-8 py-2 w-full border-gray-500 border rounded-md" 
                   placeholder="Enter Program's name"
                   name="name"
+                  value="{{$program->name}}"
                 >
                 @error('name')
                 <p class="text-red-500 text-sm">{{$message}}</p>
@@ -52,15 +54,16 @@
                   class="bg-inherit text-sm px-8 py-4 w-full h-40 border-gray-500 border rounded-md" 
                   placeholder="Describe"
                   name="summary"
-                ></textarea>
+                >
+                {{$program->summary}}
+              </textarea>
                 @error('summary')
                 <p class="text-red-500 text-sm">{{$message}}</p>
                 @enderror
               </div>
             </div>
-    
-            {{-- Upload Image  --}}
-            <div class="space-y-4 col-span-1 mt-6 pl-20 grid place-items-center">
+
+            <div class="space-y-4 col-span-1 pl-20 grid place-items-center">
               <div 
                 id="uploadPhoto" 
                 class="w-48 h-48 rounded-full border-2 hover:border-blue-950 active:mt-[1px] border-gray-300 relative grid place-items-center cursor-pointer"
@@ -68,7 +71,7 @@
                 <img 
                   id="preview" width="100" height="100" 
                   class="w-48 h-48 rounded-full absolute z-20" 
-                  src=""
+                  src="{{ $program->getImageURL() }}"
                 />
                 <img src="/icons/settings/upload-icon.svg" alt="Upload Icon" class="w-8 h-8 z-10">
                 <input 
@@ -99,7 +102,7 @@
                 type="submit"
                 class="rounded-md flex items-center px-6 py-3 text-md text-white bg-black cursor-pointer active:mt-[1px]"
               >
-                Create
+                Update
               </button>
             </div>
           </div>

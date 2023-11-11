@@ -2,21 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Module;
-use App\Http\Controllers\Controller;
+use App\Models\Program;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ModuleController extends Controller
 {
-    public function store(Request $request, User $user)
+    public function store(Request $request, Program $program)
     {
         $form = $request->validate([
             'name'=>['required','string'],
             'summary'=>['required', 'min:6'],
             'duration'=>['required'],
-            'procedure' => ['required|file|mimes:pdf,doc,docx,jpeg,png,jpg,gif|max:2048'],
+            'procedure' => ['required','string'],
             'set'=>['nullable'],
             'setcount'=>['nullable'],
             'rep'=>['nullable'],
@@ -24,65 +28,67 @@ class ModuleController extends Controller
             'schedule'=>['required'],
         ]);
 
-        $imagePath = request()->file('procedure')->store('modules','public');
-        $form['procedure'] = $imagePath; 
+        // $imagePath = request()->file('procedure')->store('modules','public');
+        // $form['procedure'] = $imagePath; 
 
 
-        $user->module()->create($form);
+        $program->modules()->create($form);
 
-        return redirect('/module/list')->with('message', 'Module created successfully!');
+        return redirect('/programs/show/' . $program->id)->with('message', 'Module created successfully!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Request $request, Module $module)
-    {
-        //
+    public function show(Module $modules){
+        return view('modules.edit',['modules' => $modules]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Module $module)
     {
-        //
+        $program = $module->program;
+
+        return view('modules.edit', ['module' => $module, 'program' => $program]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Module $module)
     {
         $form = $request->validate([
-            'name'=>['required','string'],
-            'summary'=>['required', 'min:6'],
-            'duration'=>['required'],
-            'procedure' => ['required|file|mimes:pdf,doc,docx,jpeg,png,jpg,gif|max:2048'],
+            'name'=>['nullable','string'],
+            'summary'=>['nullable', 'min:6'],
+            'duration'=>['nullable'],
+            'procedure' => ['nullable'], //need nullable in migration
             'set'=>['nullable'],
             'setcount'=>['nullable'],
             'rep'=>['nullable'],
             'repcount'=>['nullable'],
-            'schedule'=>['required'],
+            'schedule'=>['nullable'],
+            'program_id'=>['required']
         ]);
 
-        if(request()->has('procedure')){
-            $filePath = request()->file('procedure')->update('modules','public');
-            $form['procedure'] = $filePath;
-          }
+     
 
-          
+        $module->update($form);
 
-        $user->update($form);
-
-        return back()->with('message', 'Module updated successfully');
+        return redirect('/programs/show/' . $form['program_id'],['form'=>$form])->with('message', 'Module updated successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, Module $module)
     {
-        //
+        if (Hash::check($request->input('password'),  auth()->user()->password)) {
+            $module->delete();
+            return back()->with('message', 'Successfully deleted module');
+        } else {
+            return back()->with('message', 'Please type in the correct password.');
+        }
     }
 }

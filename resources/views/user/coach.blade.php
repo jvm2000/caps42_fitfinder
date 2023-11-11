@@ -81,7 +81,7 @@
     @if ($portfolio->count() > 0 && auth()->user()->role === 'Coach') 
     <x-portfolio.edit />
     @elseif (auth()->user()->role === 'Coach')
-    <form method="POST" action="/portfolio/create/{{auth()->user()->id}}">
+    <form method="POST" action="/portfolio/create/{{auth()->user()->id}}" enctype="multipart/form-data">
       @csrf
       <div class="mt-8 w-full grid place-items-center">
         <div class="grid grid-cols-2 items-start gap-x-8">

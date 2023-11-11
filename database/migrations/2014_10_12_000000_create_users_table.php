@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('zip_code')->nullable();
             $table->string('gender')->nullable();
             $table->string('role')->nullable();
-            $table->timestamp('birthdate')->nullable();
+            $table->date('birthdate')->nullable();
             $table->json('tags')->nullable();
             $table->string('image')->nullable();
             $table->rememberToken();

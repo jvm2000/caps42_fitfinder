@@ -10,7 +10,6 @@ class Module extends Model
     use HasFactory;
 
     protected $fillable = [
-    
         'name',
         'summary',
         'duration',
@@ -20,6 +19,11 @@ class Module extends Model
         'rep',
         'repcount',
         'schedule',
+        'program_id',
+    ];
+
+    protected $casts = [
+        'schedule' => 'array'
     ];
 
     public function program()

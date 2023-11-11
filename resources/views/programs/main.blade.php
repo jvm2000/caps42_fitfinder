@@ -101,13 +101,13 @@ function openTab(evt, tabName) {
 							@if($active->status === 'active')
 							<tr class="">
 								<td class="border-l-8 border-indigo-500 py-1">
-									<div class="ml-4 flex items-center space-x-4">
+									<a href="/programs/show/{{ $active->id }}" class="ml-4 flex items-center space-x-4 group">
 										<img src="{{$active->getImageURL()}}" class="w-9 h-9 rounded-full">
 										<div class="text-left">
-											<p class="text-black text-sm font-medium">{{$active->name}}</p>
+											<p class="text-black text-sm font-medium group-hover:text-indigo-400">{{$active->name}}</p>
 											<p class="text-xs text-zinc-400">{{$active->category}}</p>
 										</div>
-									</div>
+									</a>
 								</td>
 
 								<td class="py-1">
@@ -119,13 +119,13 @@ function openTab(evt, tabName) {
 
 								<td class="py-2">
 									<div class="flex items-center space-x-3 relative">
-										<button class="w-7 h-7 rounded-full p-1.5 bg-indigo-500">
+										<a href="/programs/show/{{ $active->id }}" class="w-7 h-7 rounded-full p-1.5 bg-indigo-500">
 											<img src="/icons/programs/view.svg" alt="" class="w-4 h-4">
-										</button>
+										</a>
 
-										<button class="w-7 h-7 rounded-full p-1.5 bg-indigo-500">
+										<a href="/programs/edit/{{ $active->id }}" class="w-7 h-7 rounded-full p-1.5 bg-indigo-500">
 											<img src="/icons/programs/edit.svg" alt="" class="w-4 h-4">
-										</button>
+										</a>
 
 										{{-- Archive  --}}
 										<x-programs.modal.archive :active="$active" :index="$index" />

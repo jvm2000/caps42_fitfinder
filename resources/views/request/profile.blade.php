@@ -109,53 +109,53 @@
         @endif
 
         @if ($user->medcert)
-					<div class="mt-8 w-full grid place-items-center display" id="displayForm">
-							<div class="grid grid-cols-2 items-start gap-x-8">
-									<div class="flex flex-col">
-											<div class="flex items-center space-x-5">
-													<p class="text-2xl font-semibold">Medical Certificate</p>
-											</div>
+            <div class="mt-8 w-full grid place-items-center display" id="displayForm">
+                <div class="grid grid-cols-2 items-start gap-x-8">
+                    <div class="flex flex-col">
+                        <div class="flex items-center space-x-5">
+                            <p class="text-2xl font-semibold">Medical Certificate</p>
+                        </div>
 
-											<div class="mt-10 flex flex-col space-y-5">
-													<div class="space-y-2">
-															<span class="text-md text-gray-600 font-semibold">Description</span>
-															<div
-																	class="bg-inherit text-base px-8 py-2 h-32 w-full border-gray-500 border-b resize-none">
-																	{{ $user->medcert->description }}
-															</div>
-													</div>
+                        <div class="mt-10 flex flex-col space-y-5">
+                            <div class="space-y-2">
+                                <span class="text-md text-gray-600 font-semibold">Description</span>
+                                <div
+                                    class="bg-inherit text-base px-8 py-2 h-32 w-full border-gray-500 border-b resize-none">
+                                    {{ $user->medcert->description }}
+                                </div>
+                            </div>
 
-													<div class="space-y-2">
-															<span class="text-md text-gray-600 font-semibold">Med Cert application status</span>
-															<div class="bg-inherit text-base px-8 py-2 w-full border-gray-500 border-b">
-																	{{ $user->medcert->status }}
-															</div>
-													</div>
+                            <div class="space-y-2">
+                                <span class="text-md text-gray-600 font-semibold">Med Cert application status</span>
+                                <div class="bg-inherit text-base px-8 py-2 w-full border-gray-500 border-b">
+                                    {{ $user->medcert->status }}
+                                </div>
+                            </div>
 
-													<div class="space-y-2">
-															<span class="text-md text-gray-600 font-semibold">Started Fitness at</span>
-															<div class="bg-inherit text-base px-8 py-2 w-full border-gray-500 border-b">
-																	{{ $user->medcert->started_fitness }}
-															</div>
-													</div>
-											</div>
-									</div>
+                            <div class="space-y-2">
+                                <span class="text-md text-gray-600 font-semibold">Started Fitness at</span>
+                                <div class="bg-inherit text-base px-8 py-2 w-full border-gray-500 border-b">
+                                    {{ $user->medcert->started_fitness }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-									<div class="flex flex-col items-start">
-											<div class="flex items-center space-x-5">
-													<p class="text-2xl font-semibold">Upload Resume / Application Form</p>
-													<button>
-															<img src="/icons/portfolio/upload-icon.svg" alt="Upload Icon" class="w-5 h-5">
-													</button>
-											</div>
-											<div class="mt-10 flex items-center space-x-8">
-													<div class="w-64 h-[350px] border"></div>
-													<div class="w-64 h-[350px] border"></div>
-											</div>
-									</div>
+                    <div class="flex flex-col items-start">
+                        <div class="flex items-center space-x-5">
+                            <p class="text-2xl font-semibold">Upload Resume / Application Form</p>
+                            <button>
+                                <img src="/icons/portfolio/upload-icon.svg" alt="Upload Icon" class="w-5 h-5">
+                            </button>
+                        </div>
+                        <div class="mt-10 flex items-center space-x-8">
+                            <div class="w-64 h-[350px] border"></div>
+                            <div class="w-64 h-[350px] border"></div>
+                        </div>
+                    </div>
 
-							</div>
-					</div>
+                </div>
+            </div>
         @endif
 
         {{-- Request  --}}

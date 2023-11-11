@@ -27,12 +27,12 @@
             <div class="space-y-4">
               <p class="text-2xl font-bold capitalize">{{ $match->first_name }} {{ $match->last_name }}</p>
 
-              @if(auth()->user()->role === 'Trainee')
-              <p class="text-base text-gray-600">{{$match->portfolio->description}}</p>
-
-              @else
-              <p class="text-base text-gray-600">{{$match->medcert->description}}</p>
+              @if(auth()->user()->role === 'Trainee' && $match->portfolio && $match->portfolio->count() > 0)
+                  <p class="text-base text-gray-600">{{ $match->portfolio->description }}</p>
+              @elseif(auth()->user()->role === 'Coach' && $match->medcert && $match->medcert->count() > 0)
+                  <p class="text-base text-gray-600">{{ $match->medcert->description }}</p>
               @endif
+
             </div>
             <p class="absolute bottom-0 left-6"><span class="font-medium">
               Tags</span>: <span class="font-light">

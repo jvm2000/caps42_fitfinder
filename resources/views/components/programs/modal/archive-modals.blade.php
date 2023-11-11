@@ -51,10 +51,11 @@
         </div>
   
         <div class="px-8 pt-6 pb-4">
-          <form method ="POST" action="" >
+          <form method="POST" action="/programs/delete/{{$archived->id}}" enctype="multipart/form-data" >
             @csrf
+            @method('delete')
             <div class="space-y-8">
-              <p class="text-sm"><span class="font-semibold">WARNING!</span> you are now deleting the program "sample". Please keep in note that this will affect all trainees that are currently enroleld.</p>
+              <p class="text-sm"><span class="font-semibold">WARNING!</span> you are now deleting the program "sample". Please keep in note that this will affect all trainees that are currently enroleld.sss</p>
               <div class="space-y-2">
                 <span class="text-md">type your <span class="font-semibold">"password"</span> in order to complete processing.</span>
                 <input 

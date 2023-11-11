@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Auth;
 use App\Mail\MyPhpMailerMail;
-use Illuminate\Support\Facades\Mail;
-use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
+use Illuminate\Validation\Rule;
 use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -35,7 +36,9 @@ class AuthController extends Controller
 
     $form['password'] = bcrypt($form['password']);
 
-    $user = User::create($form);
+    // $form['birthdate'] = Carbon::parse($form['birthdate'])->format('Y-m-d');
+
+    User::create($form);
 
     return redirect('/login')->with('message', 'User Registration Successful');
   }
@@ -155,6 +158,8 @@ class AuthController extends Controller
       $imagePath = request()->file('image')->store('profile', 'public');
       $form['image'] = $imagePath;
     }
+
+    // $form['birthdate'] = Carbon::parse($form['birthdate'])->format('Y-m-d');
 
     // Update the user's fields
     $user->update($form);
