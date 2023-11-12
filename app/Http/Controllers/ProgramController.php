@@ -19,6 +19,13 @@ class ProgramController extends Controller
         return view('programs.main', compact('programs'));
     }
 
+    public function showAllPrograms()
+    {
+        $programs = Program::all(); // Adjust as needed
+
+        return view('programs.create', ['programs' => $programs]);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -29,12 +36,16 @@ class ProgramController extends Controller
             'category'=>['required','string'],
             'summary'=>['required', 'min:6'],
             'status'=>['nullable'],
-            'image' => ['nullable','image'],
+            'image' => ['nullable'],
+            'prerequisite_with' =>['nullable'],
         ]);
+        // $form['chosen_program'] = $request->filled('chosen_program');
+        $form['is_prerequisite'] = $request->filled('is_prerequisite');
 
-        $imagePath = request()->file('image')->store('programs','public');
-        $form['image'] = $imagePath;
-
+        if (request()->hasFile('image') && request()->file('image')->isValid()) {
+            $imagePath = request()->file('image')->store('programs', 'public');
+            $form['image'] = $imagePath;
+        }
         $user->programs()->create($form);
 
         return redirect('/programs/list')->with('message', 'Program created successfully!');

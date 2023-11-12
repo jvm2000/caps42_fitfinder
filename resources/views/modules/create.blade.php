@@ -104,7 +104,7 @@
 
               <x-app.custom-select label="Schedule Days">
                 <x-slot name="data">
-                  <p class="text-lg capitalize text-ellipsis overflow-hidden" id="selectedTags"><span class="text-gray-400">Select Days</span></p>
+                  <p class="text-lg capitalize text-ellipsis overflow-hidden" id="selectedDays"><span class="text-gray-400">Select Days</span></p>
                 </x-slot>
   
                 @php
@@ -165,20 +165,20 @@ $(document).ready(function() {
   });
 });
 
-var checkboxes = document.querySelectorAll('input[name="tags[]"]');
+var checkboxes = document.querySelectorAll('input[name="schedule[]"]');
 
-var selectedTagsParagraph = document.getElementById('selectedTags');
+var selectedDaysParagraph = document.getElementById('selectedDays');
 
 // Add change event listener to each checkbox
 checkboxes.forEach(function(checkbox) {
   checkbox.addEventListener('change', function() {
     // Get all selected checkbox values
-    var selectedTags = Array.from(document.querySelectorAll('input[name="tags[]"]:checked')).map(function(checkbox) {
+    var selectedDays = Array.from(document.querySelectorAll('input[name="schedule[]"]:checked')).map(function(checkbox) {
         return checkbox.value;
     });
 
     // Update the paragraph element with selected tags
-    selectedTagsParagraph.innerText = 'tags: ' + selectedTags.join(', ');
+    selectedDaysParagraph.innerText = 'days: ' + selectedDays.join(', ');
   });
 });
 </script>

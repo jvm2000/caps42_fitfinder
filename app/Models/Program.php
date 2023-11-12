@@ -24,6 +24,9 @@ class Program extends Model
         'status',
         'image',
         'user_id',
+        'is_prerequisite',
+        'prerequisite_program_id',
+        'prerequisite_with',
     ];
 
     public function user()
@@ -41,6 +44,11 @@ class Program extends Model
     public function modules()
     {
         return $this->hasMany(Module::class);
+    }
+
+    public function prerequisiteProgram()
+    {
+        return $this->belongsTo(Program::class, 'prerequisite_program_id');
     }
 
 }

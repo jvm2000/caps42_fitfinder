@@ -18,7 +18,7 @@ class ModuleController extends Controller
     {
         $form = $request->validate([
             'name'=>['required','string'],
-            'summary'=>['required', 'min:6'],
+            'summary'=>['required','string'],
             'duration'=>['required'],
             'procedure' => ['required','string'],
             'set'=>['nullable'],
@@ -61,7 +61,7 @@ class ModuleController extends Controller
     {
         $form = $request->validate([
             'name'=>['nullable','string'],
-            'summary'=>['nullable', 'min:6'],
+            'summary'=>['nullable','string'],
             'duration'=>['nullable'],
             'procedure' => ['nullable'], //need nullable in migration
             'set'=>['nullable'],
@@ -76,7 +76,7 @@ class ModuleController extends Controller
 
         $module->update($form);
 
-        return redirect('/programs/show/' . $form['program_id'],['form'=>$form])->with('message', 'Module updated successfully!');
+        return redirect('/programs/show/' . $form['program_id'])->with('message', 'Module updated successfully!');
     }
 
     /**

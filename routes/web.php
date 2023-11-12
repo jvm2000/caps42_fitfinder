@@ -64,7 +64,7 @@ Route::middleware(['auth'])->group(function () {
 	Route::post('/matchmakes/send-request', [MatchmakingController::class, 'sendRequest'])->name('matchmaking.send');
 	
 	//Programs
-	Route::get('/programs/make', function () {return view('programs/create');})->name('programs.make');
+	Route::get('/programs/make', [ProgramController::class, 'showAllPrograms'])->name('programs.index');
 	Route::get('/programs/list', [ProgramController::class, 'index'])->name('programs.index');
 	Route::post('/programs/create/{user}', [ProgramController::class, 'store'])->name('programs.create');
 	Route::get('/programs/edit/{program}', [ProgramController::class, 'show'])->name('programs.edit');

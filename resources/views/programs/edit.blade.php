@@ -54,9 +54,7 @@
                   class="bg-inherit text-sm px-8 py-4 w-full h-40 border-gray-500 border rounded-md" 
                   placeholder="Describe"
                   name="summary"
-                >
-                {{$program->summary}}
-              </textarea>
+                >{{$program->summary}}</textarea>
                 @error('summary')
                 <p class="text-red-500 text-sm">{{$message}}</p>
                 @enderror
