@@ -14,9 +14,12 @@ class ProgramController extends Controller
     {
         $user = Auth::user();
 
-        $programs = $user->programs()->with('user')->latest()->paginate(5);
+        $programs = $user->programs()->with('user');
 
-        return view('programs.main', compact('programs'));
+        // return view('programs.main', compact('programs')->paginate(5)   );
+
+        return view('programs.main', ['programs' => Program::latest()->paginate(5)]);
+
     }
 
     public function showAllPrograms()

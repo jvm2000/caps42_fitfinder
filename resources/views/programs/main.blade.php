@@ -187,6 +187,10 @@ function openTab(evt, tabName) {
 			</div>
 		</div>
   </div>
+
+  <div>
+	{{$programs->links()}}
+  </div>
   
   @if(session('message'))
     <x-app.toaster message="{{ session('message') }}">
