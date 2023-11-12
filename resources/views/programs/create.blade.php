@@ -75,7 +75,7 @@
                 <select 
                   type="text" 
                   class="bg-inherit text-lg px-6 py-2 w-full border-gray-500 border rounded-md col-span-2 appearance-none" 
-                  name="prerequisite_with"
+                  name="prerequisite_program_id"
                 >
                   <option value="" selected>Choose Program</option>
                   @foreach($programs as $index => $program)

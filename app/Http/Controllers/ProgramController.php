@@ -40,7 +40,7 @@ class ProgramController extends Controller
             'summary'=>['required', 'min:6'],
             'status'=>['nullable'],
             'image' => ['nullable'],
-            'prerequisite_with' =>['nullable'],
+            'prerequisite_program_id' => 'nullable|exists:programs,id',
         ]);
         // $form['chosen_program'] = $request->filled('chosen_program');
         $form['is_prerequisite'] = $request->filled('is_prerequisite');

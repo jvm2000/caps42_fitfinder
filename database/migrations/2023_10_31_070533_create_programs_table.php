@@ -22,7 +22,6 @@ return new class extends Migration
             $table->boolean('is_prerequisite')->default(false);
             $table->unsignedBigInteger('prerequisite_program_id')->nullable();
             $table->foreign('prerequisite_program_id')->references('id')->on('programs');
-            $table->string('prerequisite_with')->nullable();
             $table->foreignIdFor(User::class);
             $table->timestamps();
         });
