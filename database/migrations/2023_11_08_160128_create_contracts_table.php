@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('address');
             $table->foreignId('trainee_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('coach_id')->constrained('users')->onDelete('cascade');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
         });
     }

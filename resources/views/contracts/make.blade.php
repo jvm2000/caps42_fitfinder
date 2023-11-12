@@ -10,7 +10,8 @@
         
 
         <div class="mt-10 w-full gap-x-8 items-center">
-            <form action="" method="post">
+            <form action="{{ route('process.contract') }}" method="post">
+                @csrf
                 <h1>This Contract ("Contract") is made and entered into as of [Date] between:</h1>
                 <h2 class="mt-10">Coach Details</h2>
             <p>
@@ -43,10 +44,10 @@
         
             <h2 class="mt-10">Trainee Details</h2>
             <p>
-                {{$traineeUsername}}<br>
-                {{$traineeAddress}}<br>
-                {{$traineeEmailAddress}}<br>
-                {{$traineePhoneNumber}}<br>
+                <input type="text" name="traineeUsername" value="{{ $traineeUsername }}" readonly><br>
+                <input type="text" name="traineeAddress" value="{{ $traineeAddress }}" readonly><br>
+                <input type="text" name="traineeEmailAddress" value="{{ $traineeEmailAddress }}" readonly><br>
+                <input type="text" name="traineePhoneNumber" value="{{ $traineePhoneNumber }}" readonly><br>
             </p>
             <br>
             <p>WHEREAS, @foreach($first_name as $firstName)

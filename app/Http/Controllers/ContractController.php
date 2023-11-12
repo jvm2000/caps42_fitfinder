@@ -40,23 +40,29 @@ class ContractController extends Controller
         ]);
 
     }
+    public function contractsDashboard(){
+        return view('contracts.dashboard');
+    }
+    
     
     public function store(Request $request){
         $this->validate($request, [
-            'address'=> 'required'
+            'address'=> 'required',
+            'trainee_id' => 'required',
+            'coach_id' => 'required',
+            'startDate' => 'required',
+            'endDate' => 'required',
         ]);
         
-      
-
         $request->user()->contract()->create([
             'address' => $request->address,
-           
+            'trainee_id' => $request->trainee_id,
+            'coach_id' => $request->coach_id,
+            'startDate' => $request->startDate,
+            'endDate' => $request->endDate
         ]);
-        return back();
-        // Contract::create([
-        //     'user_id' => auth()->id(),
-        //     'address' => $request->address,
-        // ]);
+        return redirect('/contracts/dashboard')->with('message', 'Program created successfully!');
+       
     }
     public function generateContract(Request $request){
         //
@@ -96,4 +102,31 @@ class ContractController extends Controller
             'phone_number' => $phone_number,
         ]);
     }
+public function processContract(Request $request)
+{
+    // Your logic to process the form submission
+    // ...
+    
+    $this->validate($request, [
+        'address'=> 'required',
+        'trainee_id' => 'required',
+        'coach_id' => 'required',
+        'startDate' => 'required',
+        'endDate' => 'required',
+    ]);
+    
+    $request->user()->contract()->create([
+        'address' => $request->address,
+        'trainee_id' => $request->trainee_id,
+        'coach_id' => $request->coach_id,
+        'startDate' => $request->startDate,
+        'endDate' => $request->endDate
+    ]);
+    dd($request);
+    return redirect()->route('contracts.dashboard')->with('message', 'Contract created successfully!');
 }
+}
+// Contract::create([
+        //     'user_id' => auth()->id(),
+        //     'address' => $request->address,
+        // ]);

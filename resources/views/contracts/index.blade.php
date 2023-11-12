@@ -7,8 +7,8 @@
           <p class="text-3xl font-semibold mr-auto">Contracts</p>
           <x-menu-dropdown />
         </div>
-        
-        <form action="{{ route('generate.contract') }}" method="POST">
+                      
+        <form action="{{ route('generate.contract') }}" method="get">
             @csrf
             <div class="mt-10 grid grid-cols-2 w-full gap-x-8 items-center">
                 {{-- first column  --}}
