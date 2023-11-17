@@ -93,7 +93,7 @@ class MatchmakingController extends Controller
         $role = auth()->user()->role;
 
         if ($role == "Coach") {
-            $user = User::with('portfolio')->find($id);
+            $user = User::with('portfolio','programs.modules')->find($id);
 
             // Check if the user was found
             if (!$user) {

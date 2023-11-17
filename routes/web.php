@@ -9,6 +9,7 @@ use App\Http\Controllers\ContractController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\MatchmakingController;
 use App\Http\Controllers\MedicalCertificateController;
+use App\Http\Controllers\RequestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,7 @@ Route::post('/verify-login', [AuthController::class, 'verify'])->name('verify.lo
 
 Route::middleware(['auth'])->group(function () {
 	// General 
+	Route::get('/request-all', [RequestController::class, 'index'])->name('user.index');
 	Route::get('/home', function () {return view('dashboard/main');})->name('home.index');
 	Route::post('/auth-logout', [AuthController::class, 'logout'])->name('user.logout');
 	Route::get('/auth/profile/{user}', [AuthController::class, 'show'])->name('user.show');

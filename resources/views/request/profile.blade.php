@@ -3,7 +3,7 @@
     <x-slot:title>
         FitFinder - Profile
     </x-slot>
-    <div class="w-full py-10 px-12 overflow-y-auto h-full max-h-[54rem] overflow-x-hidden">
+    <div class="w-full py-10 px-12 h-full max-h-[54rem] overflow-hidden">
         <div class="flex items-center relative space-x-4">
             <div class="flex items-center space-x-4 mr-auto">
                 <a href="/matchmakes">
@@ -59,53 +59,88 @@
         </div>
 
         @if ($user->portfolio)
-            <div class="mt-8 w-full grid place-items-center display" id="displayForm">
-                <div class="grid grid-cols-2 items-start gap-x-8">
-                    <div class="flex flex-col">
-                        <div class="flex items-center space-x-5">
-                            <p class="text-2xl font-semibold">Porfolio</p>
+        <div class="mt-8 w-full px-8 display" id="displayForm">
+            <div class="grid grid-cols-3 items-start gap-x-4">
+                <div class="flex flex-col">
+                    <div class="flex items-center space-x-5">
+                        <p class="text-2xl font-semibold">Porfolio</p>
+                    </div>
+
+                    <div class="mt-10 flex flex-col space-y-5">
+                        <div class="space-y-2">
+                            <span class="text-md text-gray-600 font-semibold">Description</span>
+                            <div
+                                class="bg-inherit text-base px-8 py-2 h-32 w-full border-gray-500 border-b resize-none">
+                                {{ $user->portfolio->description }}
+                            </div>
                         </div>
 
-                        <div class="mt-10 flex flex-col space-y-5">
-                            <div class="space-y-2">
-                                <span class="text-md text-gray-600 font-semibold">Description</span>
-                                <div
-                                    class="bg-inherit text-base px-8 py-2 h-32 w-full border-gray-500 border-b resize-none">
-                                    {{ $user->portfolio->description }}
-                                </div>
+                        <div class="space-y-2">
+                            <span class="text-md text-gray-600 font-semibold">Recent Works</span>
+                            <div class="bg-inherit text-base px-8 py-2 w-full border-gray-500 border-b">
+                                {{ $user->portfolio->recent_works }}
                             </div>
+                        </div>
 
-                            <div class="space-y-2">
-                                <span class="text-md text-gray-600 font-semibold">Recent Works</span>
-                                <div class="bg-inherit text-base px-8 py-2 w-full border-gray-500 border-b">
-                                    {{ $user->portfolio->recent_works }}
-                                </div>
-                            </div>
-
-                            <div class="space-y-2">
-                                <span class="text-md text-gray-600 font-semibold">What are some of your hobbies?</span>
-                                <div class="bg-inherit text-base px-8 py-2 w-full border-gray-500 border-b">
-                                    {{ $user->portfolio->hobbies }}
-                                </div>
+                        <div class="space-y-2">
+                            <span class="text-md text-gray-600 font-semibold">What are some of your hobbies?</span>
+                            <div class="bg-inherit text-base px-8 py-2 w-full border-gray-500 border-b">
+                                {{ $user->portfolio->hobbies }}
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="flex flex-col items-start">
-                        <div class="flex items-center space-x-5">
-                            <p class="text-2xl font-semibold">Upload Resume / Application Form</p>
-                            <button>
-                                <img src="/icons/portfolio/upload-icon.svg" alt="Upload Icon" class="w-5 h-5">
-                            </button>
-                        </div>
-                        <div class="mt-10 flex items-center space-x-8">
-                            <div class="w-64 h-[350px] border"></div>
-                            <div class="w-64 h-[350px] border"></div>
-                        </div>
+                <div class="flex flex-col items-start">
+                    <div class="flex items-center space-x-5">
+                        <p class="text-2xl font-semibold">{{ $user->first_name }} {{ $user->last_name }}'s Portfolio</p>
                     </div>
+                    <div class="mt-10 flex items-center space-x-8">
+                        <div class="w-64 h-[350px] border"></div>
+                    </div>
+                </div>
 
+                <div class="flex flex-col items-start">
+                    <div class="flex items-center space-x-5">
+                        <p class="text-2xl font-semibold">Programs</p>
+                    </div>
+                    <div class="mt-10 flex flex-col">
+                        @foreach($user->programs as $program)
+                        <div class="py-2 border-t border-b flex flex-col ">
+                            <div class="flex items-center space-x-6">
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-6 h-6 rounded-full relative">
+                                        <img class="w-full h-full rounded-full" src="{{ $program->getImageURL() }}" alt="">
+                                    </div>
+                                    <p class="text-lg font-medium">{{ $program->name }}</p>
+                                </div>
+                                <div class="px-2 py-0 rounded-full
+                                @if ($program->prerequisite)
+                                bg-indigo-200 border border-dashed border-indigo-800 text-indigo-800
+                                @else
+                                bg-red-200 border border-dashed border-red-800 text-red-800
+                                @endif
+                                text-xs">
+                                {{ $program->prerequisite ? $program->prerequisite->name : 'No Prerequisite' }}
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-4 items-center pl-10 mt-4">
+                                <div class="flex flex-col col-span-3 space-y-1">
+                                    <p class="text-xs text-neutral-950">{{ $program->summary }}</p>
+                                    <p class="text-xs text-gray-600">{{ $program->category }}</p>
+                                </div>
+                                <p class="flex items-center space-x-2 text-xs">
+                                    Number of Modules:
+                                    
+                                </p>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
+        </div>
         @endif
 
         @if ($user->medcert)

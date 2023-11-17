@@ -114,7 +114,7 @@ function openTab(evt, tabName) {
 												@endif
 												text-xs">
 												{{ $active->prerequisite ? $active->prerequisite->name : 'No Prerequisite' }}
-										</div>
+												</div>
 											</div>
 											<p class="text-xs text-zinc-400">{{$active->category}}</p>
 										</div>
