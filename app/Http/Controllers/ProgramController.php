@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 class ProgramController extends Controller
 {
     public function index()
-    {g
+    {
         $user = Auth::user();
 
         $programs = $user->programs()->latest()->paginate(5);
