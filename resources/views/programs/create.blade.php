@@ -58,6 +58,28 @@
                   <p class="text-red-500 text-sm">{{$message}}</p>
                   @enderror
                 </div>
+
+                <div class="flex items-center space-x-4">
+                  <input 
+                    type="checkbox" name="is_prerequisite" 
+                    class="w-4 h-4" id="limit_checkbox"
+                    onclick="isLimitProgramChecked()"
+                  >
+                  <label for="limit_checkbox" class="texzt-lg text-neutral-900 cursor-default">Is there a limit on the number of students?</label>                
+                </div>
+
+                <div id="limitProgramContainer" class="space-y-2 hidden">
+                  <span class="text-md text-gray-600">Number of trainees</span>
+                  <input 
+                    type="number" 
+                    class="bg-inherit text-sm px-8 py-2 w-full border-gray-500 border rounded-md" 
+                    placeholder="Enter number of trainees or null for no limit"
+                    name="no_of_trainees"
+                  >
+                  @error('no_of_trainees')
+                  <p class="text-red-500 text-sm">{{$message}}</p>
+                  @enderror
+                </div>
               </div>
 
               @if(auth()->user()->programs->count() > 0)
@@ -67,7 +89,7 @@
                   class="w-4 h-4" id="prerequisite_checkbox"
                   onclick="isPreRequesiteChecked()"
                 >
-                <label for="prerequisite_checkbox" class="texzt-lg text-neutral-900 cursor-default">Is this program pre-requisite?</label>                
+                <label for="prerequisite_checkbox" class="texzt-lg text-neutral-900 cursor-default">Does this program has a prerequisite?</label>                
               </div>
 
               <div id="prerequisiteContainer" class="space-y-2 hidden">
@@ -142,6 +164,13 @@ var success = document.getElementById("uploadPhoto");
 
 success.onclick = function() {
   document.getElementById('uploaded')?.click()
+}
+
+var limit_checkbox = document.getElementById('limit_checkbox');
+
+function isLimitProgramChecked(){
+  var limitProgram = document.getElementById('limitProgramContainer');
+  limitProgram.style.display = limit_checkbox.checked ? 'block' : 'none';
 }
 
 var prerequisite_checkbox = document.getElementById('prerequisite_checkbox');

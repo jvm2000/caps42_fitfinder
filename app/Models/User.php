@@ -109,6 +109,7 @@ class User extends Authenticatable
            'status' => 'Pending', // Set the initial status to "Pending"
        ]);
    }
+   
    public function status()
     {
     return $this->belongsTo(Status::class);

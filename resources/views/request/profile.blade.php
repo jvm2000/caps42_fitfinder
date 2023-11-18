@@ -93,7 +93,7 @@
 
                 <div class="flex flex-col items-start">
                     <div class="flex items-center space-x-5">
-                        <p class="text-2xl font-semibold">{{ $user->first_name }} {{ $user->last_name }}'s Portfolio</p>
+                        <p class="text-2xl font-semibold">Portfolio</p>
                     </div>
                     <div class="mt-10 flex items-center space-x-8">
                         <div class="w-64 h-[350px] border"></div>
@@ -185,7 +185,6 @@
                         </div>
                         <div class="mt-10 flex items-center space-x-8">
                             <div class="w-64 h-[350px] border"></div>
-                            <div class="w-64 h-[350px] border"></div>
                         </div>
                     </div>
 
@@ -196,17 +195,7 @@
         {{-- Request  --}}
         <div class="mt-8 flex items-center relative w-full">
             <div class="mr-auto"></div>
-            <div class="flex items-center space-x-4">
-                <!-- "Send Request" form -->
-                <form method="POST" action="/matchmakes/send-request">
-                    @csrf
-                    <input type="hidden" name="trainee_id" value="{{ auth()->user()->id }}">
-                    <input type="hidden" name="coach_id" value="{{ $user->id }}">
-                    <button type="submit" name="sendRequest"
-                        class="rounded-md text-center px-6 py-3 text-md text-white bg-black cursor-pointer">Send
-                        Request</button>
-                </form>
-            </div>
+            <x-requests.send-modal :user="$user" :programs="$user->programs" />
         </div>
     </div>
 	</div>

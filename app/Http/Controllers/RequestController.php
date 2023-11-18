@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\UserRequest;
 use Illuminate\Http\Request;
 
@@ -29,9 +30,21 @@ class RequestController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, User $user)
     {
-        //
+        $form = $request->validate([
+            'name'=>['required','string'],
+            'category'=>['required','string'],
+            'summary'=>['required', 'min:6'],
+            'status'=>['nullable'],
+            'image' => ['nullable'],
+            'no_of_trainees' => ['nullable'],
+            'prerequisite_program_id' => 'nullable|exists:programs,id',
+        ]);
+
+        $user->sendRequestToCoach()->create($form);
+
+        return redirect('/programs/list')->with('message', 'Program created successfully!');
     }
 
     /**

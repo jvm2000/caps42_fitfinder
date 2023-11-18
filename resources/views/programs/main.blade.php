@@ -125,7 +125,12 @@ function openTab(evt, tabName) {
 									<p class="text-sm text-ellipsis">{{$active->summary}}</p>
 								</td>
 								<td class="py-2">
-									<p class="text-sm"><span class="text-red-500">10</span> / 30</p>
+									<p class="text-sm">
+										<span class="text-red-500">0</span>
+										 / @if($active->no_of_trainees === null) <span class="text-indigo-500">No limit</span> 
+										 @else <span class="text-blue-400">{{$active->no_of_trainees}}</span> @endif
+
+										</p>
 								</td>
 
 								<td class="py-2">

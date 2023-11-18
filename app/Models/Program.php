@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\UserRequest;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -26,11 +27,17 @@ class Program extends Model
         'user_id',
         'is_prerequisite',
         'prerequisite_program_id',
+        'no_of_trainees',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function hasTrainees()
+    {
+        return $this->hasMany(User::class);
     }
 
     public function getImageURL(){

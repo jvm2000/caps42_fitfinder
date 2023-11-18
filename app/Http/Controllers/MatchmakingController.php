@@ -63,11 +63,15 @@ class MatchmakingController extends Controller
         if ($request->has('sendRequest')) {
             $traineeId = $request->input('trainee_id');
             $coachId = $request->input('coach_id');
+            $programId = $request->input('program_id');
+            $message = $request->input('message');
             
             // Check if a request already exists
             $existingRequest = DB::table('requests')
                 ->where('trainee_id', $traineeId)
                 ->where('coach_id', $coachId)
+                ->where('program_id', $programId)
+                ->where('message', $message)
                 ->first();
     
             if ($existingRequest) {
@@ -77,11 +81,11 @@ class MatchmakingController extends Controller
             DB::table('requests')->insert([
                 'trainee_id' => $traineeId,
                 'coach_id' => $coachId,
+                'program_id' => $programId,
+                'message' => $message,
                 'status' => 'Pending', // Set the initial status to "Pending"
             ]);
 
-            $status ='Pending';
-    
             return view('request.test', ['status' => 'Pending']); // You can adjust the status as needed
         } else {
             return "Something is wrong.";
