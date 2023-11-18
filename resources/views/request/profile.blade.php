@@ -199,4 +199,9 @@
         </div>
     </div>
 	</div>
+
+	@if(session('message'))
+    <x-app.toaster message="{{ session('message') }}">
+    </x-app.toaster>
+  @endif
 </x-layout>

@@ -11,14 +11,12 @@ use Illuminate\Support\Facades\Hash;
 class ProgramController extends Controller
 {
     public function index()
-    {
+    {g
         $user = Auth::user();
 
-        $programs = $user->programs()->with('user');
+        $programs = $user->programs()->latest()->paginate(5);
 
-        // return view('programs.main', compact('programs')->paginate(5)   );
-
-        return view('programs.main', ['programs' => Program::latest()->paginate(5)]);
+        return view('programs.main', compact('programs'));
 
     }
 

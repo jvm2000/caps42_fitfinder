@@ -31,6 +31,9 @@
           <option value="{{ $program->id }}">{{ $program->name }}</option>
           @endforeach
         </select>
+        @error('program_id')
+        <p class="text-red-500 text-sm">{{$message}}</p>
+        @enderror
       </div>
   
       <div class="space-y-2">
@@ -40,8 +43,11 @@
           name="message"
           placeholder="Enter message"
         ></textarea>
+        @error('message')
+        <p class="text-red-500 text-sm">{{$message}}</p>
+        @enderror
       </div>
     </div>
-    <button class="rounded-md text-center px-6 py-4 text-sm bg-black text-white w-full border-2 mt-4 active:mt-[17px] cursor-pointer">Send</button>
+    <button name="sendRequest" class="rounded-md text-center px-6 py-4 text-sm bg-black text-white w-full border-2 mt-4 active:mt-[17px] cursor-pointer">Send</button>
   </form>
 </x-app.modal>

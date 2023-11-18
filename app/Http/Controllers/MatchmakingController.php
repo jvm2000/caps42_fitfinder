@@ -83,10 +83,10 @@ class MatchmakingController extends Controller
                 'coach_id' => $coachId,
                 'program_id' => $programId,
                 'message' => $message,
-                'status' => 'Pending', // Set the initial status to "Pending"
+                'status' => 'Pending',
             ]);
 
-            return view('request.test', ['status' => 'Pending']); // You can adjust the status as needed
+            return back()->with(['status' => 'Pending', 'message' => 'Request Successfully!']);
         } else {
             return "Something is wrong.";
         }   
