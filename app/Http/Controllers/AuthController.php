@@ -41,9 +41,11 @@ class AuthController extends Controller
     // $form['birthdate'] = Carbon::parse($form['birthdate'])->format('Y-m-d');
 
     $user = User::create($form);
-    $user->sendEmailVerificationNotification();
+    Auth::login($user);
 
-    return redirect('/login')->with('message', 'User Registration Successful');
+    $user->sendEmailVerificationNotification();
+    
+    return view('emails.verify-email')->with('message', 'User Registration Successful');
   }
 
   /**

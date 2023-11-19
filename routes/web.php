@@ -26,7 +26,7 @@ use Illuminate\Http\Request;
 
 Auth::routes(['verify' => true]);
 Route::get('/email/verify', function () {
-    return view('auth.verify-email');
+    return view('auth.notify');
 })->middleware('auth')->name('verification.notice');
 Route::get('/', function () {return view('welcome');})->middleware('guest')->name('welcome');
 //Route::get('/verification', function () {return view('verify');})->name('verify');
