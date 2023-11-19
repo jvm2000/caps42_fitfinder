@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Program;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ModuleController;
@@ -9,6 +10,8 @@ use App\Http\Controllers\ContractController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\MatchmakingController;
 use App\Http\Controllers\MedicalCertificateController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +24,22 @@ use App\Http\Controllers\MedicalCertificateController;
 |
 */
 
+Auth::routes(['verify' => true]);
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
 Route::get('/', function () {return view('welcome');})->middleware('guest')->name('welcome');
-Route::get('/verification', function () {return view('verify');})->name('verify');
-
+//Route::get('/verification', function () {return view('verify');})->name('verify');
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+ 
+    return redirect('/home');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+ 
+    return redirect('/home')->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 // Auth
 Route::get('/login', function () {return view('auth/login');})->name('login');
 Route::get('/register', function () {return view('auth/register');});
@@ -53,9 +69,9 @@ Route::middleware(['auth'])->group(function () {
 	Route::post('/medcert/create/{user}', [MedicalCertificateController::class, 'store'])->name('medcert.create');
 	Route::put('/medcert/update/{medcert}', [MedicalCertificateController::class, 'update'])->name('medcert.update');
 	//contracts
-	Route::get('/contracts', [ContractController::class, 'index'])->name('contracts.index');
-	Route::post('/contracts/make', [ContractController::class, 'generateContract'])->name('generate.contract');
-  Route::post('/contracts/send', [ContractController::class, 'store']);
+	Route::get('/contracts', [ContractController::class, 'index'])->name('contracts.index')->middleware(['auth', 'verified']);
+	Route::post('/contracts/make', [ContractController::class, 'generateContract'])->name('generate.contract')->middleware(['auth', 'verified']);
+  Route::post('/contracts/send', [ContractController::class, 'store'])->middleware(['auth', 'verified']);
 	// Matchmake 
 	Route::get('/matchmakes', [MatchmakingController::class, 'index'])->name('matchmaking.index');
 	//viewprofile
