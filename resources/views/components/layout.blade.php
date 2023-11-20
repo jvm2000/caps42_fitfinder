@@ -77,11 +77,14 @@
               <img src="/dashboard/icons/settings.svg" alt="Main" class="w-8 h-8 group-hover:mb-1 mr-14">
               <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Settings</p>
             </a>
+            <div id="chatHead" class="bg-blue-500 text-white py-2 px-4 rounded-full fixed bottom-20 right-20">
+              Chat
           </div>
-
+          </div>
+          
         </div>
       </nav>
-
+      
       <div class="col-span-6 py-10 pr-10">
         <div class="bg-white rounded-3xl h-full">
           <main>
