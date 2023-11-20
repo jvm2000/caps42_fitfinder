@@ -4,7 +4,7 @@
     FitFinder - Settings
   </x-slot>
   
-  <div class="w-full py-10 px-12 overflow-y-auto h-full max-h-[54rem]">
+  <div class="w-full py-10 px-12 overflow-y-auto h-full max-h-[50rem]">
     <div class="flex items-center relative">
       <p class="text-3xl font-semibold mr-auto">Settings</p>
       <x-menu-dropdown />

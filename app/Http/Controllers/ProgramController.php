@@ -17,7 +17,6 @@ class ProgramController extends Controller
         $programs = $user->programs()->latest()->paginate(5);
 
         return view('programs.main', compact('programs'));
-
     }
 
     public function showAllPrograms()

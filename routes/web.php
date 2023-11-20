@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Models\Program;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -31,6 +32,9 @@ Route::get('/register', function () {return view('auth/register');});
 Route::post('/auth-register', [AuthController::class, 'store'])->name('user.register');
 Route::post('/auth-login', [AuthController::class, 'login'])->name('user.login');
 Route::post('/verify-login', [AuthController::class, 'verify'])->name('verify.login');
+
+Route::get('/admin', function () {return view('admin/index');});
+Route::get('/admin/trainees', [AdminController::class, 'traineesIndex'])->name('admin.trainees');
 
 Route::middleware(['auth'])->group(function () {
 	// General 
