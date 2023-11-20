@@ -71,7 +71,7 @@ Route::middleware(['auth'])->group(function () {
 	//contracts
 	Route::get('/contracts', [ContractController::class, 'index'])->name('contracts.index')->middleware(['auth', 'verified']);
 	Route::post('/contracts/make', [ContractController::class, 'generateContract'])->name('generate.contract')->middleware(['auth', 'verified']);
-  Route::post('/contracts/send', [ContractController::class, 'store'])->middleware(['auth', 'verified']);
+  	Route::post('/contracts/send', [ContractController::class, 'store'])->middleware(['auth', 'verified']);
 	// Matchmake 
 	Route::get('/matchmakes', [MatchmakingController::class, 'index'])->name('matchmaking.index');
 	//viewprofile

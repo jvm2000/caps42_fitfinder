@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'name' => env('FitFinder', 'Laravel'),
+    'name' => env('FitFinder', 'FitFinder'),
 
     /*
     |--------------------------------------------------------------------------

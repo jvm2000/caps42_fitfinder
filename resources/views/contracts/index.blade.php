@@ -21,13 +21,7 @@
         </select>
       
         <br>
-        <select id="tags" name="tags">
-        <option value="">Select an Interest</option>
-        @foreach ($tags as $traineeTags)
-            <option value="{{ $traineeTags }}">{{ $traineeTags }}</option>
-        @endforeach
-        </select>
-        <br>
+       
         @foreach ($address as $traineeAddress)
             Trainee Address: <input type="text" name="traineeAddress" value="{{ $traineeAddress }}">
         @endforeach

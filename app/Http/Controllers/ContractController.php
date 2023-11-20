@@ -12,9 +12,9 @@ class ContractController extends Controller
 {
     //
     public function index(){
-
+        $id = auth()->user()->id;
         $contract = Contract::all();
-        $programs = Program::select('category')->get();
+        $programs = Program::where('user_id', $id)->pluck('name');
         $users =  User::where('role', 'trainee')->get();
         $address = $users->pluck('address')->toArray();
         $email = $users->pluck('email')->toArray();
@@ -44,6 +44,7 @@ class ContractController extends Controller
     public function store(Request $request){
         $this->validate($request, [
             'address'=> 'required'
+    
         ]);
         
       
@@ -95,4 +96,5 @@ class ContractController extends Controller
             'phone_number' => $phone_number,
         ]);
     }
+    
 }
