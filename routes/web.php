@@ -10,6 +10,7 @@ use App\Http\Controllers\ContractController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\MatchmakingController;
 use App\Http\Controllers\MedicalCertificateController;
+use App\Http\Controllers\requestController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 
@@ -69,9 +70,9 @@ Route::middleware(['auth'])->group(function () {
 	Route::post('/medcert/create/{user}', [MedicalCertificateController::class, 'store'])->name('medcert.create');
 	Route::put('/medcert/update/{medcert}', [MedicalCertificateController::class, 'update'])->name('medcert.update');
 	//contracts
-	Route::get('/contracts', [ContractController::class, 'index'])->name('contracts.index')->middleware(['auth', 'verified']);
-	Route::post('/contracts/make', [ContractController::class, 'generateContract'])->name('generate.contract')->middleware(['auth', 'verified']);
-  	Route::post('/contracts/send', [ContractController::class, 'store'])->middleware(['auth', 'verified']);
+	
+	Route::get('/contracts/make', [ContractController::class, 'index'])->name('generate.contract')->middleware(['auth', 'verified']);
+  Route::post('/contracts', [ContractController::class, 'store'])->name('contracts.store')->middleware(['auth', 'verified']);
 	// Matchmake 
 	Route::get('/matchmakes', [MatchmakingController::class, 'index'])->name('matchmaking.index');
 	//viewprofile

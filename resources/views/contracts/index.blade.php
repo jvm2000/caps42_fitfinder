@@ -1,40 +1,43 @@
 <div>
     <!-- It is not the man who has too little, but the man who craves more, that is poor. - Seneca -->
     <h1>hello</h1>
-    <form action="{{ route('generate.contract') }}" method="POST">
+    <form action="/contracts/make" method="POST">
         @csrf
         <select id="programs" name="programs">
             <option value="">Select a Program</option>
             @foreach($programs as $program)
-            <option value="{{ $program }}">{{ $program }}</option>
+            <option value="{{ $program->id }}">{{ $program->name }}</option>
         @endforeach
         </select>
          <br>
          <select id="traineeUsername" name="traineeUsername">
-            <option value="">Select a Trainee</option>
-            @foreach ($first_name as $key => $fname)
-                @php
-                    $lname = $last_name[$key] ?? ''; // Fetch the corresponding last name
-                @endphp
-                <option value="{{ $fname . $lname }}">{{ $fname . ' ' . $lname }}</option>
+            @foreach ($requests as $request)
+                <option value="{{ $request->requester->id }}">{{ $request->requester->first_name . ' ' . $request->requester->last_name }}</option>
             @endforeach
         </select>
       
         <br>
        
-        @foreach ($address as $traineeAddress)
-            Trainee Address: <input type="text" name="traineeAddress" value="{{ $traineeAddress }}">
+        @foreach ($requests as $request)
+            Trainee Address: <input type="text" name="traineeAddress" value="{{ $request->requester->address.''.$request->requester->city}}">
         @endforeach
         <br>
-        @foreach ($email as $traineeEmailAddress)
-            Trainee Email Address: <input type="text" name="traineeEmailAddress" value="{{$traineeEmailAddress}}">
+        @foreach ($requests as $request)
+            Trainee Email Address: <input type="text" name="traineeEmailAddress" value="{{$request->requester->email}}">
         @endforeach
         <br>
-        @foreach($phone_number as $traineePhoneNumber)
-            Trainee Phone Number: <input type="text" name="traineePhoneNumber" value="{{$traineePhoneNumber}}">
+        @foreach($requests as $request)
+            Trainee Phone Number: <input type="text" name="traineePhoneNumber" value="{{$request->requester->phone_number}}">
         @endforeach
         <br>
-        <label for="startDate">Start Date:</label>
+        <label>Payment Type:</label>
+        <select id="paymentType" name="paymentType">
+         
+                <option value="gcash" >GCASH</option>
+                <option value="paypal">PAYPAL</option>
+                <option value="applepay">APPLEPAY</option>
+        </select><br>
+         <label for="startDate">Start Date:</label>
          <input type="date" id="startDate" name="startDate"><br>
 
         <label for="endDate">End Date:</label>
@@ -45,15 +48,4 @@
 
 
     </form>
-        <!-- @if($contract->count())
-            @foreach($contract as $contracts)
-                <div>
-                    <a href="">{{$contracts->user->first_name}} </a>
-                    <span>{{$contracts->created_at}}</span>
-                    <p>{{$contracts->address}}</p>
-                </div>
-            @endforeach
-         @else
-            No contracts
-         @endif -->
 </div>
