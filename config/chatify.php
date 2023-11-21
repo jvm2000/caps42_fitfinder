@@ -6,8 +6,8 @@ return [
     | Messenger display name
     |-------------------------------------
     */
-    'username' => env('CHATIFY_NAME', 'FitFinder'),
-
+    'name' => env('CHATIFY_NAME', 'FitFinder'),
+    
     /*
     |-------------------------------------
     | The disk on which to store added

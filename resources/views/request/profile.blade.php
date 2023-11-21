@@ -161,16 +161,21 @@
         {{-- Request  --}}
         <div class="mt-8 flex items-center relative w-full">
             <div class="mr-auto"></div>
-            <div class="flex items-center space-x-4">
+            <div class="flex space-x-4">
                 <!-- "Send Request" form -->
                 <form method="POST" action="/matchmakes/send-request">
                     @csrf
                     <input type="hidden" name="trainee_id" value="{{ auth()->user()->id }}">
                     <input type="hidden" name="coach_id" value="{{ $user->id }}">
                     <button type="submit" name="sendRequest"
-                        class="rounded-md text-center px-6 py-3 text-md text-white bg-black cursor-pointer">Send
+                        class="rounded-md text-center px-6 py-3 text-md text-white bg-black cursor-pointer ">Send
                         Request</button>
+                         
                 </form>
+                <a href="http://127.0.0.1:8000/chatify/{{ $user->id }}">
+                    <button type="submit" name="message"
+                        class="rounded-md text-center px-6 py-3 text-md text-white bg-black cursor-pointer ">Send
+                        Message</button></a>  
             </div>
         </div>
     </div>
