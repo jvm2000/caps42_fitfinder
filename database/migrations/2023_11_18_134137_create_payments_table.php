@@ -16,8 +16,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('trainee_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('coach_id')->constrained('users')->onDelete('cascade');
-            $table->string('treference');
-            $table->string('creference');
+            $table->string('reference');
+            $table->string('status')->default('Pending');
             $table->decimal('amount', 10, 2);
             $table->date('startdate');
             $table->date('enddate');

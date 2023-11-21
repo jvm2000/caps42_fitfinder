@@ -10,6 +10,7 @@ use App\Http\Controllers\ContractController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\MatchmakingController;
 use App\Http\Controllers\MedicalCertificateController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\requestController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -70,7 +71,6 @@ Route::middleware(['auth'])->group(function () {
 	Route::post('/medcert/create/{user}', [MedicalCertificateController::class, 'store'])->name('medcert.create');
 	Route::put('/medcert/update/{medcert}', [MedicalCertificateController::class, 'update'])->name('medcert.update');
 	//contracts
-	
 	Route::get('/contracts/make', [ContractController::class, 'index'])->name('generate.contract')->middleware(['auth', 'verified']);
   Route::post('/contracts', [ContractController::class, 'store'])->name('contracts.store')->middleware(['auth', 'verified']);
 	// Matchmake 
@@ -79,7 +79,9 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/matchmakes/view/{id}', [MatchmakingController::class, 'show'])->name('matchmaking.show');
 	//SendRequest
 	Route::post('/matchmakes/send-request', [MatchmakingController::class, 'sendRequest'])->name('matchmaking.send');
-	
+	//payments
+	Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index')->middleware(['auth', 'verified']);
+	Route::post('/payments/store', [PaymentController::class, 'store'])->name('payments.store')->middleware(['auth', 'verified']);
 	//Programs
 	Route::get('/programs/make', [ProgramController::class, 'showAllPrograms'])->name('programs.index');
 	Route::get('/programs/list', [ProgramController::class, 'index'])->name('programs.index');
