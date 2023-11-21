@@ -7,7 +7,7 @@ return [
     |-------------------------------------
     */
     'name' => env('CHATIFY_NAME', 'FitFinder'),
-    
+
     /*
     |-------------------------------------
     | The disk on which to store added
