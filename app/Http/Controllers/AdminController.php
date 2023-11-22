@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\Program;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Module;
+
 
 class AdminController extends Controller
 {
@@ -17,24 +19,41 @@ class AdminController extends Controller
         return view('admin.trainees', compact('trainees'));
     }
 
-    public function create()
+    public function coachesIndex(User $users)
     {
-        //
+        $coaches = $users->where('role', 'Coaches')->latest()->get();
+        
+        return view('admin.coaches', compact('coaches'));
     }
 
-    public function store(Request $request)
+
+
+    public function programsIndex(Program $programs)
     {
-        //
+        $programs = Program::all(); // Adjust as needed
+
+        return view('admin.programs', ['programs' => $programs]);
     }
 
-    public function show(string $id)
+    public function modulesIndex(Module $modules)
     {
-        //
+        $modules = MOdule::all(); // Adjust as needed
+
+        return view('admin.modules', ['modules' => $modules]);
     }
 
-    public function edit(string $id)
+    public function suspendUser(Request $request, User $user)
     {
-        //
+        $form = $request->validate([
+
+        'status' =>['default','suspend'],
+
+        ]);
+
+        $user->update($form);
+
+        return back()->with('loading', true);
+
     }
 
     public function update(Request $request, string $id)
@@ -42,8 +61,9 @@ class AdminController extends Controller
 
     }
 
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-
+        $user->delete();
+        return back()->with('message', 'Successfully deleted User');
     }
 }

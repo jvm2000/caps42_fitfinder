@@ -30,6 +30,7 @@ return new class extends Migration
             $table->date('birthdate')->nullable();
             $table->json('tags')->nullable();
             $table->string('image')->nullable();
+            $table->string('status')->default('active');
             $table->rememberToken();
             $table->timestamps();
         });
