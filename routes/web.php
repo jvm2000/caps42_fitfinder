@@ -34,13 +34,13 @@ Route::post('/auth-login', [AuthController::class, 'login'])->name('user.login')
 Route::post('/verify-login', [AuthController::class, 'verify'])->name('verify.login');
 
 //	Admin
-Route::get('/admin', function () {return view('admin/index');});
+Route::get('/admin', function () {return view('admin/index');})->name('admin.dashboard');
 Route::get('/admin/trainees', [AdminController::class, 'traineesIndex'])->name('admin.trainees');
 Route::get('/admin/coaches', [AdminController::class, 'coachesIndex'])->name('admin.coaches');
 Route::get('/admin/programs', [AdminController::class, 'programsIndex'])->name('admin.programs');
 Route::get('/admin/modules', [AdminController::class, 'modulesIndex'])->name('admin.modules');
-Route::put('/admin/suspend', [AdminController::class, 'suspendUser'])->name('admin.User');
-Route::delete('/admin/user', [AdminController::class, 'destroy'])->name('admin.destroy');
+Route::put('/admin/suspend/{user}', [AdminController::class, 'suspendUser'])->name('admin.User');
+Route::delete('/admin/delete/{user}', [AdminController::class, 'destroy'])->name('admin.destroy');
 
 
 Route::middleware(['auth'])->group(function () {

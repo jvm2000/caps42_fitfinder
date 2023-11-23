@@ -29,20 +29,26 @@
 
       <div class="flex flex-col mt-16">
         <a href="/admin" class="flex items-center py-4 mt-[1px] cursor-pointer">
+          @if(Route::is('admin.dashboard'))
           <span class="h-[21px] w-1 bg-white rounded-r-md"></span>
+          @endif
           <img src="/icons/admin/dashboard.svg" alt="Dashboard Icon" class="w-5 h-5 ml-12">
           <p class="text-base text-white ml-10">Dashboard</p>
         </a>
         <a href="/admin/trainees" class="flex items-center py-4 mt-[1px] cursor-pointer">
+          @if(Route::is('admin.trainees'))
           <span class="h-[21px] w-1 bg-white rounded-r-md"></span>
+          @endif
           <img src="/icons/admin/trainees.svg" alt="Trainees Icon" class="w-5 h-5 ml-12">
           <p class="text-base text-white ml-10">Trainees</p>
         </a>
-        <div class="flex items-center py-4 mt-[1px] cursor-pointer">
+        <a href="/admin/coaches" class="flex items-center py-4 mt-[1px] cursor-pointer">
+          @if(Route::is('admin.coaches'))
           <span class="h-[21px] w-1 bg-white rounded-r-md"></span>
+          @endif
           <img src="/icons/admin/coaches.svg" alt="Coaches Icon" class="w-5 h-5 ml-12">
           <p class="text-base text-white ml-10">Coaches</p>
-        </div>
+        </a>
         <div class="flex items-center py-4 mt-[1px] cursor-pointer">
           <span class="h-[21px] w-1 bg-white rounded-r-md"></span>
           <img src="/icons/admin/programs.svg" alt="Programs Icon" class="w-5 h-5 ml-12">

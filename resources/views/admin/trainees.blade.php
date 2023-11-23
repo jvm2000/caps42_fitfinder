@@ -64,13 +64,153 @@ function openTab(evt, tabName) {
   </div>
 
   <div class="mt-2">
-    <div id="Active" class="tabcontent">
-      @foreach($trainees as $index => $active)
-      <p>{{$active->username}}</p>
-      @endforeach
+    <div id="Active" class="tabcontent w-full">
+      @if($trainees->count() > 0)
+      <table class="w-full table-auto border-spacing-y-6 border-separate">
+        <thead>
+          <tr>
+            <th class="text-sm font-medium text-gray-400 py-4 text-left indent-16">Username</th>
+            <th class="text-sm font-medium text-gray-400 py-4 text-left">Full Name</th>
+            <th class="text-sm font-medium text-gray-400 py-4 text-left">Email</th>
+            <th class="text-sm font-medium text-gray-400 py-4 text-left">Full Address</th>
+            <th class="text-sm font-medium text-gray-400 py-4 text-left">Zip Code</th>
+            <th class="text-sm font-medium text-gray-400 py-4 text-left">Status</th>
+            <th class="text-sm font-medium text-gray-400 py-4 text-left">Joined at</th>
+            <th class="text-sm font-medium text-gray-400 py-4 text-left">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach($trainees as $index => $active)
+            @if($active->status === 'active')
+            <tr class="">
+              <td class="py-2 text-sm border-l-4 border-indigo-500 indent-6">
+                @ {{ $active->username }}
+              </td>
+              <td class="py-2 text-sm">
+                <div class="flex items-center space-x-4">
+                  <div class="w-6 h-6 rounded-full">
+                    <img src="{{$active->getImageURL()}}" alt="Profile" class="w-full h-full rounded-full">
+                  </div>
+                  <p class="text-sm text-black">{{ $active->first_name }} {{ $active->last_name }}</p>
+                </div>
+              </td>
+              <td class="py-2 text-sm">
+                <p class="text-sm text-black">{{ $active->email }}</p>
+              </td>
+              <td class="py-2 text-sm">
+                @if($active->address)
+                <div class="flex flex-col space-y-1">
+                  <p class="text-sm text-black">{{ $active->address }}</p>
+                  <p class="text-sm text-black">{{ $active->city }} {{ $active->province }}</p>
+                </div>
+                @else
+                <p class="text-sm text-red-500">Address not filled up yet.</p>
+                @endif
+              </td>
+              <td class="py-2 text-sm">
+                @if($active->zip_code)
+                <p class="text-sm text-black">{{ $active->zip_code }}</p>
+                @else
+                <p class="text-sm text-red-500">No zip code yet.</p>
+                @endif
+              </td>
+              <td class="py-2 text-sm">
+                <div class="flex items-center space-x-4">
+                  <span
+                    class="w-3 h-3 bg-green-500 rounded-full"
+                  ></span>
+                  <p>{{ $active->status }}</p>
+                </div>
+              </td>
+              <td class="py-2 text-sm">
+                {{ $active->created_at }}
+              </td>
+              <td class="py-2 text-sm">
+                <x-admin.modal.suspend :active="$active" :index="$index"/>
+              </td>
+            </tr>
+            @else
+            <p>No trainees registered yet.</p>
+            @endif
+          @endforeach
+        </tbody>
+      </table>
+      @endif
     </div>
     <div id="Suspended" class="tabcontent">
-      Suspended
+      @if($trainees->count() > 0)
+      <table class="w-full table-auto border-spacing-y-6 border-separate">
+        <thead>
+          <tr>
+            <th class="text-sm font-medium text-gray-400 py-4 text-left indent-16">Username</th>
+            <th class="text-sm font-medium text-gray-400 py-4 text-left">Full Name</th>
+            <th class="text-sm font-medium text-gray-400 py-4 text-left">Email</th>
+            <th class="text-sm font-medium text-gray-400 py-4 text-left">Full Address</th>
+            <th class="text-sm font-medium text-gray-400 py-4 text-left">Zip Code</th>
+            <th class="text-sm font-medium text-gray-400 py-4 text-left">Status</th>
+            <th class="text-sm font-medium text-gray-400 py-4 text-left">Joined at</th>
+            <th class="text-sm font-medium text-gray-400 py-4 text-left">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach($trainees as $index => $suspended)
+            @if($suspended->status === 'suspended')
+            <tr class="">
+              <td class="py-2 text-sm border-l-4 border-indigo-500 indent-6">
+                @ {{ $suspended->username }}
+              </td>
+              <td class="py-2 text-sm">
+                <div class="flex items-center space-x-4">
+                  <div class="w-6 h-6 rounded-full">
+                    <img src="{{$suspended->getImageURL()}}" alt="Profile" class="w-full h-full rounded-full">
+                  </div>
+                  <p class="text-sm text-black">{{ $suspended->first_name }} {{ $suspended->last_name }}</p>
+                </div>
+              </td>
+              <td class="py-2 text-sm">
+                <p class="text-sm text-black">{{ $suspended->email }}</p>
+              </td>
+              <td class="py-2 text-sm">
+                @if($suspended->address)
+                <div class="flex flex-col space-y-1">
+                  <p class="text-sm text-black">{{ $suspended->address }}</p>
+                  <p class="text-sm text-black">{{ $suspended->city }} {{ $suspended->province }}</p>
+                </div>
+                @else
+                <p class="text-sm text-red-500">Address not filled up yet.</p>
+                @endif
+              </td>
+              <td class="py-2 text-sm">
+                @if($suspended->zip_code)
+                <p class="text-sm text-black">{{ $suspended->zip_code }}</p>
+                @else
+                <p class="text-sm text-red-500">No zip code yet.</p>
+                @endif
+              </td>
+              <td class="py-2 text-sm">
+                <div class="flex items-center space-x-4">
+                  <span
+                    class="w-3 h-3 bg-red-500 rounded-full"
+                  ></span>
+                  <p>{{ $suspended->status }}</p>
+                </div>
+              </td>
+              <td class="py-2 text-sm">
+                {{ $suspended->created_at }}
+              </td>
+              <td class="py-2 text-sm">
+                <div class="flex items-center space-x-3 relative">
+                  <x-admin.modal.restore :suspended="$suspended" :index="$index"/>
+                </div>
+              </td>
+            </tr>
+            @else
+            <p>No trainees registered yet.</p>
+            @endif
+          @endforeach
+        </tbody>
+      </table>
+      @endif
     </div>
   </div>
 

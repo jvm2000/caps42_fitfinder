@@ -95,4 +95,8 @@
 
     </div>
   </div>
+
+  @if(auth()->user()->status === 'suspended')
+  <x-admin.suspended-account/>
+  @endif
 </html>

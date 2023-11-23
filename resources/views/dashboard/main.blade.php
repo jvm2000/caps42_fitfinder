@@ -17,7 +17,7 @@
                 {{-- Rectangle 1 --}}
                 <div class="rectangle rounded-2xl p-5 w-[40rem] h-25 bg-zinc-300 overflow-auto flex relative">
                     <h1 class="text-xl">
-                        <p> Hi Clyde    ! </p>
+                        <p> Hi {{ auth()->user()->first_name }} </p>
                         <p> Welcome to FitFinder </p>
                     </h1>
                     <img src="/dashboard/fitness.svg" alt="Fitness Image"

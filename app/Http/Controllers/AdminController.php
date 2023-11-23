@@ -21,7 +21,7 @@ class AdminController extends Controller
 
     public function coachesIndex(User $users)
     {
-        $coaches = $users->where('role', 'Coaches')->latest()->get();
+        $coaches = $users->where('role', 'Coach')->latest()->get();
         
         return view('admin.coaches', compact('coaches'));
     }
@@ -45,20 +45,12 @@ class AdminController extends Controller
     public function suspendUser(Request $request, User $user)
     {
         $form = $request->validate([
-
-        'status' =>['default','suspend'],
-
+            'status' =>['nullable'],
         ]);
 
         $user->update($form);
 
-        return back()->with('loading', true);
-
-    }
-
-    public function update(Request $request, string $id)
-    {
-
+        return back()->with('message', 'Account suspended successfully.');
     }
 
     public function destroy(User $user)
