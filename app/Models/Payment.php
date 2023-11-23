@@ -18,10 +18,11 @@ class Payment extends Model
         'startdate',
         'enddate',
     ];
-    public function user()
+    public function coach()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'coach_id');
     }
+    
     public function contracts()
     {
         return $this->hasMany(Contract::class);

@@ -33,32 +33,32 @@ class PaymentController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'trainee_id' => 'required|exists:users,id',
-            'reference' => 'required|string',
-            'amount' => 'required|numeric',
-            'startdate' => 'required|date',
-            'enddate' => 'required|date|after_or_equal:startdate',
-        ]);
+{
+    $request->validate([
+        'coach_id' => 'required|exists:users,id',
+        'reference' => 'required|string',
+        'amount' => 'required|numeric',
+        'startdate' => 'required|date',
+        'enddate' => 'required|date|after_or_equal:startdate',
+    ]);
 
-        // Create a new payment instance
-        $paymentData = [
-            'trainee_id' => $request->input('trainee_id'),
-            'coach_id' => $request->user()->id, 
-            'reference' => $request->input('reference'),
-            'amount' => $request->input('amount'),
-            'startdate' => $request->input('startdate'),
-            'enddate' => $request->input('enddate'),
-            'status' => 'Pending',
-        ];
+    // Create a new payment instance
+    $paymentData = [
+        'trainee_id' => $request->user()->id,  // Assuming you want to store the coach's ID here
+        'coach_id' => $request->input('coach_id'), 
+        'reference' => $request->input('reference'),
+        'amount' => $request->input('amount'),
+        'startdate' => $request->input('startdate'),
+        'enddate' => $request->input('enddate'),
+        'status' => 'Pending',
+    ];
 
-        // Save the payment to the database
-        Payment::create($paymentData);
+    // Save the payment to the database
+    Payment::create($paymentData);
 
-        // Redirect or perform any additional actions as needed
-        return redirect()->route('payments.index')->with('success', 'Payment created successfully');
-    }
+    // Redirect or perform any additional actions as needed
+    return redirect()->route('payments.index')->with('success', 'Payment created successfully');
+}
 
     /**
      * Display the specified resource.

@@ -1,19 +1,21 @@
 <?php
 
 use App\Models\Program;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ModuleController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\requestController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\MatchmakingController;
+use App\Http\Controllers\SendRequestController;
 use App\Http\Controllers\MedicalCertificateController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\requestController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -112,9 +114,17 @@ Route::middleware(['auth'])->group(function () {
 	//viewprofile
 	Route::get('/matchmakes/view/{id}', [MatchmakingController::class, 'show'])->name('matchmaking.show');
 	//SendRequest
-	Route::post('/matchmakes/send-request', [MatchmakingController::class, 'sendRequest'])->name('matchmaking.send');
+	Route::post('/matchmakes/send-request', [SendRequestController::class, 'sendRequest'])->name('matchmaking.send');
+	//
+	Route::get('/coach/dashboard', [SendRequestController::class, 'dashboard'])->name('coach.dashboard');
+	Route::post('/coach/approve-payment/{payment}', [SendRequestController::class, 'approvePayment'])->name('coach.approvePayment');
+	Route::post('/coach/disapprove-payment/{payment}', [SendRequestController::class, 'disapprovePayment'])->name('coach.disapprovePayment');
+//
+Route::post('/coach/approve-request/{request}', [UserController::class, 'approveRequest'])->name('coach.approveRequest');
+Route::post('/coach/disapprove-request/{request}', [UserController::class, 'disapproveRequest'])->name('coach.disapproveRequest');
 });
 
+//
 
 Route::get('logged-in/dashboard', [MatchmakingController::class, 'show'])->name('dashboard.main');
 Route::post('/matchmaking/send-request', [MatchmakingController::class, 'sendRequest'])->name('send.request');

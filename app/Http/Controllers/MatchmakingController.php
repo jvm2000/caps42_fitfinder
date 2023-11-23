@@ -57,37 +57,6 @@ class MatchmakingController extends Controller
         }
     }
 
-
-    public function sendRequest(Request $request)
-    {
-        if ($request->has('sendRequest')) {
-            $traineeId = $request->input('trainee_id');
-            $coachId = $request->input('coach_id');
-            
-            // Check if a request already exists
-            $existingRequest = DB::table('requests')
-                ->where('trainee_id', $traineeId)
-                ->where('coach_id', $coachId)
-                ->first();
-    
-            if ($existingRequest) {
-                return "A request has already been sent to this user.";
-            }
-
-            DB::table('requests')->insert([
-                'trainee_id' => $traineeId,
-                'coach_id' => $coachId,
-                'status' => 'Pending', // Set the initial status to "Pending"
-            ]);
-
-            $status ='Pending';
-    
-            return view('request.test', ['status' => 'Pending']); // You can adjust the status as needed
-        } else {
-            return "Something is wrong.";
-        }   
-    }
-
     public function show($id)
     {
         $role = auth()->user()->role;
