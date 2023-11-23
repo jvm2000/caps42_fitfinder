@@ -36,11 +36,55 @@ class AuthController extends Controller
 
     $form['password'] = bcrypt($form['password']);
 
-    // $form['birthdate'] = Carbon::parse($form['birthdate'])->format('Y-m-d');
-
     User::create($form);
 
-    return redirect('/login')->with('message', 'User Registration Successful');
+    $code = mt_rand(100000, 999999);
+
+    session(['code' => $code]);
+
+    session(['form_data' => $form]);
+
+    $mail = new PHPMailer(true);
+    $mail->isSMTP();
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'llagunocarl@gmail.com';
+    $mail->Password = 'vgckqfzfyyohtkgd';
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->Port = 587;
+
+    $mail->setFrom('fitfinder@co.com', 'FitFinder');
+    $mail->addAddress($email = $form['email']);
+
+
+    $mail->isHTML(true);
+    $mail->Subject = 'Verify your FitFinder account';
+    $mail->Body =
+      "<html>
+        <head>
+          <style>
+                  body {
+                      text-align: center;
+                  } .content {
+                      display: inline-block;
+                      text-align: left;
+                  }
+              </style>
+        </head>
+        <body>
+            <div class='content'>
+          <h1>Verify Log-In</h1><br>"
+            . "Your verification code<br>"
+            . "<h3>$code</h3><br>"
+            . "The verification code will be valid for 30 minutes. Please do not share this code with anyone.<br>"
+            . "<i>This is an automated message, please do not reply.</i>
+          </div>
+        </body>
+      </html>";
+
+    $mail->send();
+
+    return redirect('/verification')->with('loading', true);
   }
 
   /**
@@ -49,64 +93,33 @@ class AuthController extends Controller
   public function login(Request $request)
   {
     $form = $request->validate([
-      'email' => ['required', 'email'],
-      'password' => 'required'
+        'email' => ['required', 'email'],
+        'password' => 'required'
     ]);
-    $code = mt_rand(100000, 999999);
 
-    session(['code' => $code]);
+    $email = $form['email'];
+    $password = $form['password'];
 
-    session(['form_data' => $form]);
+    if ($email == 'user@admin.com' && $password == 'Admin1234') {
+        auth()->loginUsingId(1); // You might need to adjust the user ID based on your user data
 
+        $request->session()->regenerate();
 
-    if (auth()->attempt($form)) {
-      $mail = new PHPMailer(true);
-      $mail->isSMTP();
-      $mail->Host = 'smtp.gmail.com';
-      $mail->SMTPAuth = true;
-      $mail->Username = 'llagunocarl@gmail.com';
-      $mail->Password = 'vgckqfzfyyohtkgd';
-      $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-      $mail->Port = 587;
-
-      $mail->setFrom('fitfinder@co.com', 'FitFinder');
-      $mail->addAddress($email = $form['email']);
-
-
-      $mail->isHTML(true);
-      $mail->Subject = 'Verify your FitFinder account';
-      $mail->Body =
-        "<html>
-          <head>
-            <style>
-                    body {
-                        text-align: center;
-                    } .content {
-                        display: inline-block;
-                        text-align: left;
-                    }
-                </style>
-          </head>
-          <body>
-              <div class='content'>
-            <h1>Verify Log-In</h1><br>"
-              . "Your verification code<br>"
-              . "<h3>$code</h3><br>"
-              . "The verification code will be valid for 30 minutes. Please do not share this code with anyone.<br>"
-              . "<i>This is an automated message, please do not reply.</i>
-            </div>
-          </body>
-        </html>";
-
-
-      $mail->send();
-
-      Auth::logout();
-
-      return redirect('/verification')->with('loading', true);
+        return redirect('/admin')->with('loading', true);
     }
 
-    return back()->withErrors(['email' => 'Entered email and password is incorrect.'])->onlyInput('email')->withInput();
+    // If email and password don't match, attempt regular authentication
+    if (auth()->attempt($form)) {
+        $request->session()->regenerate();
+
+        return redirect('/home')->with('loading', true);
+    }
+
+    // If neither condition is met, show an error
+    return back()
+        ->withErrors(['email' => 'Entered email and password is incorrect.'])
+        ->onlyInput('email')
+        ->withInput();
   }
   public function verify(Request $request)
   {

@@ -35,7 +35,7 @@
 
             </div>
             <p class="absolute bottom-0 left-6"><span class="font-medium">
-              Tags</span>: <span class="font-light">
+              Interests</span>: <span class="font-light">
                 @foreach ($match->tags as $tag)
                   {{ $tag }},
                 @endforeach

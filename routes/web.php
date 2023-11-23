@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Models\Program;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\ContractController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\MatchmakingController;
 use App\Http\Controllers\MedicalCertificateController;
+use App\Http\Controllers\RequestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,8 +33,19 @@ Route::post('/auth-register', [AuthController::class, 'store'])->name('user.regi
 Route::post('/auth-login', [AuthController::class, 'login'])->name('user.login');
 Route::post('/verify-login', [AuthController::class, 'verify'])->name('verify.login');
 
+//	Admin
+Route::get('/admin', function () {return view('admin/index');})->name('admin.dashboard');
+Route::get('/admin/trainees', [AdminController::class, 'traineesIndex'])->name('admin.trainees');
+Route::get('/admin/coaches', [AdminController::class, 'coachesIndex'])->name('admin.coaches');
+Route::get('/admin/programs', [AdminController::class, 'programsIndex'])->name('admin.programs');
+Route::get('/admin/modules', [AdminController::class, 'modulesIndex'])->name('admin.modules');
+Route::put('/admin/suspend/{user}', [AdminController::class, 'suspendUser'])->name('admin.User');
+Route::delete('/admin/delete/{user}', [AdminController::class, 'destroy'])->name('admin.destroy');
+
+
 Route::middleware(['auth'])->group(function () {
 	// General 
+	Route::get('/request-all', [RequestController::class, 'index'])->name('user.index');
 	Route::get('/home', function () {return view('dashboard/main');})->name('home.index');
 	Route::post('/auth-logout', [AuthController::class, 'logout'])->name('user.logout');
 	Route::get('/auth/profile/{user}', [AuthController::class, 'show'])->name('user.show');
@@ -52,10 +65,14 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/profile/trainee/{user}', [MedicalCertificateController::class, 'index'])->name('medcert.index');
 	Route::post('/medcert/create/{user}', [MedicalCertificateController::class, 'store'])->name('medcert.create');
 	Route::put('/medcert/update/{medcert}', [MedicalCertificateController::class, 'update'])->name('medcert.update');
+	
 	//contracts
-	Route::get('/contracts', [ContractController::class, 'index'])->name('contracts.index');
-	Route::post('/contracts/make', [ContractController::class, 'generateContract'])->name('generate.contract');
-  Route::post('/contracts/send', [ContractController::class, 'store']);
+Route::get('contracts/dashboard', [ContractController::class, 'contractsDashboard'])->name('contracts.dashboard');
+Route::post('/contracts/index', [ContractController::class, 'index'])->name('contracts.index');
+Route::get('/contracts/make', [ContractController::class, 'generateContract'])->name('generate.contract');
+Route::post('/contracts/make/', [ContractController::class, 'processContract'])->name('process.contract');
+
+
 	// Matchmake 
 	Route::get('/matchmakes', [MatchmakingController::class, 'index'])->name('matchmaking.index');
 	//viewprofile
@@ -77,7 +94,8 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/profile/trainee/{user}', [MedicalCertificateController::class, 'index'])->name('medcert.index');
 	Route::post('/medcert/create/{user}', [MedicalCertificateController::class, 'store'])->name('medcert.create');
 	Route::put('/medcert/update/{medcert}', [MedicalCertificateController::class, 'update'])->name('medcert.update');
-
+	//Payments
+	Route::get('payment',[PaymentController::class,'index'])->name('payment.index');
 	// Modules 
 	Route::get('/programs/show/{program}', [ProgramController::class, 'showProgram'])->name('modules.program.show');
 	Route::get('/modules/make/{program}', function (Program $program) {

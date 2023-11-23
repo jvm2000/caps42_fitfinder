@@ -14,12 +14,9 @@ class ProgramController extends Controller
     {
         $user = Auth::user();
 
-        $programs = $user->programs()->with('user');
+        $programs = $user->programs()->latest()->paginate(5);
 
-        // return view('programs.main', compact('programs')->paginate(5)   );
-
-        return view('programs.main', ['programs' => Program::latest()->paginate(5)]);
-
+        return view('programs.main', compact('programs'));
     }
 
     public function showAllPrograms()
@@ -40,7 +37,8 @@ class ProgramController extends Controller
             'summary'=>['required', 'min:6'],
             'status'=>['nullable'],
             'image' => ['nullable'],
-            'prerequisite_with' =>['nullable'],
+            'no_of_trainees' => ['nullable'],
+            'prerequisite_program_id' => 'nullable|exists:programs,id',
         ]);
         // $form['chosen_program'] = $request->filled('chosen_program');
         $form['is_prerequisite'] = $request->filled('is_prerequisite');

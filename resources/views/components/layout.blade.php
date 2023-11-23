@@ -37,6 +37,7 @@
               <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Dashboard</p>
             </a>
 
+            @if (auth()->user()->role === 'Trainee')
             <a href="/matchmakes" class="flex items-center relative mt-14 group z-0">
               <span class="w-2 h-9 rounded-r-md mr-32 z-10"></span>
               @if(Route::is(['matchmaking.index', 'matchmaking.show']))
@@ -45,6 +46,7 @@
               <img src="/dashboard/icons/main.svg" alt="Main" class="w-6 h-6 group-hover:mb-1 mr-14">
               <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Matchmakes</p>
             </a>
+            @endif
 
             @if (auth()->user()->role === 'Coach')
             <a href="/programs/list" class="flex items-center relative mt-14 group z-0">
@@ -58,7 +60,7 @@
             @endif
 
             @if (auth()->user()->role === 'Coach')
-            <a href="/contracts"class="flex items-center relative mt-14 group">
+            <a href="/contracts/dashboard"class="flex items-center relative mt-14 group">
 
               <span class="w-2 h-9 rounded-r-md mr-32"></span>
 
@@ -93,4 +95,8 @@
 
     </div>
   </div>
+
+  @if(auth()->user()->status === 'suspended')
+  <x-admin.suspended-account/>
+  @endif
 </html>
