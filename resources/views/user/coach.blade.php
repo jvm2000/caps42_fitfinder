@@ -16,7 +16,7 @@
 
         <div class="space-y-1">
           <div class="flex items-center space-x-2">
-            <img src="/icons/settings/profile-icon.svg" alt="Profile Icon" class="w-6 h-6">
+            
             <p class="text-base font-medium">{{auth()->user()->username}}</p>
           </div>
 

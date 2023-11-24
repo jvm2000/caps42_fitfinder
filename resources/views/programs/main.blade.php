@@ -98,7 +98,8 @@ function openTab(evt, tabName) {
 					</thead>
 					<tbody>
 						@foreach($programs as $index => $active)
-							@if($active->status === 'active')
+							 {{ $id = auth()->user()->id; }}
+							@if($active->status === 'active' && $active->user_id === $id)
 							<tr class="">
 								<td class="border-l-8 border-indigo-500 py-1">
 									<a href="/programs/show/{{ $active->id }}" class="ml-4 flex items-center space-x-4 group">

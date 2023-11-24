@@ -1,132 +1,4 @@
-<x-layout>
-    <x-slot:title>
-        FitFinder - Contracts
-    </x-slot:title>
-    <div class="w-full overflow-y-auto h-[50rem] py-10 px-12">
-        <div class="flex items-center relative">
-          <p class="text-3xl font-semibold mr-auto">Contracts</p>
-          <x-menu-dropdown />
-        </div>
-        
-
-        <div class="mt-10 w-full gap-x-8 items-center">
-            <form action="{{ route('process.contract') }}" method="post">
-                @csrf
-                <h1>This Contract ("Contract") is made and entered into as of [Date] between:</h1>
-                <h2 class="mt-10">Coach Details</h2>
-            <p>
-                @foreach($first_name as $firstName)
-                    {{ $firstName }}
-                    @foreach($last_name as $lname)
-                        {{$lname}}
-                    @endforeach
-                    <br>
-                @endforeach
-        
-                @foreach($address as $add)
-                    {{ $add }}<br>
-                @endforeach
-                @foreach($city as $c)
-                    {{ $c }}
-                @endforeach
-                @foreach($province as $p)
-                    {{ $p }}
-                @endforeach
-                @foreach($zip_code as $zip)
-                    {{ $zip }}<br>
-                @endforeach
-                @foreach($phone_number as $pn)
-                    {{ $pn }}<br>
-                @endforeach
-            </p>
-            </div>
-            <p>and</p>
-        
-            <h2 class="mt-10">Trainee Details</h2>
-            <p>
-                <input type="text" name="traineeUsername" value="{{ $traineeUsername }}" readonly><br>
-                <input type="text" name="traineeAddress" value="{{ $traineeAddress }}" readonly><br>
-                <input type="text" name="traineeEmailAddress" value="{{ $traineeEmailAddress }}" readonly><br>
-                <input type="text" name="traineePhoneNumber" value="{{ $traineePhoneNumber }}" readonly><br>
-            </p>
-            <br>
-            <p>WHEREAS, @foreach($first_name as $firstName)
-                    <strong>{{ $firstName }}</strong>
-                @endforeach  provides coaching and training services, and <strong>{{$traineeEmailAddress}}</strong> seeks to engage the Coach to receive coaching and training services;</p>
-        
-            <p class="mt-10">NOW, THEREFORE, in consideration of the mutual covenants contained herein, the parties agree as
-                follows:</p>
-        
-            <h2 class="mt-10">1. COACHING AND TRAINING SERVICES</h2>
-            <p class="mt-10">The Coach agrees to provide coaching and training services to the Trainee. These services may include,
-                but are not limited to <strong>{{$programs}}</strong>.</p>
-        
-            <h2 class="mt-10">2. PAYMENT</h2>
-            <p class="mt-10">The Trainee agrees to pay the Coach for the coaching and training services at the rate of [Specify Payment Terms,
-                e.g., hourly, per session, or other] as agreed upon between the parties. Payment terms shall be [Specify Payment
-                Schedule, e.g., weekly, bi-weekly, or as agreed upon].</p>
-        
-            <h2 class="mt-10">3. TERM</h2>
-            <p class="mt-10">This Contract shall commence on <strong>{{$startDate}}</strong> and continue until terminated by either party with <strong>{{$endDate}}</strong> written notice.</p>
-        
-            <h2 class="mt-10">4. CONFIDENTIALITY</h2>
-            <p class="mt-10">The Coach and Trainee agree to maintain the confidentiality of all information shared during the
-                coaching and training sessions and not disclose or use such information for any purpose other than the
-                coaching and training.</p>
-        
-            <h2 class="mt-10">5. TERMINATION</h2>
-            <p class="mt-10">Either party may terminate this Contract for any reason by providing written notice as specified in
-                Section 3. Termination shall not relieve the parties of their obligations and responsibilities under this
-                Contract.</p>
-        
-            <h2 class="mt-10">6. ENTIRE AGREEMENT</h2>
-            <p class="mt-10">This Contract constitutes the entire agreement between the parties and supersedes all prior or
-                contemporaneous agreements, understandings, and representations.</p>
-
-            <h2 class="mt-10">DATA PRIVACY</h2> 
-            <p class="mt-10">In compliance with the Republic Act 10173 - Data Privacy Act of 20121, the Company is committed to
-             protecting and respecting the privacy of the personal data collected from the Trainee. 
-             The Company will ensure that all personal data is processed in accordance with the principles of
-              transparency, legitimate purpose, and proportionality. </p>
-            <p class="mt-10">IN WITNESS WHEREOF, the parties have executed this Contract as of the date first above written.</p>
-        
-            <h2 class="mt-10"> @foreach($first_name as $firstName)
-                    {{ $firstName }}
-                @endforeach
-                @foreach($last_name as $lname)
-                    {{ $lname }}
-                @endforeach
-            </h2>
-            <p class="mt-10">By:  @foreach($first_name as $firstName)
-                    {{ $firstName }}
-                @endforeach
-                @foreach($last_name as $lname)
-                    {{ $lname }}
-                @endforeach
-            <br>
-                Date: {{$startDate}}</p>
-        
-            <h2 class="mt-10">{{$traineeUsername}}</h2>
-            <p class="mt-10">By: {{$traineeUsername}}<br>
-                Date: {{$startDate}}</p>
-
-                <div class="flex items-center space-x-4 space-y-20">
-                    <button type="submit" class="rounded-md flex items-center px-6 py-3 text-md text-white bg-black cursor-pointer active:mt-[1px]"> Submit </button>
-                  </div>
-        </form>
-        </div>
-
-
-
-
-
-    </div>
-</x-layout>
-
-
-
-
-{{-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -136,32 +8,18 @@
 </head>
 
 <body>
-<form action="" method="post">
-        <h1>Contract</h1>
+<form action="{{ route('contracts.store') }}" method="post">
+@csrf
+<h1>Contract</h1>
+    
     <h2>Coach Details</h2>
     <p>
-        @foreach($first_name as $firstName)
-            {{ $firstName }}
-            @foreach($last_name as $lname)
-                {{$lname}}
-            @endforeach
-            <br>
-        @endforeach
-
-        @foreach($address as $add)
-            {{ $add }}<br>
-        @endforeach
-        @foreach($city as $c)
-            {{ $c }}
-        @endforeach
-        @foreach($province as $p)
-            {{ $p }}
-        @endforeach
-        @foreach($zip_code as $zip)
-            {{ $zip }}<br>
-        @endforeach
-        @foreach($phone_number as $pn)
-            {{ $pn }}<br>
+        @foreach($requests as $request)
+            {{ $request->coach->first_name . ' ' . $request->coach->last_name }}<br>
+            {{ $request->coach->address }}<br>
+            {{ $request->coach->city . ' ' . $request->coach->province . ' ' . $request->coach->zip_code }}<br>
+            {{ $request->coach->email }}<br>
+            {{ $request->coach->phone_number }}<br>
         @endforeach
     </p>
 
@@ -169,68 +27,114 @@
 
     <h2>Trainee Details</h2>
     <p>
-        {{$traineeUsername}}<br>
-        {{$traineeAddress}}<br>
-        {{$traineeEmailAddress}}<br>
-        {{$traineePhoneNumber}}<br>
+        <label for="traineeUsername">Trainee Name:</label>
+        <select id="traineeUsername" name="traineeUsername">
+            @foreach ($requests as $request)
+                <option value="{{ $request->requester->id }}">{{ $request->requester->first_name . ' ' . $request->requester->last_name }}</option>
+            @endforeach
+        </select><br>
+        <label for="traineeAddress">Trainee Address:</label>
+        <input type="text" name="traineeAddress" value="{{ $requests[0]->requester->address . ' ' . $requests[0]->requester->city }}"><br>
+        <label for="traineeEmailAddress">Trainee Email Address:</label>
+        <input type="text" name="traineeEmailAddress" value="{{ $requests[0]->requester->email }}"><br>
+        <label for="traineePhoneNumber">Trainee Phone Number:</label>
+        <input type="text" name="traineePhoneNumber" value="{{ $requests[0]->requester->phone_number }}"><br>
     </p>
 
-    <p>WHEREAS, @foreach($first_name as $firstName)
-            <strong>{{ $firstName }}</strong>
-        @endforeach  provides coaching and training services, and <strong>{{$traineeEmailAddress}}</strong> seeks to engage the Coach to receive coaching and training services;</p>
+    <p>
+        FitFinder, Inc.<br>
+        Sanciangko St, Cebu City, 6000 Cebu<br>
+        Fitfinder@getfit.com
+    </p>
+
+    <p>WHEREAS, 
+        <strong>
+            <select id="traineeUsername" name="traineeUsername">
+                @foreach ($requests as $request)
+                    <option value="{{ $request->requester->id }}">{{ $request->requester->first_name . ' ' . $request->requester->last_name }}</option>
+                @endforeach
+            </select>
+        </strong>
+        provides coaching and training services, and 
+        <strong>
+            <select id="traineeUsername" name="traineeUsername">
+                @foreach ($requests as $request)
+                    <option value="{{ $request->requester->id }}">{{ $request->requester->first_name . ' ' . $request->requester->last_name }}</option>
+                @endforeach
+            </select>
+        </strong>
+        seeks to engage the Coach to receive coaching and training services;
+        <br> and FitFinder, Inc. FitFinder operates a platform connecting Coaches and Trainees;
+    </p>
 
     <p>NOW, THEREFORE, in consideration of the mutual covenants contained herein, the parties agree as
         follows:</p>
 
     <h2>1. COACHING AND TRAINING SERVICES</h2>
-    <p>The Coach agrees to provide coaching and training services to the Trainee. These services may include,
-        but are not limited to <strong>{{$programs}}</strong>.</p>
-
+    <p>1.1 The Coach agrees to provide coaching and training services to the Trainee. 
+        These services may include, but are not limited to <strong><select id="programs" name="programs">
+            <option value="">Select a Program</option>
+            @foreach($programs as $program)
+            <option value="{{ $program->id }}">{{ $program->name }}</option>
+        @endforeach
+        </select></strong>.</p>
+        
     <h2>2. PAYMENT</h2>
-    <p>The Trainee agrees to pay the Coach for the coaching and training services at the rate of [Specify Payment Terms,
-        e.g., hourly, per session, or other] as agreed upon between the parties. Payment terms shall be [Specify Payment
-        Schedule, e.g., weekly, bi-weekly, or as agreed upon].</p>
+    <p> 2.1 The Trainee agrees to pay the Coach for the coaching and training services at the rate of <strong><select id="paymentType" name="paymentType">
+         
+         <option value="gcash" >GCASH</option>
+         <option value="paypal">PAYPAL</option>
+         <option value="applepay">APPLEPAY</option>
+ </select></strong> as agreed upon between the parties.<br>
+       <br> 2.2 FitFinder shall receive a commission of 10% on all payments made by the Trainee to the Coach through the FitFinder platform.</p>
 
     <h2>3. TERM</h2>
-    <p>This Contract shall commence on <strong>{{$startDate}}</strong> and continue until terminated by either party with <strong>{{$endDate}}</strong> written notice.</p>
+    <p>3.1 This Contract shall commence on <strong>Start Date: </strong><input type="date" id="startDate" name="startDate"><br> and continue until terminated by either party with  <strong>End Date: </strong><input type="date" id="endDate" name="endDate"><br> written notice.</p>
 
     <h2>4. CONFIDENTIALITY</h2>
-    <p>The Coach and Trainee agree to maintain the confidentiality of all information shared during the
-        coaching and training sessions and not disclose or use such information for any purpose other than the
-        coaching and training.</p>
+    <p>4.1 The Coach, Trainee, and FitFinder agree to maintain the confidentiality of all information 
+        shared during the coaching and training sessions and not disclose or use such information for any 
+        purpose other than the coaching and training.</p>
 
-    <h2>5. TERMINATION</h2>
-    <p>Either party may terminate this Contract for any reason by providing written notice as specified in
-        Section 3. Termination shall not relieve the parties of their obligations and responsibilities under this
-        Contract.</p>
+    <h2>5. DATA PRIVACY</h2>
+    <p>5.1 The parties acknowledge and agree that FitFinder may collect, process, and store personal 
+        data as necessary for the provision of services. FitFinder shall implement appropriate data security
+         measures to protect the confidentiality and integrity of personal data.<br>
+        5.2 The parties agree to comply with all applicable data protection laws and regulations.
+     </p>
 
-    <h2>6. ENTIRE AGREEMENT</h2>
-    <p>This Contract constitutes the entire agreement between the parties and supersedes all prior or
-        contemporaneous agreements, understandings, and representations.</p>
-
+    <h2>6. TERMINATION</h2>
+    <p>6.1 Either party may terminate this Contract for any reason by providing written notice as specified in Section 3. 
+        Termination shall not relieve the parties of their obligations and responsibilities under this Contract.</p>
+       
+    <h2>7. ENTIRE AGREEMENT</h2>
+    <p>7.1 This Contract constitutes the entire agreement between the parties and supersedes all prior or contemporaneous agreements, understandings, and representations.</p><br>
     <p>IN WITNESS WHEREOF, the parties have executed this Contract as of the date first above written.</p>
 
-    <h2> @foreach($first_name as $firstName)
-            {{ $firstName }}
-        @endforeach
-        @foreach($last_name as $lname)
-            {{ $lname }}
+    <h2> @foreach($requests as $request)
+            {{ $request->coach->first_name .''.$request->coach->last_name }}
+            <br>
         @endforeach
     </h2>
-    <p>By:  @foreach($first_name as $firstName)
-            {{ $firstName }}
-        @endforeach
-        @foreach($last_name as $lname)
-            {{ $lname }}
+    <p>By:  @foreach($requests as $request)
+            {{ $request->coach->first_name .''.$request->coach->last_name }}
+            <br>
         @endforeach
     <br>
-        Date: {{$startDate}}</p>
+        Date:{{$currentDate }} </p>
 
-    <h2>{{$traineeUsername}}</h2>
-    <p>By: {{$traineeUsername}}<br>
-        Date: {{$startDate}}</p>
+    <p><select id="traineeUsername" name="traineeUsername">
+            @foreach ($requests as $request)
+                <option value="{{ $request->requester->id }}">{{ $request->requester->first_name . ' ' . $request->requester->last_name }}</option>
+            @endforeach
+        </select><br>
+        Date: {{$currentDate }} </p>
+    
+        <h2>Fitfinder Inc.</h2>
+        <p>By: Fitfinder<br>
+            Date: {{$currentDate }} </p>
     <button type="submit" name="submit">Submit</button>
 </form>
 </body>
 
-</html> --}}
+</html>

@@ -19,7 +19,14 @@
 <div class="relative inline-block text-left">
   <div class="flex items-center space-x-4">
     <div class="text-right">
-        <p class="text-base font-bold"><span>@</span>{{auth()->user()->username}}</p>
+      
+        <p class="text-base font-bold">
+          @if (auth()->user()->hasVerifiedEmail())
+          <img src="/dashboard/icons/verified.svg" alt="Verified" class="w-4 h-4 inline" title="Verified">
+          @else
+          <img src="/dashboard/icons/notverified.svg" alt="Not verified" class="w-4 h-4 inline" title="Not Verified">
+          @endif
+         <span>@</span>{{auth()->user()->username}}</p>
         <p class="text-base text-neutral-400">{{auth()->user()->role}}</p>
     </div>
     <button 
