@@ -129,8 +129,8 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/matchmakes/view/{id}', [MatchmakingController::class, 'show'])->name('matchmaking.show');
 	//SendRequest
 	Route::post('/matchmakes/send-request', [SendRequestController::class, 'sendRequest'])->name('matchmaking.send');
+	Route::get('/requests/dashboard/coach',[SendRequestController::class,'viewDashboard'])->name('requests.coachDashboard');
 	//
-	Route::get('/coach/dashboard', [SendRequestController::class, 'dashboard'])->name('coach.dashboard');
 	Route::post('/coach/approve-payment/{payment}', [SendRequestController::class, 'approvePayment'])->name('coach.approvePayment');
 	Route::post('/coach/disapprove-payment/{payment}', [SendRequestController::class, 'disapprovePayment'])->name('coach.disapprovePayment');
 //
