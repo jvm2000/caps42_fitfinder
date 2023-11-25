@@ -24,35 +24,28 @@ use Illuminate\Http\Request;
 |
 */
 
-Auth::routes(['verify' => true]);
-Route::get('/email/verify', function () {
-    return view('auth.notify');
-})->middleware('auth')->name('verification.notice');
-Route::get('/', function () {return view('welcome');})->middleware('guest')->name('welcome');
-//Route::get('/verification', function () {return view('verify');})->name('verify');
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
- 
-    return redirect('/home');
-})->middleware(['auth', 'signed'])->name('verification.verify');
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
- 
-    return redirect('/home')->with('message', 'Verification link sent!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
-// Auth
-Route::get('/login', function () {return view('auth/login');})->name('login');
-Route::get('/register', function () {return view('auth/register');});
-Route::post('/auth-register', [AuthController::class, 'store'])->name('user.register');
-Route::post('/auth-login', [AuthController::class, 'login'])->name('user.login');
-Route::post('/verify-login', [AuthController::class, 'verify'])->name('verify.login');
+	Auth::routes(['verify' => true]);
+	Route::get('/email/verify', function () {return view('auth.notify');})->middleware('auth')->name('verification.notice');Route::get('/', function () {return view('welcome');})->middleware('guest')->name('welcome');
+	//Route::get('/verification', function () {return view('verify');})->name('verify');
+	Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();return redirect('/home');})->middleware(['auth', 'signed'])->name('verification.verify');
+	Route::post('/email/verification-notification', function (Request $request) {$request->user()->sendEmailVerificationNotification();return redirect('/home')->with('message', 'Verification link sent!');})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
-Route::middleware(['auth'])->group(function () {
+	// Auth
+	Route::get('/login', function () {return view('auth/login');})->name('login');
+	Route::get('/register', function () {return view('auth/register');});
+	Route::post('/auth-register', [AuthController::class, 'store'])->name('user.register');
+	Route::post('/auth-login', [AuthController::class, 'login'])->name('user.login');
+	Route::post('/verify-login', [AuthController::class, 'verify'])->name('verify.login');
+
+	Route::middleware(['auth'])->group(function () {
+	
 	// General 
 	Route::get('/home', function () {return view('dashboard/main');})->name('home.index');
 	Route::post('/auth-logout', [AuthController::class, 'logout'])->name('user.logout');
 	Route::get('/auth/profile/{user}', [AuthController::class, 'show'])->name('user.show');
 	Route::put('/auth/profile/update/{user}', [AuthController::class, 'update'])->name('user.update');
+	
 	// General 
 	Route::get('/home', function () {return view('dashboard/main');})->name('home.index');
 	Route::post('/auth-logout', [AuthController::class, 'logout'])->name('user.logout');
@@ -68,14 +61,19 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/profile/trainee/{user}', [MedicalCertificateController::class, 'index'])->name('medcert.index');
 	Route::post('/medcert/create/{user}', [MedicalCertificateController::class, 'store'])->name('medcert.create');
 	Route::put('/medcert/update/{medcert}', [MedicalCertificateController::class, 'update'])->name('medcert.update');
+	
 	//contracts
-	Route::get('/contracts', [ContractController::class, 'index'])->name('contracts.index')->middleware(['auth', 'verified']);
+	Route::get('/contracts/dashboard', function () {return view('contracts.dashboard');})->middleware(['auth', 'verified']);
+	Route::get('/contracts/create', [ContractController::class, 'index'])->name('contracts.index')->middleware(['auth', 'verified']);
 	Route::post('/contracts/make', [ContractController::class, 'generateContract'])->name('generate.contract')->middleware(['auth', 'verified']);
   	Route::post('/contracts/send', [ContractController::class, 'store'])->middleware(['auth', 'verified']);
+	
 	// Matchmake 
 	Route::get('/matchmakes', [MatchmakingController::class, 'index'])->name('matchmaking.index');
+	
 	//viewprofile
 	Route::get('/matchmakes/view/{id}', [MatchmakingController::class, 'show'])->name('matchmaking.show');
+	
 	//SendRequest
 	Route::post('/matchmakes/send-request', [MatchmakingController::class, 'sendRequest'])->name('matchmaking.send');
 	
@@ -96,9 +94,7 @@ Route::middleware(['auth'])->group(function () {
 
 	// Modules 
 	Route::get('/programs/show/{program}', [ProgramController::class, 'showProgram'])->name('modules.program.show');
-	Route::get('/modules/make/{program}', function (Program $program) {
-    return view('modules.create', compact('program'));
-})->name('modules.make');
+	Route::get('/modules/make/{program}', function (Program $program) {return view('modules.create', compact('program'));})->name('modules.make');
 	Route::post('/modules/create/{program}', [ModuleController::class, 'store'])->name('modules.create');
 	Route::get('/modules/edit/{module}', [ModuleController::class, 'edit'])->name('modules.edit');
 	Route::put('/modules/update/{module}', [ModuleController::class, 'update'])->name('modules.update');
@@ -106,12 +102,11 @@ Route::middleware(['auth'])->group(function () {
 
 	// Matchmake 
 	Route::get('/matchmakes', [MatchmakingController::class, 'index'])->name('matchmaking.index');
+	
 	//viewprofile
 	Route::get('/matchmakes/view/{id}', [MatchmakingController::class, 'show'])->name('matchmaking.show');
+	
 	//SendRequest
-	Route::post('/matchmakes/send-request', [MatchmakingController::class, 'sendRequest'])->name('matchmaking.send');
-});
-
-
-Route::get('logged-in/dashboard', [MatchmakingController::class, 'show'])->name('dashboard.main');
-Route::post('/matchmaking/send-request', [MatchmakingController::class, 'sendRequest'])->name('send.request');
+	Route::post('/matchmakes/send-request', [MatchmakingController::class, 'sendRequest'])->name('matchmaking.send');});
+	Route::get('logged-in/dashboard', [MatchmakingController::class, 'show'])->name('dashboard.main');
+	Route::post('/matchmaking/send-request', [MatchmakingController::class, 'sendRequest'])->name('send.request');

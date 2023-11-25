@@ -58,7 +58,7 @@
             @endif
 
             @if (auth()->user()->role === 'Coach')
-            <a href="/contracts"class="flex items-center relative mt-14 group">
+            <a href="/contracts/dashboard"class="flex items-center relative mt-14 group">
 
               <span class="w-2 h-9 rounded-r-md mr-32"></span>
 
