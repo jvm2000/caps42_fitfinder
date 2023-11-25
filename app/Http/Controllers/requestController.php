@@ -2,33 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\UserRequest;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
-class requestController extends Controller
+class RequestController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $form = $request->validate([
-            'programs' => 'required',
-            'traineeUsername' => 'required',
-            'traineeAddress' => 'required',
-            'traineeEmailAddress' => 'required|email',
-            'traineePhoneNumber' => 'required',
-            'startDate' => 'required|date',
-            'endDate' => 'required|date|after_or_equal:startDate',
-            'paymentType' => 'required',
-        ]);
-         $requests = UserRequest::all(); // Adjust as needed
+        $requests = UserRequest::all(); // Adjust as needed
 
-        return view('contracts.make',[
-            'form' => $form,
-            'requests' => $requests
-        ]);
+        return view('request.testv2', ['requests' => $requests]);
     }
 
     /**
@@ -42,9 +30,21 @@ class requestController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, User $user)
     {
-        //
+        $form = $request->validate([
+            'name'=>['required','string'],
+            'category'=>['required','string'],
+            'summary'=>['required', 'min:6'],
+            'status'=>['nullable'],
+            'image' => ['nullable'],
+            'no_of_trainees' => ['nullable'],
+            'prerequisite_program_id' => 'nullable|exists:programs,id',
+        ]);
+
+        $user->sendRequestToCoach()->create($form);
+
+        return redirect('/programs/list')->with('message', 'Program created successfully!');
     }
 
     /**
