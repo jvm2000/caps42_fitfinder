@@ -13,9 +13,13 @@ return new class extends Migration
     {
         Schema::create('contracts', function (Blueprint $table) {
             $table->id();
-            $table->string('address');
+            $table->foreignId('programs_id')->constrained('programs')->onDelete('cascade');
             $table->foreignId('trainee_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('coach_id')->constrained('users')->onDelete('cascade');
+            $table->string('payment_type')->default(''); // Keep the payment_type column
+            $table->string('status')->default('Pending');
+            $table->date('startdate');
+            $table->date('enddate');
             $table->timestamps();
         });
     }

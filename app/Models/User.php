@@ -41,6 +41,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'birthdate',
         'tags',
         'image',
+        'status',
     ];
 
     /**
@@ -111,6 +112,7 @@ class User extends Authenticatable implements MustVerifyEmail
            'status' => 'Pending', // Set the initial status to "Pending"
        ]);
    }
+   
    public function status()
     {
     return $this->belongsTo(Status::class);
@@ -124,5 +126,6 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Contract::class);
     }
+    
     
 }

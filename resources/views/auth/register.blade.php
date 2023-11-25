@@ -34,6 +34,7 @@
               label="First Name" 
               placeholder="Enter First Name" 
               name="first_name"
+              value="{{ old('first_name') }}"
             >
               <x-slot name="errors">
                 @error('first_name')
@@ -47,6 +48,7 @@
               label="Last Name" 
               placeholder="Enter Last Name" 
               name="last_name"
+              value="{{ old('last_name') }}"
             >
               <x-slot name="errors">
                 @error('last_name')
@@ -60,6 +62,7 @@
               label="Phone Number" 
               placeholder="Enter Phone Number" 
               name="phone_number"
+              value="{{ old('phone_number') }}"
             >
               <x-slot name="errors">
                 @error('phone_number')
@@ -126,6 +129,7 @@
               label="Username" 
               placeholder="Enter Username" 
               name="username"
+              value="{{ old('username') }}"
             >
               <x-slot name="errors">
                 @error('username')
@@ -139,6 +143,7 @@
               label="Email" 
               placeholder="Enter Email" 
               name="email"
+              value="{{ old('email') }}"
             >
               <x-slot name="errors">
                 @error('email')

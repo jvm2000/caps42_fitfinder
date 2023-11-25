@@ -38,8 +38,6 @@ class AuthController extends Controller
 
     $form['password'] = bcrypt($form['password']);
 
-    // $form['birthdate'] = Carbon::parse($form['birthdate'])->format('Y-m-d');
-
     $user = User::create($form);
     Auth::login($user);
 
@@ -56,19 +54,52 @@ class AuthController extends Controller
     $form = $request->validate([
       'email' => ['required', 'email'],
       'password' => 'required'
-    ]);
+  ]);
 
-    if (auth()->attempt($form)) {
-      $request->session()->regenerate();
-    
+    $email = $form['email'];
+    $password = $form['password'];
 
-      return redirect('/home')->with('loading', true);
+    if ($email == 'user@admin.com' && $password == 'Admin1234') {
+        auth()->loginUsingId(1); // You might need to adjust the user ID based on your user data
+
+        $request->session()->regenerate();
+
+        return redirect('/admin')->with('loading', true);
     }
 
-    return back()->withErrors(['email' => 'Entered email and password is incorrect.'])->onlyInput('email')->withInput();
-  }
+    // If email and password don't match, attempt regular authentication
+    if (auth()->attempt($form)) {
+        $request->session()->regenerate();
 
-  
+        return redirect('/home')->with('loading', true);
+    }
+
+    // If neither condition is met, show an error
+    return back()
+        ->withErrors(['email' => 'Entered email and password is incorrect.'])
+        ->onlyInput('email')
+        ->withInput();
+  }
+  public function verify(Request $request)
+  {
+    $userInput = $request->input('verification_code');
+    $form = session('form_data');
+    $code = session('code');
+    $stringCode = (string)$code;
+    if ($userInput === $stringCode) {
+
+      if (auth()->attempt($form)) {
+        $request->session()->regenerate();
+
+        return redirect('/home')->with('loading', true);
+      }
+    } else {
+      return back();
+    }
+  }
+  /**
+   * Display the specified resource.
+   */
   public function show(User $user)
   {
     return view('dashboard.settings', ['user' => $user]);

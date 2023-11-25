@@ -105,7 +105,18 @@ function openTab(evt, tabName) {
 									<a href="/programs/show/{{ $active->id }}" class="ml-4 flex items-center space-x-4 group">
 										<img src="{{$active->getImageURL()}}" class="w-9 h-9 rounded-full">
 										<div class="text-left">
-											<p class="text-black text-sm font-medium group-hover:text-indigo-400">{{$active->name}}</p>
+											<div class="flex items-center space-x-4">
+												<p class="text-black text-sm font-medium group-hover:text-indigo-400">{{$active->name}}</p>
+												<div class="px-2 py-0 rounded-full
+												@if ($active->prerequisite)
+														bg-indigo-200 border border-dashed border-indigo-800 text-indigo-800
+												@else
+														bg-red-200 border border-dashed border-red-800 text-red-800
+												@endif
+												text-xs">
+												{{ $active->prerequisite ? $active->prerequisite->name : 'No Prerequisite' }}
+												</div>
+											</div>
 											<p class="text-xs text-zinc-400">{{$active->category}}</p>
 										</div>
 									</a>
@@ -115,7 +126,12 @@ function openTab(evt, tabName) {
 									<p class="text-sm text-ellipsis">{{$active->summary}}</p>
 								</td>
 								<td class="py-2">
-									<p class="text-sm"><span class="text-red-500">10</span> / 30</p>
+									<p class="text-sm">
+										<span class="text-red-500">0</span>
+										 / @if($active->no_of_trainees === null) <span class="text-indigo-500">No limit</span> 
+										 @else <span class="text-blue-400">{{$active->no_of_trainees}}</span> @endif
+
+										</p>
 								</td>
 
 								<td class="py-2">
@@ -134,9 +150,12 @@ function openTab(evt, tabName) {
 									</div>
 								</td>
 							</tr>
+							
 							@endif
+							
 						@endforeach
 					</tbody>
+					{{$programs->links()}}
 				</table>
 			</div>
 
@@ -189,9 +208,7 @@ function openTab(evt, tabName) {
 		</div>
   </div>
 
-  <div>
-	{{$programs->links()}}
-  </div>
+
   
   @if(session('message'))
     <x-app.toaster message="{{ session('message') }}">

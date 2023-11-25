@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\User;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -29,9 +30,21 @@ return new class extends Migration
             $table->date('birthdate')->nullable();
             $table->json('tags')->nullable();
             $table->string('image')->nullable();
+            $table->string('status')->default('active');
             $table->rememberToken();
             $table->timestamps();
         });
+
+        $user = User::create([
+            'username' => 'admin001',
+            'email' => 'user@admin.com',
+            'first_name' => 'FitFinder',
+            'last_name' => 'Admin',
+            'password' => bcrypt('Admin1234'),
+            'role' => 'admin',
+            'email_verified_at' => now(),
+            'role_id' => 1, // Admin
+        ]);
     }
 
     /**

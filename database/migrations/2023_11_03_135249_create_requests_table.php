@@ -15,11 +15,14 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('trainee_id');
             $table->unsignedBigInteger('coach_id');
+            $table->unsignedBigInteger('program_id');
             $table->string('status')->default('Pending');
+            $table->string('message')->default('A request has been sent!');
             $table->timestamps();
 
             $table->foreign('trainee_id')->references('id')->on('users');
             $table->foreign('coach_id')->references('id')->on('users');
+            $table->foreign('program_id')->references('id')->on('programs');
         });
     }
 

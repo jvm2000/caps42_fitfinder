@@ -10,9 +10,13 @@ class Contract extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'address',
+        'programs_id',
         'coach_id',
         'trainee_id',
+        'payment_id',
+        'status',
+        'startdate',
+        'enddate',
     ];
 
     public function coach() {

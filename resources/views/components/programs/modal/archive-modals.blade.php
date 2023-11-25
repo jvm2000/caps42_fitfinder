@@ -111,6 +111,5 @@ function closeDeleteModal(index){
   if (deleteModal) {
     deleteModal.style.display = 'none';
   }
-  deleteModal.style.display = 'none';
 }
-  </script>
+</script>
