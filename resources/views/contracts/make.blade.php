@@ -8,7 +8,7 @@
 </head>
 
 <body>
-<form action="{{ route('contracts.store') }}" method="post">
+<form action="/contracts/send" method="post">
 @csrf
 <h1>Contract</h1>
     

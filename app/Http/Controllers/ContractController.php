@@ -17,16 +17,25 @@ class ContractController extends Controller
         $requests = UserRequest::all(); // Adjust as needed
         $programs = Program::all();
         $currentDate = now();
-
+    
+        
         return view('contracts.make', [
             'requests' => $requests,
             'programs' => $programs,
-            'currentDate' => $currentDate,
-          
+            'currentDate' => $currentDate
         ]);
 
     }
-    
+    public function showContracts(){
+        $contracts = Contract::all();
+
+        return view('contracts.dashboard', [
+      
+            'contracts' => $contracts
+          
+        ]);
+    }
+
     public function store(Request $request){
 
         $request->validate([

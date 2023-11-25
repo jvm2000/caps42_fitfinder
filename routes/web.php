@@ -71,6 +71,7 @@ Route::get('/admin/trainees', [AdminController::class, 'traineesIndex'])->name('
 Route::get('/admin/coaches', [AdminController::class, 'coachesIndex'])->name('admin.coaches');
 Route::get('/admin/programs', [AdminController::class, 'programsIndex'])->name('admin.programs');
 Route::get('/admin/modules', [AdminController::class, 'modulesIndex'])->name('admin.modules');
+Route::get('/admin/contracts', [AdminController::class, 'contractsIndex'])->name('admin.contracts');
 Route::put('/admin/suspend/{user}', [AdminController::class, 'suspendUser'])->name('admin.User');
 Route::delete('/admin/delete/{user}', [AdminController::class, 'destroy'])->name('admin.destroy');
 
@@ -101,11 +102,10 @@ Route::delete('/admin/delete/{user}', [AdminController::class, 'destroy'])->name
 	Route::put('/medcert/update/{medcert}', [MedicalCertificateController::class, 'update'])->name('medcert.update');
 	
 	//contracts
-	Route::get('/contracts/dashboard', function () {return view('contracts.dashboard');})->middleware(['auth', 'verified']);
-	Route::get('/contracts/create', [ContractController::class, 'index'])->name('contracts.index')->middleware(['auth', 'verified']);
-	Route::post('/contracts/make', [ContractController::class, 'generateContract'])->name('generate.contract')->middleware(['auth', 'verified']);
+	Route::get('/contracts/dashboard', [ContractController::class, 'showContracts'])->middleware(['auth', 'verified']);
+	Route::get('/contracts/make', [ContractController::class, 'index'])->name('generate.contract')->middleware(['auth', 'verified']);
   	Route::post('/contracts/send', [ContractController::class, 'store'])->middleware(['auth', 'verified']);
-	
+	  Route::get('/contracts/show/{program}', [ContractController::class, 'showContract'])->name('contracts.show');
 	// Matchmake 
 	Route::get('/matchmakes', [MatchmakingController::class, 'index'])->name('matchmaking.index');
 	
@@ -140,7 +140,7 @@ Route::delete('/admin/delete/{user}', [AdminController::class, 'destroy'])->name
 	Route::get('/modules/edit/{module}', [ModuleController::class, 'edit'])->name('modules.edit');
 	Route::put('/modules/update/{module}', [ModuleController::class, 'update'])->name('modules.update');
 	Route::delete('/modules/delete/{module}', [ModuleController::class, 'destroy'])->name('modules.delete');
-
+		
 	// Matchmake 
 	Route::get('/matchmakes', [MatchmakingController::class, 'index'])->name('matchmaking.index');
 	
@@ -156,12 +156,8 @@ Route::delete('/admin/delete/{user}', [AdminController::class, 'destroy'])->name
 //
 Route::post('/coach/approve-request/{request}', [UserController::class, 'approveRequest'])->name('coach.approveRequest');
 Route::post('/coach/disapprove-request/{request}', [UserController::class, 'disapproveRequest'])->name('coach.disapproveRequest');
-});
+	});
 
-//
 
-Route::get('logged-in/dashboard', [MatchmakingController::class, 'show'])->name('dashboard.main');
-Route::post('/matchmaking/send-request', [MatchmakingController::class, 'sendRequest'])->name('send.request');
-	Route::post('/matchmakes/send-request', [MatchmakingController::class, 'sendRequest'])->name('matchmaking.send');});
 	Route::get('logged-in/dashboard', [MatchmakingController::class, 'show'])->name('dashboard.main');
 	Route::post('/matchmaking/send-request', [MatchmakingController::class, 'sendRequest'])->name('send.request');

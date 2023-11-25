@@ -15,9 +15,7 @@ class SendRequestController extends Controller
         if ($request->has('sendRequest')) {
             $traineeId = $request->input('trainee_id');
             $coachId = $request->input('coach_id');
-            
-            // Check if a request already exists
-            // Check if a payment already exists
+            $programId = $request->input('program_id');
             $existingPayment = Payment::where('trainee_id', $traineeId)
             ->where('coach_id', $coachId)
             ->first();
@@ -29,6 +27,7 @@ class SendRequestController extends Controller
             DB::table('requests')->insert([
                 'trainee_id' => $traineeId,
                 'coach_id' => $coachId,
+                'program_id'=> $programId,
                 'status' => 'Pending', // Set the initial status to "Pending"
             ]);
     

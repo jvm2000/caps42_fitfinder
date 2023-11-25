@@ -59,7 +59,7 @@
             </a>
             @endif
 
-            @if (auth()->user()->role === 'Coach')
+       
             <a href="/contracts/dashboard"class="flex items-center relative mt-14 group">
 
               <span class="w-2 h-9 rounded-r-md mr-32"></span>
@@ -67,7 +67,7 @@
               <img src="/dashboard/icons/contracts.svg" alt="Main" class="w-6 h-6 mr-14 group-hover:mb-1">
               <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Contracts</p>
             </a>
-            @endif
+            
           </div>
 
           <div class="absolute bottom-0">

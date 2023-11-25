@@ -67,9 +67,9 @@
                             <p class="text-xl font-medium group-hover:text-indigo-400">Pending</p>
                         </button>
                     </div>
-                    
+                    @if (auth()->user()->role === 'Coach')
                     <a 
-                        href="/contracts/create"
+                        href=""
                         type="submit"
                         class="rounded-full flex items-center space-x-4 px-6 py-3 text-md text-white bg-black cursor-pointer w-auto"
                     >
@@ -78,7 +78,7 @@
                     </a>
     
                     <div class="w-full border-t-8 absolute z-10 bottom-0"></div>
-    
+                    @endif
                 </div>
             </div>
     
@@ -97,13 +97,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                           
+                                @foreach ($contracts as $contract)
                                 <tr class="">
                                     <td class="border-l-8 border-indigo-500 py-1">
                                         <a href="" class="ml-4 flex items-center space-x-4 group">
                                             <img src="" class="w-9 h-9 rounded-full">
                                             <div class="text-left">
-                                                <p class="text-black text-sm font-medium group-hover:text-indigo-400"></p>
+                                                <p class="text-black text-sm font-medium group-hover:text-indigo-400">{{$contract->program->id}}</p>
                                                 <p class="text-xs text-zinc-400"></p>
                                             </div>
                                         </a>
@@ -132,6 +132,7 @@
                                         </div>
                                     </td>
                                 </tr>
+                                @endforeach
                         </tbody>
                     </table>
                 </div>
