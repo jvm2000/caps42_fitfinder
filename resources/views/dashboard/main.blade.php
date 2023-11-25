@@ -8,6 +8,9 @@
         <div class="flex items-center relative">
             <p class="text-3xl font-semibold mr-auto">Dashboard</p>
         </div>
+        <div class="w-5 relative py-5 px-5">
+            <a href="/requests/dashboard/coach" class="font-semibold mr-auto">Notification</a>
+        </div>
         <div class="absolute top-10 right-12 z-20">
             <x-menu-dropdown />
         </div>
