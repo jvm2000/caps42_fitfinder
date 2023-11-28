@@ -93,7 +93,7 @@
               </div>
 
               <div id="prerequisiteContainer" class="space-y-2 hidden">
-                <label class="text-md text-gray-600">Choose Program</label>
+                {{-- <label class="text-md text-gray-600">Choose Program</label>
                 <select 
                   type="text" 
                   class="bg-inherit text-lg px-6 py-2 w-full border-gray-500 border rounded-md col-span-2 appearance-none" 
@@ -101,9 +101,32 @@
                 >
                   <option value="" selected>Choose Program</option>
                   @foreach($programs as $index => $program)
-                  <option value="{{ $program->id }}">{{ $program->name }}</option>
+                  <option class="relative" value="{{ $program->id }}">{{ $program->name }}</option>
                   @endforeach
-                </select>
+                </select> --}}
+                <x-app.radio-select label="Choose Program">
+                  <x-slot name="data">
+                    <p class="text-sm text-black" id="selectedRadio">Select Program</p>
+                  </x-slot>
+
+                  @foreach($programs as $index => $program)
+                  <label for="{{ $index }}" class="py-3 hover:bg-gray-200 flex items-center relative w-full space-x-4">
+                    <img src="{{ $program->getImageURL() }}" alt="" class="w-6 h-6 rounded-full ml-4">
+                    <p class="text-sm">{{ $program->name }}</p>
+                    <input id="{{ $index }}" type="radio" name="prerequisite_program_id" value="{{$program->id}}" class="invisible">
+
+                    <div class="text-xs rounded-full py-0  border px-4 border-dashed items-center absolute right-4
+                      @if ($program->prerequisite)
+                        bg-indigo-200 border-indigo-800 text-indigo-800
+                      @else
+                        bg-red-200 border-red-800 text-red-800
+                      @endif
+                    ">
+                      {{ $program->prerequisite ? $program->prerequisite->name : 'No Prerequisite' }}
+                    </div>
+                  </label>
+                  @endforeach
+                </x-app.radio-select>
               </div>
               @endif
             </div>
@@ -135,21 +158,23 @@
     
           </div>
   
-          <div class="mt-20 flex items-center relative mr-12">
-            <div class="mr-auto"></div>
-            <div class="flex items-center space-x-4">
-              <a 
-                href="/programs/list"
-                class="rounded-md flex items-center px-6 py-3 text-md text-black border-2 border-black cursor-pointer active:mt-[1px]"
-              >
-                Cancel
-              </a>
-              <button 
-                type="submit"
-                class="rounded-md flex items-center px-6 py-3 text-md text-white bg-black cursor-pointer active:mt-[1px]"
-              >
-                Create
-              </button>
+          <div class="absolute bottom-24 right-24">
+            <div class="mt-20 flex items-center relative mr-12">
+              <div class="mr-auto"></div>
+              <div class="flex items-center space-x-4">
+                <a 
+                  href="/programs/list"
+                  class="rounded-md flex items-center px-6 py-3 text-md text-black border-2 border-black cursor-pointer active:mt-[1px]"
+                >
+                  Cancel
+                </a>
+                <button 
+                  type="submit"
+                  class="rounded-md flex items-center px-6 py-3 text-md text-white bg-black cursor-pointer active:mt-[1px]"
+                >
+                  Create
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -180,4 +205,18 @@ function isPreRequesiteChecked(){
   prerequisitePrograms.style.display = prerequisite_checkbox.checked ? 'block' : 'none';
 }
 
+var radios = document.querySelectorAll('input[name="prerequisite_program_id"]');
+
+var selectedRadios = document.getElementById('selectedRadio');
+
+radios.forEach(function(radio) {
+  radio.addEventListener('change', function() {
+
+    var selectedRadio = Array.from(document.querySelectorAll('input[name="prerequisite_program_id"]:checked')).map(function(radio) {
+        return radio.value;
+    });
+
+    selectedRadios.innerText = 'Program ' + selectedRadio.join(', ');
+  });
+});
 </script>

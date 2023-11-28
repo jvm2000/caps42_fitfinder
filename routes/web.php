@@ -34,16 +34,25 @@ Route::get('/email/verify', function () {
     return view('auth.notify');
 })->middleware('auth')->name('verification.notice');
 Route::get('/', function () {return view('welcome');})->middleware('guest')->name('welcome');
+
 //Route::get('/verification', function () {return view('verify');})->name('verify');
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
  
     return redirect('/home');
 })->middleware(['auth', 'signed'])->name('verification.verify');
+//If logged-in Register
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
  
-    return redirect('/home')->with('message', 'Verification link sent!');
+    return redirect('/email/verify')->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+//If register
+Route::post('/email/register/verify', function (Request $request) {
+	$request->user()->sendEmailVerificationNotification();
+
+	return view('emails.verify-email')->with('message', 'User Registration Successful');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 // Auth
 Route::get('/login', function () {return view('auth/login');})->name('login');
@@ -61,6 +70,8 @@ Route::get('/admin/modules', [AdminController::class, 'modulesIndex'])->name('ad
 Route::put('/admin/suspend/{user}', [AdminController::class, 'suspendUser'])->name('admin.User');
 Route::delete('/admin/delete/{user}', [AdminController::class, 'destroy'])->name('admin.destroy');
 
+// Test 
+Route::get('/test-verify', function () {return view('emails/verify-email');})->name('admin.dashboard');
 
 Route::middleware(['auth'])->group(function () {
 	// General 
@@ -74,6 +85,8 @@ Route::middleware(['auth'])->group(function () {
 	Route::post('/auth-logout', [AuthController::class, 'logout'])->name('user.logout');
 	Route::get('/auth/profile/{user}', [AuthController::class, 'show'])->name('user.show');
 	Route::put('/auth/profile/update/{user}', [AuthController::class, 'update'])->name('user.update');
+	Route::put('/auth/deactive/{user}', [AuthController::class, 'deactivate'])->name('user.deactivate');
+	Route::put('/auth/reactivate/{user}', [AuthController::class, 'reactivate'])->name('user.reactivate');
 
 	//Portfolio Creation
 	Route::get('/profile/coach/{user}', [PortfolioController::class, 'index'])->name('profile.index');

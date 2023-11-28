@@ -21,12 +21,19 @@ class MedCert extends Model
         'description',
         'status',
         'started_fitness',
+        'user_id',
         'cert_file',
-        'user_id'
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getMedURL(){
+        if($this->cert_file){
+            return url('storage/'. $this->cert_file);
+        }
+        return '/icons/general/blank-document.svg';
     }
 }

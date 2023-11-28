@@ -29,4 +29,11 @@ class Portfolio extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getPortfolioUrl(){
+        if($this->form_document){
+            return url('storage/'. $this->form_document);
+        }
+        return '/icons/settings/profile-icon.svg';
+    }
 }

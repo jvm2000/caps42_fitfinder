@@ -12,7 +12,14 @@
 
     <div class="py-7 flex items-center justify-between relative w-full border-b-8">
       <div class="flex items-center space-x-6">
-        <img src="{{auth()->user()->getImageURL()}}" alt="Profile" class="w-36 h-36 rounded-full">
+        <div class="w-36 h-36 rounded-full relative">
+          @if (auth()->user()->hasVerifiedEmail())
+          <img src="/dashboard/icons/verified.svg" alt="Verified" class="w-10 h-10 inline absolute top-0 right-0" title="Verified">
+          @else
+          <img src="/dashboard/icons/notverified.svg" alt="Not verified" class="w-10 h-10 inline absolute top-0 right-0" title="Not Verified">
+          @endif
+          <img src="{{auth()->user()->getImageURL()}}" alt="Profile" class="w-36 h-36 rounded-full">
+        </div>
 
         <div class="space-y-1">
           <div class="flex items-center space-x-2">
@@ -143,8 +150,24 @@
               </button>
             </div>
             <div class="mt-10 flex items-center space-x-8">
-              <div class="w-64 h-[350px] border"></div>
-              <div class="w-64 h-[350px] border"></div>
+              <div 
+                id="uploadFile" 
+                class="w-64 h-[350px] border grid place-items-center cursor-pointer hover:border-2 hover:border-black group"
+                title="Upload File"
+              >
+                <img 
+                  id="preview" width="100" height="100" 
+                  class="w-full h-full z-40"
+                />
+                <img src="/icons/general/upload-icon.svg" alt="" class="w-10 h-10 group-hover:w-11 group-hover:h-11 fixed z-20">
+                <input 
+                  type="file" 
+                  class="fixed z-40 h-8 w-8 invisible" 
+                  name="form_document" 
+                  id="uploaded"
+                  onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])"
+                >
+              </div>
             </div>
           </div>
 
@@ -153,7 +176,7 @@
             <button 
               type="submit"
               class="rounded-md text-center px-6 py-3 text-md text-white bg-black cursor-pointer"
-            >Update</button>
+            >Upload</button>
           </div>
 
         </div>
@@ -166,6 +189,12 @@
 </x-layout>
 
 <script>
+var success = document.getElementById("uploadFile");
+
+success.onclick = function() {
+  document.getElementById('uploaded')?.click()
+}
+
 $(document).ready(function() {
   $('input').click(function() {
       $('.error').hide();

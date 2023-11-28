@@ -13,7 +13,7 @@
       <div class="flex items-center space-x-5">
         <p class="text-2xl font-semibold">Manage Porfolio</p>
         <div id="openUpdateForm" class="cursor-pointer">
-          <img src="/icons/portfolio/edit-icon.svg" alt="Edit Icon" class="w-5 h-5">
+          <img src="/icons/portfolio/edit-icon.svg" alt="Edit Icon" class="w-5 h-5" title="Edit Portfolio">
         </div>
       </div>
 
@@ -43,21 +43,26 @@
 
     <div class="flex flex-col items-start">
       <div class="flex items-center space-x-5">
-        <p class="text-2xl font-semibold">Upload Resume / Application Form</p>
+        <p class="text-2xl font-semibold">Resume / Application Form</p>
         <button>
           <img src="/icons/portfolio/upload-icon.svg" alt="Upload Icon" class="w-5 h-5">
         </button>
       </div>
       <div class="mt-10 flex items-center space-x-8">
-        <div class="w-64 h-[350px] border"></div>
-        <div class="w-64 h-[350px] border"></div>
+        <div class="w-64 h-[350px] border">
+          <img 
+            id="preview" width="100" height="100" 
+            class="w-full h-full z-40"
+            src="{{auth()->user()->portfolio->getPortfolioURL()}}"
+          />
+        </div>
       </div>
     </div>
 
   </div>
 </div>
 
-<form method="POST" action="/portfolio/update/{{auth()->user()->portfolio->id}}" enctype="multipart/form-data" >
+<form method="POST" action="/portfolio/update/{{auth()->user()->portfolio->id}}" enctype="multipart/form-data">
   @csrf
   @method('PUT')
   <div class="mt-8 w-full grid place-items-center container" id="updateForm">
@@ -66,15 +71,15 @@
         <div class="flex items-center relative">
           <div class="flex items-center space-x-5 mr-auto">
             <p class="text-2xl font-semibold">Edit Porfolio</p>
-            <div id="close" class="cursor-pointer mr-auto">
-              <img src="/icons/portfolio/edit-icon.svg" alt="Edit Icon" class="w-5 h-5">
+            <div class="cursor-pointer mr-auto">
+              <img src="/icons/portfolio/edit-icon.svg" alt="Edit Icon" class="w-5 h-5" title="Edit Portfolio">
             </div>
           </div>
           <div class="flex items-center space-x-2">
-            <button 
+            <div 
               class="rounded-full text-center px-3 py-1 text-md text-black cursor-pointer"
               id="close"
-            >Cancel</button>
+            >Cancel</div>
             <button 
               type="submit"
               class="rounded-full text-center px-3 py-1 text-md text-white bg-black cursor-pointer"
@@ -132,11 +137,28 @@
           <button>
             <img src="/icons/portfolio/upload-icon.svg" alt="Upload Icon" class="w-5 h-5">
           </button>
-          <input type="file" name="form_document">
         </div>
         <div class="mt-10 flex items-center space-x-8">
-          <div class="w-64 h-[350px] border"></div>
-          <div class="w-64 h-[350px] border"></div>
+          <div class="w-64 h-[350px] border">
+            <div 
+              id="updateFile" 
+              class="w-64 h-[350px] border grid place-items-center cursor-pointer hover:border-2 hover:border-black group"
+              title="Upload File"
+            >
+              <img 
+                id="hasfile-preview" width="100" height="100" 
+                class="w-full h-full z-40"
+                src="{{auth()->user()->portfolio->getPortfolioURL()}}"
+              />
+              <img src="/icons/general/upload-icon.svg" alt="" class="w-10 h-10 group-hover:w-11 group-hover:h-11 fixed z-20">
+              <input 
+                type="file" 
+                class="fixed z-40 h-8 w-8 invisible" 
+                name="form_document" 
+                id="updated"
+                onchange="document.getElementById('hasfile-preview').src = window.URL.createObjectURL(this.files[0])"
+              >
+          </div>
         </div>
       </div>
 
@@ -146,21 +168,27 @@
 </form>
 
 <script>
-  var display = document.getElementById("displayForm");
+var display = document.getElementById("displayForm");
 
-  var container = document.getElementById("updateForm");
-  
-  var btn = document.getElementById("openUpdateForm");
-  
-  var cancel = document.getElementById("close");
-  
-  btn.onclick = function() {
-    container.style.display = "block";
-    display.style.display = "none";
-  }
+var container = document.getElementById("updateForm");
 
-  cancel.onclick = function() {
-    container.style.display = "none";
-    display.style.display = "block";
-  }
+var btn = document.getElementById("openUpdateForm");
+
+var cancel = document.getElementById("close");
+
+btn.onclick = function() {
+  container.style.display = "block";
+  display.style.display = "none";
+}
+
+cancel.onclick = function() {
+  container.style.display = "none";
+  display.style.display = "block";
+}
+
+var success = document.getElementById("updateFile");
+
+success.onclick = function() {
+  document.getElementById('updated')?.click()
+}
   </script>

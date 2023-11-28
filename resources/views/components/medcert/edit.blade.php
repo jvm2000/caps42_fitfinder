@@ -28,7 +28,11 @@
           <div class="space-y-2">
             <span class="text-md text-gray-600 font-semibold">Med Cert application status</span>
             <div class="bg-inherit text-base px-8 py-2 w-full border-gray-500 border-b">
-              {{auth()->user()->medcert->status}}
+              @if(auth()->user()->medcert->status === 'yes')
+              <p class="text-sm text-green-500">Already uploaded a medical certificate</p>
+              @else
+              <p class="text-sm text-red-500">Not yet, need to upload</p>
+              @endif
             </div>
           </div>
   
@@ -49,15 +53,20 @@
           </button>
         </div>
         <div class="mt-10 flex items-center space-x-8">
-          <div class="w-64 h-[350px] border"></div>
-          <div class="w-64 h-[350px] border"></div>
+          <div class="w-64 h-[350px] border">
+            <img 
+              id="preview" width="100" height="100" 
+              class="w-full h-full z-40"
+              src="{{auth()->user()->medcert->getMedURL()}}"
+            />
+          </div>
         </div>
       </div>
   
     </div>
   </div>
   
-  <form method="POST" action="/medcert/update/{{auth()->user()->medcert->id}}">
+  <form method="POST" action="/medcert/update/{{auth()->user()->medcert->id}}" enctype="multipart/form-data">
     @csrf
     @method('PUT')
     <div class="mt-8 w-full grid place-items-center container" id="updateForm">
@@ -106,6 +115,7 @@
                     class="w-4 h-4" 
                     name="status"
                     value="yes"
+                    {{ auth()->user()->medcert->status === 'yes' ? 'checked' : '' }}
                   />
                   <label for="yes" class="text-md text-gray-600">Yes</label>
                 </div>
@@ -116,6 +126,7 @@
                     class="w-4 h-4" 
                     name="status"
                     value="no"
+                    {{ auth()->user()->medcert->status === 'no' ? 'checked' : '' }}
                   />
                   <label for="no" class="text-md text-gray-600">No</label>
                 </div>
@@ -149,8 +160,27 @@
             </button>
           </div>
           <div class="mt-10 flex items-center space-x-8">
-            <div class="w-64 h-[350px] border"></div>
-            <div class="w-64 h-[350px] border"></div>
+            <div class="w-64 h-[350px] border">
+              <div 
+                id="updateFile" 
+                class="w-64 h-[350px] border grid place-items-center cursor-pointer hover:border-2 hover:border-black group"
+                title="Upload File"
+              >
+                <img 
+                  id="hasfile-preview" width="100" height="100" 
+                  class="w-full h-full z-40"
+                  src="{{auth()->user()->medcert->getMedURL()}}"
+                />
+                <img src="/icons/general/upload-icon.svg" alt="" class="w-10 h-10 group-hover:w-11 group-hover:h-11 fixed z-20">
+                <input 
+                  type="file" 
+                  class="fixed z-40 h-8 w-8 invisible" 
+                  name="cert_file" 
+                  id="updated"
+                  onchange="document.getElementById('hasfile-preview').src = window.URL.createObjectURL(this.files[0])"
+                >
+              </div>
+            </div>
           </div>
         </div>
   
@@ -159,22 +189,28 @@
   
   </form>
   
-  <script>
-    var display = document.getElementById("displayForm");
-  
-    var container = document.getElementById("updateForm");
-    
-    var btn = document.getElementById("openUpdateForm");
-    
-    var cancel = document.getElementById("close");
-    
-    btn.onclick = function() {
-      container.style.display = "block";
-      display.style.display = "none";
-    }
-  
-    cancel.onclick = function() {
-      container.style.display = "none";
-      display.style.display = "block";
-    }
-    </script>
+<script>
+var display = document.getElementById("displayForm");
+
+var container = document.getElementById("updateForm");
+
+var btn = document.getElementById("openUpdateForm");
+
+var cancel = document.getElementById("close");
+
+btn.onclick = function() {
+  container.style.display = "block";
+  display.style.display = "none";
+}
+
+cancel.onclick = function() {
+  container.style.display = "none";
+  display.style.display = "block";
+}
+
+var success = document.getElementById("updateFile");
+
+success.onclick = function() {
+  document.getElementById('updated')?.click()
+}
+</script>

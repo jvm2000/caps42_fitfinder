@@ -11,6 +11,7 @@ use Illuminate\Validation\Rule;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Notifications\VerifyEmail;
@@ -131,9 +132,6 @@ class AuthController extends Controller
       $form['image'] = $imagePath;
     }
 
-    // $form['birthdate'] = Carbon::parse($form['birthdate'])->format('Y-m-d');
-
-    // Update the user's fields
     $user->update($form);
 
     return back()->with('loading', true);
@@ -146,5 +144,39 @@ class AuthController extends Controller
     $request->session()->regenerateToken();
 
     return redirect('/login')->with('message', 'User logged out successfully!');
+  }
+
+  public function deactivate(Request $request, User $user)
+  {
+    if (Hash::check($request->input('password'),  auth()->user()->password)) {
+      $form = $request->validate([
+          'status' => ['nullable'],
+      ]);
+  
+      $user->update($form);
+  
+      auth()->logout();
+      $request->session()->invalidate();
+      $request->session()->regenerateToken();
+
+      return redirect('/login')->with('message', 'User is now deactivated!');
+  } else {
+      return back()->with('message', 'Please type in the correct password.');
+  }
+  }
+
+  public function reactivate(Request $request, User $user)
+  {
+    if (Hash::check($request->input('password'),  auth()->user()->password)) {
+      $form = $request->validate([
+          'status' => ['nullable'],
+      ]);
+  
+      $user->update($form);
+
+      return redirect('/home')->with('message', 'User is now active again!');
+  } else {
+      return back()->with('message', 'Please type in the correct password.');
+  }
   }
 }

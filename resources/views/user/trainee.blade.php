@@ -12,7 +12,14 @@
 
     <div class="py-7 flex items-center justify-between relative w-full border-b-8">
       <div class="flex items-center space-x-6">
-        <img src="{{auth()->user()->getImageURL()}}" alt="Profile" class="w-36 h-36 rounded-full">
+        <div class="w-36 h-36 rounded-full relative">
+          @if (auth()->user()->hasVerifiedEmail())
+          <img src="/dashboard/icons/verified.svg" alt="Verified" class="w-10 h-10 inline absolute top-0 right-0" title="Verified">
+          @else
+          <img src="/dashboard/icons/notverified.svg" alt="Not verified" class="w-10 h-10 inline absolute top-0 right-0" title="Not Verified">
+          @endif
+          <img src="{{auth()->user()->getImageURL()}}" alt="Profile" class="w-36 h-36 rounded-full">
+        </div>
 
         <div class="space-y-1">
           <div class="flex items-center space-x-2">
@@ -81,7 +88,7 @@
     @if ($medcert->count() > 0 && auth()->user()->role === 'Trainee') 
     <x-medcert.edit />
     @elseif (auth()->user()->role === 'Trainee')
-    <form method="POST" action="/medcert/create/{{auth()->user()->id}}">
+    <form method="POST" action="/medcert/create/{{auth()->user()->id}}" enctype="multipart/form-data">
       @csrf
       <div class="mt-8 w-full grid place-items-center">
         <div class="grid grid-cols-2 items-start gap-x-8">
@@ -128,6 +135,7 @@
                       class="w-4 h-4" 
                       name="status"
                       value="no"
+                      checked
                     />
                     <label for="no" class="text-md text-gray-600">No, not yet</label>
                   </div>
@@ -154,13 +162,27 @@
           <div class="flex flex-col items-start">
             <div class="flex items-center space-x-5">
               <p class="text-2xl font-semibold">Upload Medical Certificate</p>
-              <button>
-                <img src="/icons/portfolio/upload-icon.svg" alt="Upload Icon" class="w-5 h-5">
-              </button>
+              <img src="/icons/portfolio/upload-icon.svg" alt="Upload Icon" class="w-5 h-5">
             </div>
             <div class="mt-10 flex items-center space-x-8">
-              <div class="w-64 h-[350px] border"></div>
-              <div class="w-64 h-[350px] border"></div>
+              <div 
+                id="uploadFile" 
+                class="w-64 h-[350px] border grid place-items-center cursor-pointer hover:border-2 hover:border-black group"
+                title="Upload File"
+              >
+                <img 
+                  id="preview" width="100" height="100" 
+                  class="w-full h-full z-40"
+                />
+                <img src="/icons/general/upload-icon.svg" alt="" class="w-10 h-10 group-hover:w-11 group-hover:h-11 fixed z-20">
+                <input 
+                  type="file" 
+                  class="fixed z-40 h-8 w-8 invisible" 
+                  name="cert_file" 
+                  id="uploaded"
+                  onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])"
+                >
+              </div>
             </div>
           </div>
 
@@ -169,7 +191,7 @@
             <button 
               type="submit"
               class="rounded-md text-center px-6 py-3 text-md text-white bg-black cursor-pointer"
-            >Update</button>
+            >Upload</button>
           </div>
 
         </div>
@@ -180,7 +202,18 @@
   </div>
 </x-layout>
 
+@if (session('message'))
+	<x-app.toaster message="{{ session('message') }}">
+	</x-app.toaster>
+@endif
+
 <script>
+var success = document.getElementById("uploadFile");
+
+success.onclick = function() {
+  document.getElementById('uploaded')?.click()
+}
+
 $(document).ready(function() {
   $('input').click(function() {
       $('.error').hide();

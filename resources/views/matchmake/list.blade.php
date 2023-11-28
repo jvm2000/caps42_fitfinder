@@ -25,7 +25,14 @@
           </div>
           <div class="p-6 relative h-44">
             <div class="space-y-4">
-              <p class="text-2xl font-bold capitalize">{{ $match->first_name }} {{ $match->last_name }}</p>
+              <div class="flex items-center w-full relative">
+                <p class="text-2xl font-bold capitalize">{{ $match->first_name }} {{ $match->last_name }}</p>
+                @if ($match->hasVerifiedEmail())
+                <p class="text-lg absolute right-0 text-green-500">verified</p>
+                @else
+                <p class="text-lg absolute right-0 text-red-500">not verified</p>
+                @endif
+              </div>
 
               @if(auth()->user()->role === 'Trainee' && $match->portfolio && $match->portfolio->count() > 0)
                   <p class="text-base text-gray-600">{{ $match->portfolio->description }}</p>

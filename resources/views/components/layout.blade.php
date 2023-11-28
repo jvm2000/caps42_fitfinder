@@ -99,4 +99,8 @@
   @if(auth()->user()->status === 'suspended')
   <x-admin.suspended-account/>
   @endif
+
+  @if(auth()->user()->status === 'deactivated')
+  <x-admin.deactivated-account/>
+  @endif
 </html>
