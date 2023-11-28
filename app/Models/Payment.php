@@ -12,18 +12,25 @@ class Payment extends Model
     protected $fillable = [
         'trainee_id',
         'coach_id',
+        'contract_id', // Add this line
         'reference',
         'amount',
         'status',
         'startdate',
         'enddate',
     ];
-    public function user()
+    public function trainee()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'trainee_id');
     }
-    public function contracts()
+
+    public function coach()
     {
-        return $this->hasMany(Contract::class);
+        return $this->belongsTo(User::class, 'coach_id');
+    }
+
+    public function contract()
+    {
+        return $this->belongsTo(Contract::class, 'contract_id');
     }
 }

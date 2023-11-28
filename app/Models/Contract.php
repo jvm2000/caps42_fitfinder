@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\Program;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -26,5 +27,9 @@ class Contract extends Model
     // Define a belongsTo relationship with the User model for trainee
     public function trainee() {
         return $this->belongsTo(User::class, 'trainee_id');
+    }
+
+    public function programs(){
+        return $this->belongsTo(Program::class, 'programs_id');
     }
 }
