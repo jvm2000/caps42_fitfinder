@@ -14,7 +14,7 @@ class Contract extends Model
         'programs_id',
         'coach_id',
         'trainee_id',
-        'payment_id',
+        'payment_type',
         'status',
         'startdate',
         'enddate',

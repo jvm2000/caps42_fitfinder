@@ -38,9 +38,10 @@ class ContractController extends Controller
 
     }
     
-    public function store(Request $request, User $user){
-       
-        $form = $request->validate([
+    public function store(Request $request){
+
+        $request->validate([
+            // Add your validation rules here
             'traineeUsername' => 'required',
             'traineeAddress' => 'required',
             'traineeEmailAddress' => 'required|email',
@@ -50,15 +51,22 @@ class ContractController extends Controller
             'startDate' => 'required|date',
             'endDate' => 'required|date|after_or_equal:startDate',
         ]);
-    
-        // Create a new contract associated with the specified user
-        $contract = $user->contracts()->create($form);
-    
-        // Attach the selected program to the contract
-        $contract->programs()->attach($request->input('programs'));
+        $coach = auth()->user();
+        // Create a new contract instance
+        $contract = new Contract([
+            'programs_id' => $request->input('programs'),
+            'trainee_id' => $request->input('traineeUsername'),
+            'coach_id' => $coach->id,
+            'payment_type' => $request->input('paymentType'),
+            'startdate' => $request->input('startDate'),
+            'enddate' => $request->input('endDate'),
+            'status' => 'Pending',
+        ]); 
+        // Save the contract to the database
+        $contract->save();
 
         // Redirect or perform any additional actions as needed
-        return redirect('/contracts/dashboard')->with('message', 'Program created successfully!');
+        return redirect()->route('home.index')->with('success', 'Contract created successfully');
     }
     
 }

@@ -69,7 +69,7 @@
                     </div>
                     @if (auth()->user()->role === 'Coach')
                     <a 
-                        href=""
+                        href="/contracts/make"
                         type="submit"
                         class="rounded-full flex items-center space-x-4 px-6 py-3 text-md text-white bg-black cursor-pointer w-auto"
                     >
