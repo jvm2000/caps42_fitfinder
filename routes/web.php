@@ -2,7 +2,6 @@
 
 use App\Models\Program;
 use Illuminate\Http\Request;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -10,9 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProgramController;
-use App\Http\Controllers\requestController;
 use App\Http\Controllers\requestController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\PortfolioController;
@@ -106,8 +103,8 @@ Route::delete('/admin/delete/{user}', [AdminController::class, 'destroy'])->name
 	Route::put('/medcert/update/{medcert}', [MedicalCertificateController::class, 'update'])->name('medcert.update');
 	
 	//contracts
-	Route::get('/contracts/dashboard', [ContractController::class, 'showContracts'])->middleware(['auth', 'verified']);
-	Route::get('/contracts/dashboard', [ContractDashboardController::class, 'listOfContracts']);
+	// Route::get('/contracts/dashboard', [ContractController::class, 'showContracts'])->middleware(['auth', 'verified']);
+    Route::get('/contracts/dashboard', [ContractDashboardController::class, 'listOfContracts']);
 	Route::post('/contracts/create/{user}', [ContractController::class, 'store'])->name('contracts.store');
 	Route::get('/contracts/make', [ContractController::class, 'index'])->name('generate.contract')->middleware(['auth', 'verified']);
 	// Matchmake 

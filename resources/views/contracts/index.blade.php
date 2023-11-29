@@ -38,54 +38,58 @@
 		{{-- Table  --}}
 		<div class="mt-2">
 			<div id="Active" class="tabcontent">
-				<table class="w-full table-auto border-spacing-y-6 border-separate">
-					<thead>
-						<tr>
-							<th class="text-xl font-medium text-gray-400 py-4 text-left indent-16">Program's Name</th>
-							<th class="text-xl font-medium text-gray-400 py-4 text-left">Trainee</th>
-							<th class="py-4">
-								<p class="text-xl font-medium text-gray-400 py-4 text-left w-44">Status</p>
-							</th>
-							<th class="text-xl font-medium text-gray-400 py-4 text-left">Action</th>
-						</tr>
-					</thead>
-					<tbody>
-                        @foreach($contracts as $contract)
-							<tr class="">
-								<td class="border-l-8 border-indigo-500 py-1">
-									<a href="" class="ml-4 flex items-center space-x-4 group">
-										<img src="" class="w-9 h-9 rounded-full">
-										<div class="text-left">
-											<p class="text-black text-sm font-medium group-hover:text-indigo-400"></p>
-											<p class="text-xs text-zinc-400">{{$contract->programs->name}}</p>
-										</div>
-									</a>
-								</td>
-                                
-								<td class="py-1">
-									<p class="text-sm text-ellipsis">{{$contract->trainee->email}}</p>
-								</td>
-								<td class="py-2">
-									<p class="text-sm">{{$contract->status}}</p>
-								</td>
-                                
-								<td class="py-2">
-									<div class="flex items-center space-x-3 relative">
-										<a href="" class="w-7 h-7 rounded-full p-1.5 bg-indigo-500">
-											<img src="/icons/programs/view.svg" alt="" class="w-4 h-4">
-										</a>
-
-										<a href="" class="w-7 h-7 rounded-full p-1.5 bg-indigo-500">
-											<img src="/icons/programs/edit.svg" alt="" class="w-4 h-4">
-										</a>
-									</div>
-								</td>
+				@if($contracts && count($contracts) > 0)
+					<table class="w-full table-auto border-spacing-y-6 border-separate">
+						<thead>
+							<tr>
+								<th class="text-xl font-medium text-gray-400 py-4 text-left indent-16">Program's Name</th>
+								<th class="text-xl font-medium text-gray-400 py-4 text-left">Trainee</th>
+								<th class="py-4">
+									<p class="text-xl font-medium text-gray-400 py-4 text-left w-44">Status</p>
+								</th>
+								<th class="text-xl font-medium text-gray-400 py-4 text-left">Action</th>
 							</tr>
-					</tbody
-                    >@endforeach
-				</table>
+						</thead>
+						<tbody>
+							@foreach($contracts as $contract)
+								<tr class="">
+									<td class="border-l-8 border-indigo-500 py-1">
+										<a href="" class="ml-4 flex items-center space-x-4 group">
+											<img src="" class="w-9 h-9 rounded-full">
+											<div class="text-left">
+												<p class="text-black text-sm font-medium group-hover:text-indigo-400"></p>
+												<p class="text-xs text-zinc-400">{{$contract->programs->name}}</p>
+											</div>
+										</a>
+									</td>
+									
+									<td class="py-1">
+										<p class="text-sm text-ellipsis">{{$contract->trainee->email}}</p>
+									</td>
+									<td class="py-2">
+										<p class="text-sm">{{$contract->status}}</p>
+									</td>
+									
+									<td class="py-2">
+										<div class="flex items-center space-x-3 relative">
+											<a href="" class="w-7 h-7 rounded-full p-1.5 bg-indigo-500">
+												<img src="/icons/programs/view.svg" alt="" class="w-4 h-4">
+											</a>
+		
+											<a href="" class="w-7 h-7 rounded-full p-1.5 bg-indigo-500">
+												<img src="/icons/programs/edit.svg" alt="" class="w-4 h-4">
+											</a>
+										</div>
+									</td>
+								</tr>
+							@endforeach
+						</tbody>
+					</table>
+				@else
+					<p>No contracts made yet</p>
+				@endif
 			</div>
-
+		</div>
   
   @if(session('message'))
     <x-app.toaster message="{{ session('message') }}">

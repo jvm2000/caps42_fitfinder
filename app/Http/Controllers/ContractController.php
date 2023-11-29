@@ -17,10 +17,7 @@ class ContractController extends Controller
         $requests = UserRequest::all(); // Adjust as needed
         $programs = Program::all();
         $currentDate = now();
-
-        return view('contracts.create', [
-    
-        
+            
         return view('contracts.make', [
             'requests' => $requests,
             'programs' => $programs,
