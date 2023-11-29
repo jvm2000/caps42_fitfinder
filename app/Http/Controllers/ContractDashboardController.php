@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use view;
+use App\Models\Program;
 use App\Models\Contract;
+use App\Models\UserRequest;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
 
 class ContractDashboardController extends Controller
 {
@@ -15,10 +19,28 @@ class ContractDashboardController extends Controller
     {
         //
         $contracts = Contract::all();
-        
+        $requests = UserRequest::all(); // Adjust as needed
+        $programs = Program::all();
+        $currentDate = now();
+            
         return view('contracts.index', [
             'contracts' => $contracts,
+            'requests' => $requests,
+            'programs' => $programs,
+            'currentDate' => $currentDate,
+          
         ]);
+
+    }
+    public function contract(Request $request){
+        $action = $request->input('action');
+        if($action=='agree'){
+            return view('payments.index');
+        }
+        elseif ($action == 'decline') {
+
+        }
+
     }
 
     /**

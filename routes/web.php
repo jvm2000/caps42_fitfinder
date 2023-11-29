@@ -104,8 +104,9 @@ Route::delete('/admin/delete/{user}', [AdminController::class, 'destroy'])->name
 	
 	//contracts
 	// Route::get('/contracts/dashboard', [ContractController::class, 'showContracts'])->middleware(['auth', 'verified']);
-    Route::get('/contracts/dashboard', [ContractDashboardController::class, 'listOfContracts']);
-	Route::post('/contracts/create/{user}', [ContractController::class, 'store'])->name('contracts.store');
+    Route::post('/contracts/contract', [ContractDashboardController::class, 'contract']);
+	Route::get('/contracts/dashboard', [ContractDashboardController::class, 'listOfContracts']);
+	Route::post('/contracts/create', [ContractController::class, 'store'])->name('contracts.store');
 	Route::get('/contracts/make', [ContractController::class, 'index'])->name('generate.contract')->middleware(['auth', 'verified']);
 	// Matchmake 
 	Route::get('/matchmakes', [MatchmakingController::class, 'index'])->name('matchmaking.index');
