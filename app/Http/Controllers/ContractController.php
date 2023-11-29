@@ -13,12 +13,23 @@ class ContractController extends Controller
 {
     //
     public function index(){
-     
+        
+        $contracts = Contract::all();
         $requests = UserRequest::all(); // Adjust as needed
         $programs = Program::all();
         $currentDate = now();
-            
-        return view('contracts.make', [
+
+        if ($requests->isEmpty()) {
+            return view('/contracts/index', [
+                'contracts' => $contracts,
+                'requests' => $requests,
+                'programs' => $programs,
+                'currentDate' => $currentDate,
+            ])->with('message', 'There are currently no trainees who have requested.');
+        }  
+    
+        return view('contracts.create', [
+            'contracts' => $contracts,
             'requests' => $requests,
             'programs' => $programs,
             'currentDate' => $currentDate,

@@ -4,6 +4,7 @@
   <x-slot:title>
     FitFinder - Contracts
   </x-slot>
+
   <div class="w-full py-10 px-12">
     <div class="flex items-center relative">
       <p class="text-3xl font-semibold mr-auto">Contracts</p>
@@ -22,11 +23,11 @@
 
 				</div>
 				@if (auth()->user()->role === 'Coach')	
+				
 				<a 
 					href="/contracts/make"
 					type="submit"
-					class="rounded-full flex items-center space-x-4 px-6 py-3 text-md text-white bg-black cursor-pointer w-auto"
-				>
+					class="rounded-full flex items-center space-x-4 px-6 py-3 text-md text-white bg-black cursor-pointer w-auto">
 					<img src="/icons/programs/plus.svg" class="w-6 h-6">
 					<p class="whitespace-nowrap">Create</p>
 				</a>
@@ -182,6 +183,7 @@
 	  <span class="close" id="closeModalBtn">&times;</span>
 	  <form action="/contracts/contract" method="POST">
 		@csrf
+		@if(count($requests) > 0)
 	  <!-- Modal content goes here -->
 	  <div class="contract">
 	  <h1>Contract</h1>
@@ -276,7 +278,7 @@
 				<button type="submit" name="action" class="btn" value="agree">I Agree</button>
 				<button type="submit" name="action" class="btn" value="decline">Decline</button>
 			  </div>
-			
+			@endif
 	  </form>
 	  
 	
