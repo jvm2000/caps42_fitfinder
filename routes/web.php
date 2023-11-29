@@ -1,20 +1,24 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use App\Models\Program;
+use Illuminate\Http\Request;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\requestController;
 use App\Http\Controllers\requestController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\MatchmakingController;
 use App\Http\Controllers\SendRequestController;
+use App\Http\Controllers\ContractDashboardController;
 use App\Http\Controllers\MedicalCertificateController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
@@ -103,9 +107,9 @@ Route::delete('/admin/delete/{user}', [AdminController::class, 'destroy'])->name
 	
 	//contracts
 	Route::get('/contracts/dashboard', [ContractController::class, 'showContracts'])->middleware(['auth', 'verified']);
+	Route::get('/contracts/dashboard', [ContractDashboardController::class, 'listOfContracts']);
+	Route::post('/contracts/create/{user}', [ContractController::class, 'store'])->name('contracts.store');
 	Route::get('/contracts/make', [ContractController::class, 'index'])->name('generate.contract')->middleware(['auth', 'verified']);
-  	Route::post('/contracts/send', [ContractController::class, 'store'])->middleware(['auth', 'verified']);
-	  Route::get('/contracts/show/{program}', [ContractController::class, 'showContract'])->name('contracts.show');
 	// Matchmake 
 	Route::get('/matchmakes', [MatchmakingController::class, 'index'])->name('matchmaking.index');
 	
@@ -115,7 +119,7 @@ Route::delete('/admin/delete/{user}', [AdminController::class, 'destroy'])->name
 	//SendRequest
 	Route::post('/matchmakes/send-request', [MatchmakingController::class, 'sendRequest'])->name('matchmaking.send');
 	//payments
-	Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index')->middleware(['auth', 'verified']);
+	Route::get('/payments/create', [PaymentController::class, 'create'])->name('payments.create')->middleware(['auth', 'verified']);
 	Route::post('/payments/store', [PaymentController::class, 'store'])->name('payments.store')->middleware(['auth', 'verified']);
 	//Programs
 	Route::get('/programs/make', [ProgramController::class, 'showAllPrograms'])->name('programs.index');

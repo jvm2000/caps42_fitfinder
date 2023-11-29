@@ -34,11 +34,11 @@
             @endforeach
         </select><br>
         <label for="traineeAddress">Trainee Address:</label>
-        <input type="text" name="traineeAddress" value="{{ $requests[0]->requester->address . ' ' . $requests[0]->requester->city }}"><br>
+        <input type="text" name="traineeAddress" value="{{ $requests->requester->address . ' ' . $requests->requester->city }}"><br>
         <label for="traineeEmailAddress">Trainee Email Address:</label>
-        <input type="text" name="traineeEmailAddress" value="{{ $requests[0]->requester->email }}"><br>
+        <input type="text" name="traineeEmailAddress" value="{{ $requests->requester->email }}"><br>
         <label for="traineePhoneNumber">Trainee Phone Number:</label>
-        <input type="text" name="traineePhoneNumber" value="{{ $requests[0]->requester->phone_number }}"><br>
+        <input type="text" name="traineePhoneNumber" value="{{ $requests->requester->phone_number }}"><br>
     </p>
 
     <p>
