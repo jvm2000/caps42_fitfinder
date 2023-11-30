@@ -21,8 +21,6 @@
     <div class="absolute right-0 top-0">
       @if (auth()->user()->hasVerifiedEmail())
       <img src="/dashboard/icons/verified.svg" alt="Verified" class="w-4 h-4 inline" title="Verified">
-      @else
-      <img src="/dashboard/icons/notverified.svg" alt="Not verified" class="w-4 h-4 inline" title="Not Verified">
       @endif
     </div>
 

@@ -18,19 +18,14 @@ class ModuleController extends Controller
     {
         $form = $request->validate([
             'name'=>['required','string'],
-            'summary'=>['required','string'],
-            'duration'=>['required'],
-            'procedure' => ['required','string'],
-            'set'=>['nullable'],
-            'setcount'=>['nullable'],
-            'rep'=>['nullable'],
-            'repcount'=>['nullable'],
-            'schedule'=>['required'],
+            'procedure'=>['required'],
+            'sets' => ['required','string'],
+            'reps'=>['nullable'],
+            'rest_period'=>['nullable'],
+            'difficulty'=>['nullable'],
+            'notes'=>['nullable'],
+            'video_url'=>['required'],
         ]);
-
-        // $imagePath = request()->file('procedure')->store('modules','public');
-        // $form['procedure'] = $imagePath; 
-
 
         $program->modules()->create($form);
 
@@ -60,15 +55,14 @@ class ModuleController extends Controller
     public function update(Request $request, Module $module)
     {
         $form = $request->validate([
-            'name'=>['nullable','string'],
-            'summary'=>['nullable','string'],
-            'duration'=>['nullable'],
-            'procedure' => ['nullable'], //need nullable in migration
-            'set'=>['nullable'],
-            'setcount'=>['nullable'],
-            'rep'=>['nullable'],
-            'repcount'=>['nullable'],
-            'schedule'=>['nullable'],
+            'name'=>['nullable'],
+            'procedure'=>['nullable'],
+            'sets' => ['nullable'],
+            'reps'=>['nullable'],
+            'rest_period'=>['nullable'],
+            'difficulty'=>['nullable'],
+            'notes'=>['nullable'],
+            'video_url'=>['nullable'],
             'program_id'=>['required']
         ]);
 

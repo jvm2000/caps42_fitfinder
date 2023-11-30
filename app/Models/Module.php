@@ -11,19 +11,14 @@ class Module extends Model
 
     protected $fillable = [
         'name',
-        'summary',
-        'duration',
         'procedure',
-        'set',
-        'setcount',
-        'rep',
-        'repcount',
-        'schedule',
+        'sets',
+        'reps',
+        'rest_period',
+        'difficulty',
+        'notes',
+        'video_url',
         'program_id',
-    ];
-
-    protected $casts = [
-        'schedule' => 'array'
     ];
 
     public function program()

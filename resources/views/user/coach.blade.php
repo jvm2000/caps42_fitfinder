@@ -16,7 +16,6 @@
           @if (auth()->user()->hasVerifiedEmail())
           <img src="/dashboard/icons/verified.svg" alt="Verified" class="w-10 h-10 inline absolute top-0 right-0" title="Verified">
           @else
-          <img src="/dashboard/icons/notverified.svg" alt="Not verified" class="w-10 h-10 inline absolute top-0 right-0" title="Not Verified">
           @endif
           <img src="{{auth()->user()->getImageURL()}}" alt="Profile" class="w-36 h-36 rounded-full">
         </div>
