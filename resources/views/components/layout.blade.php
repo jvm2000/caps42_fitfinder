@@ -69,8 +69,17 @@
               <img src="/dashboard/icons/contracts.svg" alt="Main" class="w-6 h-6 mr-14 group-hover:mb-1">
               <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Contracts</p>
             </a>
+             <a href="/payments/dashboard"class="flex items-center relative mt-14 group">
+
+              <span class="w-2 h-9 rounded-r-md mr-32"></span>
+
+              <img src="/dashboard/icons/contracts.svg" alt="Main" class="w-6 h-6 mr-14 group-hover:mb-1">
+              <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Payments</p>
+            </a>
             
           </div>
+          
+        
 
           <div class="absolute bottom-0">
             <a href="/auth/profile/{{auth()->user()->id}}" class="flex items-center relative group">

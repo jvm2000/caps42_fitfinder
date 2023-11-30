@@ -75,6 +75,9 @@ Route::get('/admin/modules', [AdminController::class, 'modulesIndex'])->name('ad
 Route::get('/admin/contracts', [AdminController::class, 'contractsIndex'])->name('admin.contracts');
 Route::put('/admin/suspend/{user}', [AdminController::class, 'suspendUser'])->name('admin.User');
 Route::delete('/admin/delete/{user}', [AdminController::class, 'destroy'])->name('admin.destroy');
+Route::get('/admin/payments', [AdminController::class, 'paymentIndex'])->name('admin.paymentsIndex');
+Route::post('/admin/payments/{paymentId}/accept', [AdminController::class, 'acceptPayment'])->name('admin.payments.accept');
+
 
 
 	Route::middleware(['auth'])->group(function () {
@@ -118,8 +121,9 @@ Route::delete('/admin/delete/{user}', [AdminController::class, 'destroy'])->name
 	//SendRequest
 	Route::post('/matchmakes/send-request', [MatchmakingController::class, 'sendRequest'])->name('matchmaking.send');
 	//payments
-	Route::get('/payments/create', [PaymentController::class, 'create'])->name('payments.create')->middleware(['auth', 'verified']);
-	Route::post('/payments/store', [PaymentController::class, 'store'])->name('payments.store')->middleware(['auth', 'verified']);
+	Route::get('/payments/dashboard', [PaymentController::class, 'index'])->name('payments.dashboard')->middleware(['auth', 'verified']);
+	Route::post('/contracts/{contractId}/make-payment', [PaymentController::class, 'makePayment'])->name('payments.make-payment');
+	Route::get('/payments/create', [PaymentController::class, 'paymentsIndex'])->name('payments.index');
 	//Programs
 	Route::get('/programs/make', [ProgramController::class, 'showAllPrograms'])->name('programs.index');
 	Route::get('/programs/list', [ProgramController::class, 'index'])->name('programs.index');

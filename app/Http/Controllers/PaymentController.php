@@ -17,22 +17,17 @@ class PaymentController extends Controller
      */
     public function index()
     {
-    // Get the logged-in user
-        $user = Auth::user();
+        $contracts = Contract::all(); // Adjust as needed
+        return view('payments.dashboard',[
+            'contracts' => $contracts
+        ]);
 
-        // Determine the role of the user
-        $role = $user->role; // Assuming you have a 'role' attribute in your User model
-
-        // Fetch the data based on the user's role
-        if ($role == 'coach') {
-            $requests = Contract::where('coach_id', $user->id)->get();
-            $idField = 'trainee_id';
-        } else {
-            $requests = Contract::where('trainee_id', $user->id)->get();
-            $idField = 'coach_id';
-        }
-
-    return view('payments.index', compact('requests', 'idField'));
+    }
+    public function paymentsIndex(){
+        $contracts = Contract::all(); // Adjust as needed
+        return view('payments.index',[
+            'contracts' => $contracts
+        ]);
     }
     /**
      * Show the form for creating a new resource.
@@ -43,42 +38,30 @@ class PaymentController extends Controller
         $idField = 'coach_id'; // Adjust this based on your actual requirements
         return view('payments.index', compact('coaches', 'idField'));
     }
-
-    
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function makePayment(Request $request, $contractId)
     {
-        $idField = $request->input('idField');
-
+        // Additional validation and error handling can be added
         $request->validate([
-            $idField => 'required|exists:users,id',
-            'reference' => 'required|string',
             'amount' => 'required|numeric',
-            'startdate' => 'required|date',
-            'enddate' => 'required|date|after_or_equal:startdate',
+            'reference' => 'required|string|max:255',
         ]);
 
-        // Create a new payment instance
-        $paymentData = [
-            'trainee_id' => $request->input('idField'),
-            'coach_id' => $request->user()->id,
-            'reference' => $request->input('reference'),
+        $payment = new Payment([
+            'contract_id' => $contractId,
             'amount' => $request->input('amount'),
-            'startdate' => $request->input('startdate'),
-            'enddate' => $request->input('enddate'),
-            'status' => 'Pending',
-        ];
+            'reference' => $request->input('reference'),
+            'status' => $request->input('status', 'pending'), 
+        ]);
 
-    // Save the payment to the database
-    Payment::create($paymentData);
+        $payment->save();
 
-        // Redirect or perform any additional actions as needed
-        return redirect()->route('payments.index', ['user' => $request->user()->id])
-            ->with('success', 'Payment created successfully');
+        // You might want to update the contract status or other details here
+
+        return redirect()->back()->with('success', 'Payment successful!');
     }
-
     /**
      * Display the specified resource.
      */

@@ -14,14 +14,10 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('trainee_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('coach_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('contract_id')->constrained('contracts')->onDelete('cascade'); 
-            $table->string('reference_number');
-            $table->string('status')->default('Pending');
+            $table->foreignId('contract_id')->constrained(); // Assuming you have a 'contracts' table
+            $table->string('reference');
             $table->decimal('amount', 10, 2);
-            $table->date('startdate');
-            $table->date('enddate');
+            $table->string('status')->default('pending'); // 'pending', 'accepted', 'rejected', or other statuses
             $table->timestamps();
         });
     }
