@@ -16,13 +16,8 @@ class SendRequestController extends Controller
             $traineeId = $request->input('trainee_id');
             $coachId = $request->input('coach_id');
             $programId = $request->input('program_id');
-            $existingPayment = Payment::where('trainee_id', $traineeId)
-            ->where('coach_id', $coachId)
-            ->first();
-    
-            if ($existingPayment) {
-                return "A request has already been sent to this user.";
-            }
+            
+
 
             DB::table('requests')->insert([
                 'trainee_id' => $traineeId,

@@ -16,10 +16,12 @@ class PaymentController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
+    {   
+        $payments = Payment::all();
         $contracts = Contract::all(); // Adjust as needed
         return view('payments.dashboard',[
-            'contracts' => $contracts
+            'contracts' => $contracts,
+            'payments' => $payments,
         ]);
 
     }
