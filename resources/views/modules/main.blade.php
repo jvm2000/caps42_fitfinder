@@ -58,11 +58,11 @@
         <thead>
           <tr>
             <th class="text-xl font-medium text-gray-400 py-4 text-left indent-16">Model's Info</th>
-            <th class="text-xl font-medium text-gray-400 py-4 text-left">Summary</th>
+            <th class="text-xl font-medium text-gray-400 py-4 text-left">Procedure</th>
             <th class="py-4">
-              <p class="text-xl font-medium text-gray-400 py-4 text-left w-44">Duration</p>
+              <p class="text-xl font-medium text-gray-400 py-4 text-left w-44">Rest Period</p>
             </th>
-            <th class="text-xl font-medium text-gray-400 py-4 text-left">Scheduled Days</th>
+            <th class="text-xl font-medium text-gray-400 py-4 text-left">Number of sets/reps</th>
             <th class="text-xl font-medium text-gray-400 py-4 text-left">Actions</th>
           </tr>
         </thead>
@@ -71,30 +71,12 @@
           <tr>
             <td class="border-l-8 border-indigo-500 py-1 indent-4 text-sm">{{ $module->name }}</td>
 
-            <td class="py-1 text-neutral-950 text-sm w-96 overflow-hidden text-ellipsis">{{ $module->summary }}</td>
+            <td class="py-1 text-neutral-950 text-sm w-96 overflow-hidden text-ellipsis">{{ $module->procedure }}</td>
 
-            <td class="py-1 text-neutral-950 text-sm">{{ $module->duration }}</td>
+            <td class="py-1 text-neutral-950 text-sm">{{ $module->rest_period }} minute/s</td>
 
-            <td class="py-1 text-neutral-950 text-sm">
-             <div class="flex items-center space-x-2">
-                @foreach ($module->schedule as $day)
-                  @if($day === 'monday')
-                  <div class="w-7 h-7 bg-indigo-500 rounded-full grid place-items-center text-xs text-white">M</div>
-                  @elseif($day == 'tuesday')
-                  <div class="w-7 h-7 bg-indigo-500 rounded-full grid place-items-center text-xs text-white">T</div>
-                  @elseif($day == 'wednesday')
-                  <div class="w-7 h-7 bg-indigo-500 rounded-full grid place-items-center text-xs text-white">W</div>
-                  @elseif($day == 'thursday')
-                  <div class="w-7 h-7 bg-indigo-500 rounded-full grid place-items-center text-xs text-white">Th</div>
-                  @elseif($day == 'friday')
-                  <div class="w-7 h-7 bg-indigo-500 rounded-full grid place-items-center text-xs text-white">Th</div>
-                  @elseif($day == 'saturday')
-                  <div class="w-7 h-7 bg-indigo-500 rounded-full grid place-items-center text-xs text-white">S</div>
-                  @elseif($day == 'sunday')
-                  <div class="w-7 h-7 bg-indigo-500 rounded-full grid place-items-center text-xs text-white">Su</div>
-                  @endif
-              @endforeach
-             </div>
+            <td class="py-1 text-sm">
+              <p><span class="text-neutral-950">{{ $module->sets }} sets</span> / <span class="text-indigo-500">{{ $module->reps }} reps</span></p>
             </td>
 
             <td class="py-1">

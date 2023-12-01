@@ -58,6 +58,13 @@
         >
           <p class="text-base font-medium group-hover:text-indigo-400">Suspended</p>
         </button>
+
+        <button
+          class="relative px-6 justify-center border-b-4 group py-[14px] cursor-pointer hover:border-indigo-400 tablinks" 
+          onclick="openTab(event, 'Deactivated')"
+        >
+          <p class="text-base font-medium group-hover:text-indigo-400">Deactivated</p>
+        </button>
       </div>
   
       <div class="w-full border-t-4 absolute z-10 bottom-0"></div>
@@ -202,6 +209,79 @@
                   <div class="flex items-center space-x-3 relative">
                     <x-admin.modal.restore :suspended="$suspended" :index="$index"/>
                   </div>
+                </td>
+              </tr>
+              @else
+              <p>No coaches registered yet.</p>
+              @endif
+            @endforeach
+          </tbody>
+        </table>
+        @endif
+      </div>
+      <div id="Deactivated" class="tabcontent">
+        @if($coaches->count() > 0)
+        <table class="w-full table-auto border-spacing-y-6 border-separate">
+          <thead>
+            <tr>
+              <th class="text-sm font-medium text-gray-400 py-4 text-left indent-16">Username</th>
+              <th class="text-sm font-medium text-gray-400 py-4 text-left">Full Name</th>
+              <th class="text-sm font-medium text-gray-400 py-4 text-left">Email</th>
+              <th class="text-sm font-medium text-gray-400 py-4 text-left">Full Address</th>
+              <th class="text-sm font-medium text-gray-400 py-4 text-left">Zip Code</th>
+              <th class="text-sm font-medium text-gray-400 py-4 text-left">Status</th>
+              <th class="text-sm font-medium text-gray-400 py-4 text-left">Joined at</th>
+              <th class="text-sm font-medium text-gray-400 py-4 text-left">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach($coaches as $index => $deactivated)
+              @if($deactivated->status === 'deactivated')
+              <tr class="">
+                <td class="py-2 text-sm border-l-4 border-indigo-500 indent-6">
+                  @ {{ $deactivated->username }}
+                </td>
+                <td class="py-2 text-sm">
+                  <div class="flex items-center space-x-4">
+                    <div class="w-6 h-6 rounded-full">
+                      <img src="{{$deactivated->getImageURL()}}" alt="Profile" class="w-full h-full rounded-full">
+                    </div>
+                    <p class="text-sm text-black">{{ $deactivated->first_name }} {{ $deactivated->last_name }}</p>
+                  </div>
+                </td>
+                <td class="py-2 text-sm">
+                  <p class="text-sm text-black">{{ $deactivated->email }}</p>
+                </td>
+                <td class="py-2 text-sm">
+                  @if($deactivated->address)
+                  <div class="flex flex-col space-y-1">
+                    <p class="text-sm text-black">{{ $deactivated->address }}</p>
+                    <p class="text-sm text-black">{{ $deactivated->city }} {{ $deactivated->province }}</p>
+                  </div>
+                  @else
+                  <p class="text-sm text-red-500">Address not filled up yet.</p>
+                  @endif
+                </td>
+                <td class="py-2 text-sm">
+                  @if($deactivated->zip_code)
+                  <p class="text-sm text-black">{{ $deactivated->zip_code }}</p>
+                  @else
+                  <p class="text-sm text-red-500">No zip code yet.</p>
+                  @endif
+                </td>
+                <td class="py-2 text-sm">
+                  <div class="flex items-center space-x-4">
+                    <span
+                      class="w-3 h-3 bg-gray-500 rounded-full"
+                    ></span>
+                    <p>{{ $deactivated->status }}</p>
+                  </div>
+                </td>
+                <td class="py-2 text-sm">
+                  {{ $deactivated->created_at }}
+                </td>
+                <td class="py-2 text-sm">
+                  -
                 </td>
               </tr>
               @else

@@ -35,7 +35,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        $user = User::create([
+        User::create([
             'username' => 'admin001',
             'email' => 'user@admin.com',
             'first_name' => 'FitFinder',
@@ -45,6 +45,7 @@ return new class extends Migration
             'email_verified_at' => now(),
             'role_id' => 1, // Admin
         ]);
+
     }
 
     /**

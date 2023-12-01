@@ -11,7 +11,10 @@ use Illuminate\Validation\Rule;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Auth\Notifications\VerifyEmail;
 
 class AuthController extends Controller
 {
@@ -21,7 +24,7 @@ class AuthController extends Controller
   public function store(Request $request)
   {
     $form = $request->validate([
-      'username' => ['required', 'min:3'],
+      'username' => ['required', 'min:3'],  
       'email' => ['required', 'email', Rule::unique('users', 'email')],
       'password' => ['required', 'min:8'],
       'role' => ['required'],
@@ -36,55 +39,12 @@ class AuthController extends Controller
 
     $form['password'] = bcrypt($form['password']);
 
-    User::create($form);
+    $user = User::create($form);
+    Auth::login($user);
 
-    $code = mt_rand(100000, 999999);
-
-    session(['code' => $code]);
-
-    session(['form_data' => $form]);
-
-    $mail = new PHPMailer(true);
-    $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com';
-    $mail->SMTPAuth = true;
-    $mail->Username = 'llagunocarl@gmail.com';
-    $mail->Password = 'vgckqfzfyyohtkgd';
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-    $mail->Port = 587;
-
-    $mail->setFrom('fitfinder@co.com', 'FitFinder');
-    $mail->addAddress($email = $form['email']);
-
-
-    $mail->isHTML(true);
-    $mail->Subject = 'Verify your FitFinder account';
-    $mail->Body =
-      "<html>
-        <head>
-          <style>
-                  body {
-                      text-align: center;
-                  } .content {
-                      display: inline-block;
-                      text-align: left;
-                  }
-              </style>
-        </head>
-        <body>
-            <div class='content'>
-          <h1>Verify Log-In</h1><br>"
-            . "Your verification code<br>"
-            . "<h3>$code</h3><br>"
-            . "The verification code will be valid for 30 minutes. Please do not share this code with anyone.<br>"
-            . "<i>This is an automated message, please do not reply.</i>
-          </div>
-        </body>
-      </html>";
-
-    $mail->send();
-
-    return redirect('/verification')->with('loading', true);
+    $user->sendEmailVerificationNotification();
+    
+    return view('emails.verify-email')->with('message', 'User Registration Successful');
   }
 
   /**
@@ -93,9 +53,9 @@ class AuthController extends Controller
   public function login(Request $request)
   {
     $form = $request->validate([
-        'email' => ['required', 'email'],
-        'password' => 'required'
-    ]);
+      'email' => ['required', 'email'],
+      'password' => 'required'
+  ]);
 
     $email = $form['email'];
     $password = $form['password'];
@@ -172,9 +132,6 @@ class AuthController extends Controller
       $form['image'] = $imagePath;
     }
 
-    // $form['birthdate'] = Carbon::parse($form['birthdate'])->format('Y-m-d');
-
-    // Update the user's fields
     $user->update($form);
 
     return back()->with('loading', true);
@@ -187,5 +144,39 @@ class AuthController extends Controller
     $request->session()->regenerateToken();
 
     return redirect('/login')->with('message', 'User logged out successfully!');
+  }
+
+  public function deactivate(Request $request, User $user)
+  {
+    if (Hash::check($request->input('password'),  auth()->user()->password)) {
+      $form = $request->validate([
+          'status' => ['nullable'],
+      ]);
+  
+      $user->update($form);
+  
+      auth()->logout();
+      $request->session()->invalidate();
+      $request->session()->regenerateToken();
+
+      return redirect('/login')->with('message', 'User is now deactivated!');
+  } else {
+      return back()->with('message', 'Please type in the correct password.');
+  }
+  }
+
+  public function reactivate(Request $request, User $user)
+  {
+    if (Hash::check($request->input('password'),  auth()->user()->password)) {
+      $form = $request->validate([
+          'status' => ['nullable'],
+      ]);
+  
+      $user->update($form);
+
+      return redirect('/home')->with('message', 'User is now active again!');
+  } else {
+      return back()->with('message', 'Please type in the correct password.');
+  }
   }
 }

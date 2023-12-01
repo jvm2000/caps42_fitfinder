@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Module;
+use App\Models\Payment;
 use App\Models\Program;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Module;
 
 
 class AdminController extends Controller
@@ -25,7 +26,20 @@ class AdminController extends Controller
         
         return view('admin.coaches', compact('coaches'));
     }
+    public function acceptPayment($paymentId)
+    {
+        $payment = Payment::findOrFail($paymentId);
+        $payment->update(['status' => 'accepted']);
 
+        // Additional logic, e.g., update contract status or perform other actions
+
+        return redirect()->back()->with('success', 'Payment accepted!');
+    }
+    public function paymentIndex(){
+        $pendingPayments = Payment::where('status', 'pending')->get();
+
+        return view('admin.payments', compact('pendingPayments'));
+    }
 
 
     public function programsIndex(Program $programs)

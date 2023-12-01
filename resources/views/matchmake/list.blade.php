@@ -25,7 +25,9 @@
           </div>
           <div class="p-6 relative h-44">
             <div class="space-y-4">
-              <p class="text-2xl font-bold capitalize">{{ $match->first_name }} {{ $match->last_name }}</p>
+              <div class="flex items-center w-full relative">
+                <p class="text-2xl font-bold capitalize">{{ $match->first_name }} {{ $match->last_name }}</p>
+              </div>
 
               @if(auth()->user()->role === 'Trainee' && $match->portfolio && $match->portfolio->count() > 0)
                   <p class="text-base text-gray-600">{{ $match->portfolio->description }}</p>
@@ -44,7 +46,11 @@
           <a href="/matchmakes/view/{{$match->id}}" class="absolute bottom-6 right-6">
             <img src="/icons/chevron-left-icon.svg" alt="View Profile" class="w-6 h-6">
           </a>
-          
+          @if ($match->hasVerifiedEmail())
+          <p class="text-lg absolute right-6 top-7 text-green-500">verified</p>
+          @else
+          <p class="text-lg absolute right-6 top-7 text-red-500">not verified</p>
+          @endif
         </div>
         @endforeach
 

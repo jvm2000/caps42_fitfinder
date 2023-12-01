@@ -24,7 +24,7 @@ class UserRequest extends Model
     {
         return $this->belongsTo(User::class, 'coach_id');
     }
-    public function programs()
+    public function program()
     {
         return $this->hasOne(Program::class, 'program_id');
     }

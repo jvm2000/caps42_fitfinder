@@ -57,4 +57,8 @@ class Program extends Model
         return $this->belongsTo(Program::class, 'prerequisite_program_id');
     }
 
+    public function request()
+    {
+        return $this->belongsTo(UserRequest::class);
+    }
 }

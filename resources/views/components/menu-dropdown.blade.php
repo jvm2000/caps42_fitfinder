@@ -17,13 +17,15 @@
 </script>
 
 <div class="relative inline-block text-left">
-  <div class="flex items-center space-x-4">
-    <div class="text-right">
-        <p class="text-base font-bold"><span>@</span>{{auth()->user()->username}}</p>
-        <p class="text-base text-neutral-400">{{auth()->user()->role}}</p>
+  <div class="w-11 h-11 rounded-full relative border-none">
+    <div class="absolute right-0 top-0">
+      @if (auth()->user()->hasVerifiedEmail())
+      <img src="/dashboard/icons/verified.svg" alt="Verified" class="w-4 h-4 inline" title="Verified">
+      @endif
     </div>
+
     <button 
-      class="w-11 h-11 rounded-full border"
+      class="w-10 h-10 rounded-full border"
       id="menu-button"
       aria-haspopup="true"
       aria-expanded="true"  
@@ -36,41 +38,73 @@
     @csrf
     <div
       id="menu-dropdown"
-      class="origin-top-right absolute right-0 mt-4 w-40 rounded-md shadow-lg hidden py-2 z-[9999] bg-white"
+      class="origin-top-right absolute right-0 mt-4 w-64 rounded-md shadow-lg hidden py-2 z-[9999] bg-white"
     >
-      {{-- View Profile if Coach  --}}
       @if(auth()->user()->role === 'Coach')
       <a 
-        class="flex w-full items-center space-x-8 cursor-pointer py-2 hover:bg-gray-100"
+        class="flex items-center space-x-6 py-2 w-full pl-3"
         href="/profile/coach/{{auth()->user()->id}}"
       >
-        <img src="/icons/settings/profile-icon.svg" alt="Profile Icon" class="w-6 h-6 ml-4">
-        <p class="text-sm font-medium">Profile</p>
+        <div class="w-8 h-8 rounded-full relative">
+          <img src="{{auth()->user()->getImageURL()}}" alt="Sample Icon" class="rounded-full h-full w-full">
+        </div>
+        <div class="">
+          <div class="flex items-center space-x-4">
+            <p class="text-base font-semibold">{{auth()->user()->first_name}} {{auth()->user()->last_name}}</p>
+            <p class="text-xs text-blue-500">{{ auth()->user()->role }}</p>
+          </div>
+          <div class="flex items-center space-x-8">
+            <p class="text-xs">{{auth()->user()->username}}</p>
+            @if (auth()->user()->hasVerifiedEmail())
+            <p class="text-xs text-green-500 font-medium">verified</p>
+            @else
+            <p class="text-xs text-red-500 font-medium">not verified</p>
+            @endif
+          </div>
+        </div>
       </a>
       @endif
 
-      {{-- View Profile if Trainee  --}}
       @if(auth()->user()->role === 'Trainee')
       <a 
-        class="flex w-full items-center space-x-8 cursor-pointer py-2 hover:bg-gray-100"
+        class="flex items-center space-x-6 py-2 w-full pl-3"
         href="/profile/trainee/{{auth()->user()->id}}"
+        title="View Profile"
       >
-        <img src="/icons/settings/profile-icon.svg" alt="Profile Icon" class="w-6 h-6 ml-4">
-        <p class="text-sm font-medium">Profile</p>
+        <div class="w-8 h-8 rounded-full relative">
+          <img src="{{auth()->user()->getImageURL()}}" alt="Sample Icon" class="rounded-full h-full w-full">
+        </div>
+        <div class="">
+          <div class="flex items-center space-x-4">
+            <p class="text-base font-semibold"><span>@</span>{{auth()->user()->first_name}} {{auth()->user()->last_name}}</p>
+            <p class="text-xs text-blue-500">{{ auth()->user()->role }}</p>
+          </div>
+          <div class="flex items-center space-x-8">
+            <p class="text-xs">{{auth()->user()->username}}</p>
+            @if (auth()->user()->hasVerifiedEmail())
+            <p class="text-xs text-green-500 font-medium">verified</p>
+            @else
+            <p class="text-xs text-red-500 font-medium">not verified</p>
+            @endif
+          </div>
+        </div>
       </a>
       @endif
-      <a 
-        class="flex w-full items-center space-x-8 cursor-pointer py-2 hover:bg-gray-100"
-        href="/auth/profile/{{auth()->user()->id}}"
-      >
-        <img src="/icons/settings/gear-icon.svg" alt="Gear Icon" class="w-6 h-6 ml-4">
-        <p class="text-sm font-medium">Settings</p>
-      </a>
 
-      <button class="flex w-full items-center space-x-8 cursor-pointer py-2 hover:bg-gray-100">
-        <img src="/icons/settings/logout-icon.svg" alt="Gear Icon" class="w-6 h-6 ml-4">
-        <p class="text-sm font-medium">Logout</p>
-      </button>
+      <div class="px-4 border-t pt-2 pb-1">
+        <a 
+          class="flex w-full items-center space-x-8 cursor-pointer py-2 hover:bg-gray-100"
+          href="/auth/profile/{{auth()->user()->id}}"
+        >
+          <img src="/icons/settings/gear-icon.svg" alt="Gear Icon" class="w-6 h-6">
+          <p class="text-sm font-medium">Settings</p>
+        </a>
+
+        <button class="flex w-full items-center space-x-8 cursor-pointer py-2 hover:bg-gray-100">
+          <img src="/icons/settings/logout-icon.svg" alt="Gear Icon" class="w-6 h-6">
+          <p class="text-sm font-medium">Logout</p>
+        </button>
+      </div>
     </div>
 
   </form>

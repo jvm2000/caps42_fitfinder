@@ -29,107 +29,86 @@
               </x-app.input>
   
               <x-app.input 
-                type="date" 
-                label="Duration" 
-                placeholder="DD/MM/YY" 
-                name="duration"
+                type="text" 
+                label="Video Reference" 
+                placeholder="Enter Youtube's URL" 
+                name="video_url"
               >
                 <x-slot name="errors">
-                  @error('duration')
+                  @error('video_url')
                   <p class="text-red-500 text-sm error">{{$message}}</p>
                   @enderror
                 </x-slot>
               </x-app.input>
   
               <div class="space-y-2">
-                <span class="text-md text-gray-600">Summary</span>
+                <span class="text-md text-gray-600">Procedure</span>
                 <textarea 
                   type="text" 
                   class="bg-inherit text-sm px-8 py-4 w-full h-[120px] border-gray-500 border rounded-md" 
-                  placeholder="Describe"
-                  name="summary"
+                  placeholder="What to do?"
+                  name="procedure"
                 ></textarea>
               </div>
             </div>
             
             <div class="flex flex-col space-y-2">
+              <div class="space-y-2">
+                <span class="text-md text-gray-600">Set</span>
+                <div class="grid grid-cols-2 items-center gap-x-4">
+                  <input 
+                    type="number" 
+                    class="bg-inherit text-lg pl-8 pr-4 py-2 w-full border-gray-500 border rounded-md" 
+                    placeholder="Enter Sets"
+                    name="sets"
+                  />
+                  <input 
+                    type="number" 
+                    class="bg-inherit text-lg pl-8 pr-4 py-2 w-full border-gray-500 border rounded-md" 
+                    placeholder="Enter Reps"
+                    name="reps"
+                  />
+                </div>
+              </div>
+
               <x-app.input 
-                type="text" 
-                label="Procedure" 
-                placeholder="Attatch Link" 
-                name="procedure"
+                type="number" 
+                label="Rest Period (minute/s)" 
+                placeholder="Enter Required Rest Period" 
+                name="rest_period"
               >
                 <x-slot name="errors">
-                  @error('procedure')
+                  @error('rest_period')
                   <p class="text-red-500 text-sm error">{{$message}}</p>
                   @enderror
                 </x-slot>
               </x-app.input>
 
               <div class="space-y-2">
-                <span class="text-md text-gray-600">Set</span>
-                <div class="grid grid-cols-3 items-center gap-x-4">
-                  <input 
-                    type="text" 
-                    class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md col-span-2" 
-                    placeholder="Enter Set Name"
-                    name="set"
-                  />
-                  <input 
-                    type="number" 
-                    class="bg-inherit text-lg pl-5 pr-4 py-2 w-full border-gray-500 border rounded-md col-span-1" 
-                    placeholder="#sets"
-                    name="setcount"
-                  />
-                </div>
+                <span class="text-md text-gray-600">Difficulty</span>
+                <select 
+                  name="difficulty" 
+                  class="bg-inherit text-lg pl-8 py-2 w-full border-gray-500 border rounded-md" 
+                >
+                  <option value="" selected disabled>Select Difficulty</option>
+                  <option value="beginner">Beginner</option>
+                  <option value="intermediate">Intermediate</option>
+                  <option value="expert">Expert</option>
+                </select>
               </div>
 
-              <div class="space-y-2">
-                <span class="text-md text-gray-600">Reps</span>
-                <div class="grid grid-cols-3 items-center gap-x-4">
-                  <input 
-                    type="text" 
-                    class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md col-span-2" 
-                    placeholder="Enter Reps Name"
-                    name="rep"
-                  />
-                  <input 
-                    type="number" 
-                    class="bg-inherit text-lg pl-5 pr-4 py-2 w-full border-gray-500 border rounded-md col-span-1" 
-                    placeholder="#reps"
-                    name="repcount"
-                  />
-                </div>
-              </div>
-
-              <x-app.custom-select label="Schedule Days">
-                <x-slot name="data">
-                  <p class="text-lg capitalize text-ellipsis overflow-hidden" id="selectedDays"><span class="text-gray-400">Select Days</span></p>
+              <x-app.input 
+                type="text" 
+                label="Notes" 
+                placeholder="What to note..." 
+                name="notes"
+              >
+                <x-slot name="errors">
+                  @error('notes')
+                  <p class="text-red-500 text-sm error">{{$message}}</p>
+                  @enderror
                 </x-slot>
-  
-                @php
-                    $options = [
-                      0 => 'monday',
-                      1 => 'tuesday',
-                      2 => 'wednesday',
-                      4 => 'thursday',
-                      5 => 'friday',
-                      6 => 'saturday',
-                      7 => 'sunday',
-                    ];
-                @endphp
-  
-                @foreach ($options as $value)
-                <label for="{{ $value }}" class="flex items-center space-x-2 indent-5 hover:bg-gray-200 py-1 cursor-pointer relative w-full pr-10">
-                  <p class="text-lg text-black font-norma capitalize mr-auto">{{ $value }}</p>
-                  <input id="{{ $value }}" name="schedule[]" type="checkbox" class="w-4 h-4" value="{{ $value }}">
-                </label>
-                @endforeach
-  
-                <x-slot name="input">
-                  <p class="text-lg" id="checkboxValue"></p>
-                </x-slot>
-              </x-app.custom-select>
+              </x-app.input>
 
             </div>
           </div>

@@ -1,16 +1,23 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use App\Models\Program;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ModuleController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\requestController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\MatchmakingController;
+use App\Http\Controllers\SendRequestController;
+use App\Http\Controllers\ContractDashboardController;
 use App\Http\Controllers\MedicalCertificateController;
-use App\Http\Controllers\RequestController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,9 +30,44 @@ use App\Http\Controllers\RequestController;
 |
 */
 
-Route::get('/', function () {return view('welcome');})->middleware('guest')->name('welcome');
-Route::get('/verification', function () {return view('verify');})->name('verify');
+	Auth::routes(['verify' => true]);
+	Route::get('/email/verify', function () {return view('auth.notify');})->middleware('auth')->name('verification.notice');Route::get('/', function () {return view('welcome');})->middleware('guest')->name('welcome');
+	//Route::get('/verification', function () {return view('verify');})->name('verify');
+	Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();return redirect('/home');})->middleware(['auth', 'signed'])->name('verification.verify');
+	Route::post('/email/verification-notification', function (Request $request) {$request->user()->sendEmailVerificationNotification();return redirect('/home')->with('message', 'Verification link sent!');})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
+	// Auth
+	Route::get('/login', function () {return view('auth/login');})->name('login');
+	Route::get('/register', function () {return view('auth/register');});
+	Route::post('/auth-register', [AuthController::class, 'store'])->name('user.register');
+	Route::post('/auth-login', [AuthController::class, 'login'])->name('user.login');
+	Route::post('/verify-login', [AuthController::class, 'verify'])->name('verify.login');
+Auth::routes(['verify' => true]);
+Route::get('/email/verify', function () {
+    return view('auth.notify');
+})->middleware('auth')->name('verification.notice');
+Route::get('/', function () {return view('welcome');})->middleware('guest')->name('welcome');
+
+//Route::get('/verification', function () {return view('verify');})->name('verify');
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+ 
+    return redirect('/home');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+//If logged-in Register
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+ 
+    return redirect('/email/verify')->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+//If register
+Route::post('/email/register/verify', function (Request $request) {
+	$request->user()->sendEmailVerificationNotification();
+
+	return view('emails.verify-email')->with('message', 'User Registration Successful');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 // Auth
 Route::get('/login', function () {return view('auth/login');})->name('login');
 Route::get('/register', function () {return view('auth/register');});
@@ -39,8 +81,14 @@ Route::get('/admin/trainees', [AdminController::class, 'traineesIndex'])->name('
 Route::get('/admin/coaches', [AdminController::class, 'coachesIndex'])->name('admin.coaches');
 Route::get('/admin/programs', [AdminController::class, 'programsIndex'])->name('admin.programs');
 Route::get('/admin/modules', [AdminController::class, 'modulesIndex'])->name('admin.modules');
+Route::get('/admin/contracts', [AdminController::class, 'contractsIndex'])->name('admin.contracts');
 Route::put('/admin/suspend/{user}', [AdminController::class, 'suspendUser'])->name('admin.User');
 Route::delete('/admin/delete/{user}', [AdminController::class, 'destroy'])->name('admin.destroy');
+Route::get('/admin/payments', [AdminController::class, 'paymentIndex'])->name('admin.paymentsIndex');
+Route::post('/admin/payments/{paymentId}/accept', [AdminController::class, 'acceptPayment'])->name('admin.payments.accept');
+
+// Test 
+Route::get('/test-verify', function () {return view('emails/verify-email');})->name('admin.dashboard');
 
 
 Route::middleware(['auth'])->group(function () {
@@ -50,11 +98,14 @@ Route::middleware(['auth'])->group(function () {
 	Route::post('/auth-logout', [AuthController::class, 'logout'])->name('user.logout');
 	Route::get('/auth/profile/{user}', [AuthController::class, 'show'])->name('user.show');
 	Route::put('/auth/profile/update/{user}', [AuthController::class, 'update'])->name('user.update');
+	
 	// General 
 	Route::get('/home', function () {return view('dashboard/main');})->name('home.index');
 	Route::post('/auth-logout', [AuthController::class, 'logout'])->name('user.logout');
 	Route::get('/auth/profile/{user}', [AuthController::class, 'show'])->name('user.show');
 	Route::put('/auth/profile/update/{user}', [AuthController::class, 'update'])->name('user.update');
+	Route::put('/auth/deactive/{user}', [AuthController::class, 'deactivate'])->name('user.deactivate');
+	Route::put('/auth/reactivate/{user}', [AuthController::class, 'reactivate'])->name('user.reactivate');
 
 	//Portfolio Creation
 	Route::get('/profile/coach/{user}', [PortfolioController::class, 'index'])->name('profile.index');
@@ -67,19 +118,23 @@ Route::middleware(['auth'])->group(function () {
 	Route::put('/medcert/update/{medcert}', [MedicalCertificateController::class, 'update'])->name('medcert.update');
 	
 	//contracts
-Route::get('contracts/dashboard', [ContractController::class, 'contractsDashboard'])->name('contracts.dashboard');
-Route::post('/contracts/index', [ContractController::class, 'index'])->name('contracts.index');
-Route::get('/contracts/make', [ContractController::class, 'generateContract'])->name('generate.contract');
-Route::post('/contracts/make/', [ContractController::class, 'processContract'])->name('process.contract');
-
-
+	Route::post('/contracts/contract', [ContractDashboardController::class, 'contract']);
+	Route::get('/contracts/dashboard', [ContractDashboardController::class, 'listOfContracts'])->middleware(['auth', 'verified']);
+	Route::get('/contracts/make', [ContractController::class, 'index'])->name('generate.contract')->middleware(['auth', 'verified']);
+  Route::post('/contracts/create', [ContractController::class, 'store'])->name('contracts.store')->middleware(['auth', 'verified']);
+	
 	// Matchmake 
 	Route::get('/matchmakes', [MatchmakingController::class, 'index'])->name('matchmaking.index');
+	
 	//viewprofile
 	Route::get('/matchmakes/view/{id}', [MatchmakingController::class, 'show'])->name('matchmaking.show');
+	
 	//SendRequest
 	Route::post('/matchmakes/send-request', [MatchmakingController::class, 'sendRequest'])->name('matchmaking.send');
-	
+	//payments
+	Route::get('/payments/dashboard', [PaymentController::class, 'index'])->name('payments.dashboard')->middleware(['auth', 'verified']);
+	Route::post('/contracts/{contractId}/make-payment', [PaymentController::class, 'makePayment'])->name('payments.make-payment');
+	Route::get('/payments/create', [PaymentController::class, 'paymentsIndex'])->name('payments.index');
 	//Programs
 	Route::get('/programs/make', [ProgramController::class, 'showAllPrograms'])->name('programs.index');
 	Route::get('/programs/list', [ProgramController::class, 'index'])->name('programs.index');
@@ -98,22 +153,29 @@ Route::post('/contracts/make/', [ContractController::class, 'processContract'])-
 	Route::get('payment',[PaymentController::class,'index'])->name('payment.index');
 	// Modules 
 	Route::get('/programs/show/{program}', [ProgramController::class, 'showProgram'])->name('modules.program.show');
-	Route::get('/modules/make/{program}', function (Program $program) {
-    return view('modules.create', compact('program'));
-})->name('modules.make');
+	Route::get('/modules/make/{program}', function (Program $program) {return view('modules.create', compact('program'));})->name('modules.make');
 	Route::post('/modules/create/{program}', [ModuleController::class, 'store'])->name('modules.create');
 	Route::get('/modules/edit/{module}', [ModuleController::class, 'edit'])->name('modules.edit');
 	Route::put('/modules/update/{module}', [ModuleController::class, 'update'])->name('modules.update');
 	Route::delete('/modules/delete/{module}', [ModuleController::class, 'destroy'])->name('modules.delete');
-
+		
 	// Matchmake 
 	Route::get('/matchmakes', [MatchmakingController::class, 'index'])->name('matchmaking.index');
+	
 	//viewprofile
 	Route::get('/matchmakes/view/{id}', [MatchmakingController::class, 'show'])->name('matchmaking.show');
+	
 	//SendRequest
-	Route::post('/matchmakes/send-request', [MatchmakingController::class, 'sendRequest'])->name('matchmaking.send');
-});
+	Route::post('/matchmakes/send-request', [SendRequestController::class, 'sendRequest'])->name('matchmaking.send');
+	Route::get('/requests/dashboard/coach',[SendRequestController::class,'viewDashboard'])->name('requests.coachDashboard');
+	//
+	Route::post('/coach/approve-payment/{payment}', [SendRequestController::class, 'approvePayment'])->name('coach.approvePayment');
+	Route::post('/coach/disapprove-payment/{payment}', [SendRequestController::class, 'disapprovePayment'])->name('coach.disapprovePayment');
+//
+	Route::post('/coach/approve-request/{request}', [UserController::class, 'approveRequest'])->name('coach.approveRequest');
+	Route::post('/coach/disapprove-request/{request}', [UserController::class, 'disapproveRequest'])->name('coach.disapproveRequest');
+	});
 
 
-Route::get('logged-in/dashboard', [MatchmakingController::class, 'show'])->name('dashboard.main');
-Route::post('/matchmaking/send-request', [MatchmakingController::class, 'sendRequest'])->name('send.request');
+	Route::get('logged-in/dashboard', [MatchmakingController::class, 'show'])->name('dashboard.main');
+	Route::post('/matchmaking/send-request', [MatchmakingController::class, 'sendRequest'])->name('send.request');

@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Contract;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Auth\Notifications\VerifyEmail;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
     
@@ -35,6 +36,7 @@ class User extends Authenticatable
         'province',
         'zip_code',
         'gender',
+        'verified',
         'role',
         'birthdate',
         'tags',
@@ -116,10 +118,14 @@ class User extends Authenticatable
     return $this->belongsTo(Status::class);
     }
 
-
-    public function contract()
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerifyEmail);
+    }
+    public function contracts()
     {
         return $this->hasMany(Contract::class);
     }
+    
     
 }

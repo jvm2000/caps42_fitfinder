@@ -31,13 +31,13 @@ class MedicalCertificateController extends Controller
             'description'=>['required','string','min:12'],
             'status'=>['required','string'],
             'started_fitness'=>['required'],
-            'cert_file' => ['nullable|file|mimes:pdf,doc,docx,jpeg,png,jpg,gif|max:2048'],
+            'cert_file' =>['nullable','file'],
         ]);
 
-        // if($form['cert_file'] != null ){
-        //     $filePath = request()->file('cert_file')->store('cert_file','public');
-        //     $form['cert_file'] = $filePath;
-        //   }
+        if (request()->has('cert_file')) {
+            $filePath = request()->file('cert_file')->store('medcert', 'public');
+            $form['cert_file'] = $filePath;
+        }
 
         MedCert::create(['user_id' => $user->id] + $form);
 
@@ -54,17 +54,17 @@ class MedicalCertificateController extends Controller
             'description'=>['nullable','string','min:12'],
             'status'=>['nullable','string'],
             'started_fitness'=>['nullable'],
-            'cert_file' => ['nullable|file|mimes:pdf,doc,docx,jpeg,png,jpg,gif|max:2048'],
+            'cert_file' =>['nullable','file'],
         ]);
         
-        // if(request()->has('cert_file')){
-        //     $filePath = request()->file('cert_file')->update('cert_file','public');
-        //     $form['cert_file'] = $filePath;
-        //   }
-        // Update the user's fields
+        if (request()->has('cert_file')) {
+            $filePath = request()->file('cert_file')->store('medcert', 'public');
+            $form['cert_file'] = $filePath;
+        }
+
         $medcert->update($form);
 
-        return back()->with('success', 'Portfolio Updated successfully');
+        return back()->with('message', 'Medical Profile Updated successfully');
     }
 
     /**

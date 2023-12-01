@@ -9,7 +9,7 @@
       <div class="w-full relative flex items-center py-5 indent-6 border-b">
         <p class="text-xl font-medium">Archive Program</p>
         <button onclick="closeArchiveModal({{ $index }})" class="absolute right-8 ">
-          <img id="closeArchive" src="/icons/programs/close.svg" alt="" class="w-4 h-4cursor-pointer active:mt-1">
+          <img id="closeArchive" src="/icons/programs/close.svg" alt="" class="w-4 h-4cursor-pointer active:mt-1" title="Archive Program">
         </button>
       </div>
       {{-- Slot  --}}

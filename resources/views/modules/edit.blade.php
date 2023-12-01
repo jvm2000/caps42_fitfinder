@@ -21,7 +21,7 @@
                 label="Module Name" 
                 placeholder="Enter Module Name" 
                 name="name"
-                value="{{$module->name}}"
+                value="{{ $module->name }}"
               >
                 <x-slot name="errors">
                   @error('name')
@@ -31,116 +31,105 @@
               </x-app.input>
   
               <x-app.input 
-                type="date" 
-                label="Duration" 
-                placeholder="DD/MM/YY" 
-                name="duration"
-                value="{{ $module->duration }}"
+                type="text" 
+                label="Video Reference" 
+                placeholder="Enter Youtube's URL" 
+                name="video_url"
+                value="{{ $module->video_url }}"
+                class="text-blue-500"
               >
                 <x-slot name="errors">
-                  @error('duration')
+                  @error('video_url')
                   <p class="text-red-500 text-sm error">{{$message}}</p>
                   @enderror
                 </x-slot>
               </x-app.input>
   
               <div class="space-y-2">
-                <span class="text-md text-gray-600">Summary</span>
+                <span class="text-md text-gray-600">Procedure</span>
                 <textarea 
                   type="text" 
-                  class="bg-inherit text-sm px-8 py-4 w-full h-[120px] border-gray-500 border rounded-md" 
-                  placeholder="Describe"
-                  name="summary"
-                 
-                >{{$module->summary}}</textarea>
+                  class="bg-inherit text-lg px-8 py-4 w-full h-[120px] border-gray-500 border rounded-md" 
+                  placeholder="What to do?"
+                  name="procedure"
+                >{{ $module->procedure }}</textarea>
               </div>
             </div>
             
             <div class="flex flex-col space-y-2">
+              <div class="space-y-2">
+                <span class="text-md text-gray-600">Set</span>
+                <div class="grid grid-cols-2 items-center gap-x-4">
+                  <input 
+                    type="number" 
+                    class="bg-inherit text-lg pl-8 pr-4 py-2 w-full border-gray-500 border rounded-md" 
+                    placeholder="Enter Sets"
+                    name="sets"
+                    value="{{ $module->sets }}"
+                  />
+                  <input 
+                    type="number" 
+                    class="bg-inherit text-lg pl-8 pr-4 py-2 w-full border-gray-500 border rounded-md" 
+                    placeholder="Enter Reps"
+                    name="reps"
+                    value="{{ $module->reps }}"
+                  />
+                </div>
+              </div>
+
               <x-app.input 
-                type="text" 
-                label="Procedure" 
-                placeholder="Attatch Link" 
-                name="procedure"
-                value="{{$module->procedure}}"
+                type="number" 
+                label="Rest Period (minute/s)" 
+                placeholder="Enter Required Rest Period" 
+                name="rest_period"
+                value="{{ $module->rest_period }}"
               >
                 <x-slot name="errors">
-                  @error('procedure')
+                  @error('rest_period')
+                  <p class="text-red-500 text-sm error">{{$message}}</p>
+                  @enderror
+                </x-slot>
+              </x-app.input>
+              @php
+                $options = [
+                  0 => 'beginner',
+                  1 => 'intermediate',
+                  2 => 'expert',
+                ];
+                @endphp
+              <div class="space-y-2">
+                <span class="text-md text-gray-600">Difficulty</span>
+                <select 
+                  name="difficulty" 
+                  class="bg-inherit text-lg pl-8 py-2 w-full border-gray-500 border rounded-md capitalize" 
+                >
+                  <option value="" selected disabled>Select Difficulty</option>
+                  @foreach($options as $option)
+                  <option 
+                    value="{{ $option }}" 
+                    class="capitalize"
+                    @if($module->difficulty === $option)
+                    selected
+                    @endif
+                  >{{ $option }}</option>
+                  @endforeach
+                </select>
+              </div>
+
+              <x-app.input 
+                type="text" 
+                label="Notes" 
+                placeholder="What to note..." 
+                name="notes"
+                value="{{ $module->notes }}"
+              >
+                <x-slot name="errors">
+                  @error('notes')
                   <p class="text-red-500 text-sm error">{{$message}}</p>
                   @enderror
                 </x-slot>
               </x-app.input>
 
-              <div class="space-y-2">
-                <span class="text-md text-gray-600">Set</span>
-                <div class="grid grid-cols-3 items-center gap-x-4">
-                  <input 
-                    type="text" 
-                    class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md col-span-2" 
-                    placeholder="Enter Set Name"
-                    name="set"
-                    value="{{$module->set}}"
-                  />
-                  <input 
-                    type="number" 
-                    class="bg-inherit text-lg pl-5 pr-4 py-2 w-full border-gray-500 border rounded-md col-span-1" 
-                    placeholder="#sets"
-                    name="setcount"
-                    value="{{$module->setcount}}"
-                  />
-                </div>
-              </div>
-
-              <div class="space-y-2">
-                <span class="text-md text-gray-600">Reps</span>
-                <div class="grid grid-cols-3 items-center gap-x-4">
-                  <input 
-                    type="text" 
-                    class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md col-span-2" 
-                    placeholder="Enter Reps Name"
-                    name="rep"
-                    value="{{$module->rep}}"
-                  />
-                  <input 
-                    type="number" 
-                    class="bg-inherit text-lg pl-5 pr-4 py-2 w-full border-gray-500 border rounded-md col-span-1" 
-                    placeholder="#reps"
-                    name="repcount"
-                    value="{{$module->repcount}}"
-                  />
-                </div>
-              </div>
-
-              <x-app.custom-select label="Schedule Days">
-                <x-slot name="data">
-                  <p class="text-lg capitalize text-ellipsis overflow-hidden" id="selectedTags"><span class="text-gray-400">Select Days</span></p>
-                </x-slot>
-  
-                @php
-                    $options = [
-                      0 => 'monday',
-                      1 => 'tuesday',
-                      2 => 'wednesday',
-                      4 => 'thursday',
-                      5 => 'friday',
-                      6 => 'saturday',
-                      7 => 'sunday',
-                    ];
-                @endphp
-  
-                @foreach ($options as $value)
-                <label for="{{ $value }}" class="flex items-center space-x-2 indent-5 hover:bg-gray-200 py-1 cursor-pointer relative w-full pr-10">
-                  <p class="text-lg text-black font-norma capitalize mr-auto">{{ $value }}</p>
-                  <input id="{{ $value }}" name="" type="checkbox" class="w-4 h-4" value="{{ $value }}">
-                </label>
-                @endforeach
-  
-                <x-slot name="input">
-                  <p class="text-lg" id="checkboxValue"></p>
-                </x-slot>
-              </x-app.custom-select>
-
-              <input type="text" name="program_id" value="{{$program->id}}" class="hidden">
             </div>
           </div>
 
@@ -163,6 +152,7 @@
           </div>
         </div>
       </div>
+      <input type="text" name="program_id" value="{{$program->id}}" class="hidden">
     </form>
   </div>
 </x-layout>

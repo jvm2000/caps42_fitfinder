@@ -40,7 +40,7 @@
 						<!-- content 1 -->
 						<div class="absolute mt-28 ml-72">
 								<div class="space-y-6">
-										<p class="text-cyan-300 text-5xl font-extrabold">
+										<p class="text-cyan-300 text-5xl font-extrabold sm:block hidden">
 												FIND YOUR<br>
 												PERFECT FITNESS<br>
 												MATCH.

@@ -4,7 +4,7 @@
     FitFinder - Settings
   </x-slot>
   
-  <div class="w-full py-10 px-12 overflow-y-auto h-full max-h-[50rem]">
+  <div class="w-full py-10 px-12 overflow-y-auto h-[52rem]">
     <div class="flex items-center relative">
       <p class="text-3xl font-semibold mr-auto">Settings</p>
       <x-menu-dropdown />
@@ -65,17 +65,17 @@
           </div>
         </div>
         {{-- Right Panel  --}}
-        <div class="space-y-4 col-span-1 pl-20 grid place-items-center">
+        <div class="space-y-4 col-span-2 pl-20 grid place-items-center">
           <div 
             id="uploadPhoto" 
             class="w-48 h-48 rounded-full border-2 hover:border-blue-950 active:mt-[1px] border-gray-300 relative grid place-items-center cursor-pointer"
           >
             <img 
               id="preview" width="100" height="100" 
-              class="w-48 h-48 rounded-full absolute z-20 border-2 hover:border-blue-950 border-gray-300" 
+              class="w-48 h-48 rounded-full absolute z-40 border-2 hover:border-blue-950 border-gray-300" 
               src="{{auth()->user()->getImageURL()}}"
             />
-            <img src="/icons/settings/upload-icon.svg" alt="Upload Icon" class="w-8 h-8 z-10">
+            <img src="/icons/settings/upload-icon.svg" alt="Upload Icon" class="w-8 h-8 z-0">
             <input 
               id="uploaded" 
               type="file" 
@@ -142,12 +142,18 @@
         <div class="flex flex-col space-y-6 col-span-3"> 
           <div class="grid grid-cols-3 items-center">
             <label class="text-base font-medium col-span-1 text-black">Email</span></label>
-            <input 
-              type="email" 
-              class="bg-inherit text-sm px-6 py-2 w-full border-gray-500 border rounded-md col-span-2" 
-              disabled
-              value="{{$user->email}}"
-            >
+            <div class="bg-inherit text-sm px-6 py-2 w-full border-gray-500 border rounded-md col-span-2 relative flex items-center">
+              <p>{{$user->email}}</p>
+              @if (auth()->user()->hasVerifiedEmail())
+              <div class="absolute right-6 text-green-500 text-sm">
+                verified
+              </div>
+              @else
+              <div class="absolute right-6 text-red-500 text-sm">
+                not verified yet
+              </div>
+              @endif
+            </div>
           </div>
 
           <div class="grid grid-cols-3 items-center">
@@ -185,15 +191,19 @@
         </div>
   
         <div class="mt-16 col-span-3 flex items-center relative">
-          <div class="mr-auto"></div>
+          <div class="mr-auto">
+          </div>
           <button 
             type="submit"
             class="rounded-md text-center px-6 py-3 text-md text-white bg-black cursor-pointer w-36"
           >Update</button>
         </div>
       </div>
-
     </form>
+    <div class="pl-12">
+      <p class="text-sm">Do you want to deactivate your account?</p>
+      <x-admin.modal.deactivate />
+    </div>
   </div>
 
   @if(session('message'))
@@ -203,14 +213,6 @@
 
 </x-layout>
 
-<script>
-var success = document.getElementById("uploadPhoto");
-
-success.onclick = function() {
-  document.getElementById('uploaded')?.click()
-}
-</script>
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {
@@ -218,6 +220,12 @@ $(document).ready(function() {
       $('.error').hide();
   });
 });
+
+var success = document.getElementById("uploadPhoto");
+
+success.onclick = function() {
+  document.getElementById('uploaded')?.click()
+}
 
 document.addEventListener('DOMContentLoaded', function () {
   const dropdownButton = document.getElementById('dropdown-button');
@@ -234,13 +242,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
-
-var array = []
-var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
-
-for (var i = 0; i < checkboxes.length; i++) {
-  array.push(checkboxes[i].value)
-}
 
 var checkboxes = document.querySelectorAll('input[name="tags[]"]');
 
