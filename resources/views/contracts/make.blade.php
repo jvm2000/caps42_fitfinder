@@ -8,7 +8,7 @@
 </head>
 
 <body>
-<form action="{{ route('contracts.store') }}" method="post">
+<form action="/contracts/create" method="post">
 @csrf
 <h1>Contract</h1>
     
@@ -34,11 +34,11 @@
             @endforeach
         </select><br>
         <label for="traineeAddress">Trainee Address:</label>
-        <input type="text" name="traineeAddress" value="{{ $requests[0]->requester->address . ' ' . $requests[0]->requester->city }}"><br>
-        <label for="traineeEmailAddress">Trainee Email Address:</label>
-        <input type="text" name="traineeEmailAddress" value="{{ $requests[0]->requester->email }}"><br>
-        <label for="traineePhoneNumber">Trainee Phone Number:</label>
-        <input type="text" name="traineePhoneNumber" value="{{ $requests[0]->requester->phone_number }}"><br>
+    <input type="text" name="traineeAddress" value="{{ $request->requester->address . ' ' . $request->requester->city }}"><br>
+    <label for="traineeEmailAddress">Trainee Email Address:</label>
+    <input type="text" name="traineeEmailAddress" value="{{ $request->requester->email }}"><br>
+    <label for="traineePhoneNumber">Trainee Phone Number:</label>
+    <input type="text" name="traineePhoneNumber" value="{{ $request->requester->phone_number }}"><br>
     </p>
 
     <p>
@@ -48,13 +48,7 @@
     </p>
 
     <p>WHEREAS, 
-        <strong>
-            <select id="traineeUsername" name="traineeUsername">
-                @foreach ($requests as $request)
-                    <option value="{{ $request->requester->id }}">{{ $request->requester->first_name . ' ' . $request->requester->last_name }}</option>
-                @endforeach
-            </select>
-        </strong>
+        {{ $request->coach->first_name .''.$request->coach->last_name }}    
         provides coaching and training services, and 
         <strong>
             <select id="traineeUsername" name="traineeUsername">
@@ -111,15 +105,11 @@
     <p>7.1 This Contract constitutes the entire agreement between the parties and supersedes all prior or contemporaneous agreements, understandings, and representations.</p><br>
     <p>IN WITNESS WHEREOF, the parties have executed this Contract as of the date first above written.</p>
 
-    <h2> @foreach($requests as $request)
+  
+    <p>By: 
             {{ $request->coach->first_name .''.$request->coach->last_name }}
             <br>
-        @endforeach
-    </h2>
-    <p>By:  @foreach($requests as $request)
-            {{ $request->coach->first_name .''.$request->coach->last_name }}
-            <br>
-        @endforeach
+      
     <br>
         Date:{{$currentDate }} </p>
 
@@ -133,8 +123,10 @@
         <h2>Fitfinder Inc.</h2>
         <p>By: Fitfinder<br>
             Date: {{$currentDate }} </p>
+
     <button type="submit" name="submit">Submit</button>
 </form>
+
 </body>
 
 </html>

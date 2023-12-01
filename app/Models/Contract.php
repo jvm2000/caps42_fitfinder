@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Program;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -13,7 +15,7 @@ class Contract extends Model
         'programs_id',
         'coach_id',
         'trainee_id',
-        'payment_id',
+        'payment_type',
         'status',
         'startdate',
         'enddate',
@@ -23,8 +25,15 @@ class Contract extends Model
         return $this->belongsTo(User::class, 'coach_id');
     }
 
-    // Define a belongsTo relationship with the User model for trainee
     public function trainee() {
         return $this->belongsTo(User::class, 'trainee_id');
+    }
+    public function program(){
+        return $this->belongsTo(Program::class, 'programs_id');
+    }
+
+    public function getYourDateColumnAttribute($value)
+    {
+        return Carbon::parse($value)->format('m-d-Y');
     }
 }

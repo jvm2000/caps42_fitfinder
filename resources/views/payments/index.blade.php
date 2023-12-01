@@ -1,37 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- payments.index.blade.php -->
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Payment</title>
-</head>
+@foreach ($contracts as $contract)
+    <div>
+        <!-- Display contract details -->
+        <p>Contract ID: {{ $contract->id }}</p>
+        <p>Program ID: {{ $contract->programs_id }}</p>
+        <p>Coach ID: {{ $contract->coach_id }}</p>
+        <p>Trainee ID: {{ $contract->trainee_id }}</p>
+        <!-- Add other contract details as needed -->
 
-<body>
-    <form action="{{ route('payments.store') }}" method="post">
-        @csrf
-        <h1>Create Payment</h1>
-        <label for="coach_id">Coach ID</label>
-        <select id="coach_id" name="coach_id">
-            @foreach ($requests as $request)
-                <option value="{{ $request->coach->id }}">{{ $request->coach->id }}</option>
-            @endforeach
-        </select>
-        <br>
+        <!-- Add a form for making payments -->
+        <form action="{{ route('payments.make-payment', ['contractId' => $contract->id]) }}" method="post">
+            @csrf
+            @method('post')
 
-        <label for="reference">Reference number:</label>
-        <input type="text" name="reference" value="{{ old('reference') }}" required><br>
-        <label for="amount">Amount:</label>
-        <input type="text" name="amount" value="{{ old('amount') }}" required><br>
+            <!-- Input for payment reference -->
+            <input type="text" name="reference" placeholder="Enter reference" required>
 
-        <label for="startdate">Start Date:</label>
-        <input type="date" name="startdate" value="{{ old('startdate') }}" required><br>
+            <!-- Input for payment amount -->
+            <input type="number" name="amount" placeholder="Enter amount" required>
 
-        <label for="enddate">End Date:</label>
-        <input type="date" name="enddate" value="{{ old('enddate') }}" required><br>
+            <!-- Hidden input for payment status with a default value -->
+            <input type="hidden" name="status" value="pending">
 
-        <button type="submit" name="submit" value="1">Create Payment</button>
-    </form>
-</body>
+            <!-- Submit button -->
+            <button type="submit">Make Payment</button>
+        </form>
 
-</html>
+
+    </div>
+@endforeach

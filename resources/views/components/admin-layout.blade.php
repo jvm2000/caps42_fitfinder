@@ -59,11 +59,13 @@
           <img src="/icons/admin/modules.svg" alt="Modules Icon" class="w-5 h-5 ml-12">
           <p class="text-base text-white ml-10">Modules</p>
         </div>
+        <a  href="/admin/payments" class="flex items-center py-4 mt-[1px] cursor-pointer" >
         <div class="flex items-center py-4 mt-[1px] cursor-pointer">
           <span class="h-[21px] w-1 bg-white rounded-r-md"></span>
           <img src="/icons/admin/contracts.svg" alt="Contracts Icon" class="w-5 h-5 ml-12">
-          <p class="text-base text-white ml-10">Contracts</p>
+          <p class="text-base text-white ml-10">Payments</p>
         </div>
+        </a>
       </div>
     </div>
     <div class="w-full px-20 py-10 relative">

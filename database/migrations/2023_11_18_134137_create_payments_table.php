@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Contract;
 use App\Models\User;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -14,13 +15,10 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('trainee_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('coach_id')->constrained('users')->onDelete('cascade');
             $table->string('reference');
-            $table->string('status')->default('Pending');
             $table->decimal('amount', 10, 2);
-            $table->date('startdate');
-            $table->date('enddate');
+            $table->string('status')->default('pending');
+            $table->foreignIdFor(Contract::class);
             $table->timestamps();
         });
     }

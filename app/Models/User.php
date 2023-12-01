@@ -122,7 +122,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $this->notify(new VerifyEmail);
     }
-    public function contract()
+    public function contracts()
     {
         return $this->hasMany(Contract::class);
     }

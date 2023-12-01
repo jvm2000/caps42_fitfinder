@@ -1,40 +1,37 @@
 <style>
-	.tab button {
-		background-color: inherit;
+.tab button {
+	background-color: inherit;
+}
+
+.tab button.active {
+	border-color: #6366F1; 
+	color: #6366F1; 
+}
+</style>
+
+<script>
+window.onload = function() {
+	var button = document.getElementById('myButton');
+
+	if (button) {
+			button.click();
 	}
+};
+
+function openTab(evt, tabName) {
+	var i, tabcontent, tablinks;
 	
-	.tab button.active {
-		border-color: #6366F1; 
-		color: #6366F1; 
+	tabcontent = document.getElementsByClassName("tabcontent");
+	for (i = 0; i < tabcontent.length; i++) {
+		tabcontent[i].style.display = "none";
 	}
-	</style>
-	
-	<script>
-	 window.onload = function() {
-		// Find the element by its ID
-		var button = document.getElementById('myButton');
-	
-		// Check if the element exists
-		if (button) {
-				// Programmatically trigger the click event
-				button.click();
-		}
-	};
-	
-	function openTab(evt, tabName) {
-		var i, tabcontent, tablinks;
-		
-		tabcontent = document.getElementsByClassName("tabcontent");
-		for (i = 0; i < tabcontent.length; i++) {
-			tabcontent[i].style.display = "none";
-		}
-		tablinks = document.getElementsByClassName("tablinks");
-		for (i = 0; i < tablinks.length; i++) {
-			tablinks[i].className = tablinks[i].className.replace(" active", "");
-		}
-		document.getElementById(tabName).style.display = "block";
-		evt.currentTarget.className += " active";
+	tablinks = document.getElementsByClassName("tablinks");
+	for (i = 0; i < tablinks.length; i++) {
+		tablinks[i].className = tablinks[i].className.replace(" active", "");
 	}
+	document.getElementById(tabName).style.display = "block";
+	evt.currentTarget.className += " active";
+}
 </script>
 	
 	<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
@@ -47,7 +44,14 @@
 		<div class="w-full py-10 px-12">
 			<div class="flex items-center relative">
 				<p class="text-3xl font-semibold mr-auto">Programs</p>
-				<x-menu-dropdown />
+				<div class="flex items-center space-x-4">
+					<div class="">
+						<x-notification-component />
+					</div>
+					<div>
+						<x-menu-dropdown />
+					</div>
+				</div>
 			</div>
 	
 			<div class="mt-20 flex flex-col space-y-10">

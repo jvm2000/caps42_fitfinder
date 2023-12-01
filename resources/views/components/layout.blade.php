@@ -8,7 +8,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> @vite('resources/css/app.css')
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+ @vite('resources/css/app.css')
+   
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -59,16 +61,25 @@
             </a>
             @endif
 
-            @if (auth()->user()->role === 'Coach')
-            <a href="/contracts/make"class="flex items-center relative mt-14 group">
+       
+            <a href="/contracts/dashboard"class="flex items-center relative mt-14 group">
 
               <span class="w-2 h-9 rounded-r-md mr-32"></span>
 
               <img src="/dashboard/icons/contracts.svg" alt="Main" class="w-6 h-6 mr-14 group-hover:mb-1">
               <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Contracts</p>
             </a>
-            @endif
+             <a href="/payments/dashboard"class="flex items-center relative mt-14 group">
+
+              <span class="w-2 h-9 rounded-r-md mr-32"></span>
+
+              <img src="/dashboard/icons/contracts.svg" alt="Main" class="w-6 h-6 mr-14 group-hover:mb-1">
+              <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Payments</p>
+            </a>
+            
           </div>
+          
+        
 
           <div class="absolute bottom-0">
             <a href="/auth/profile/{{auth()->user()->id}}" class="flex items-center relative group">
@@ -78,12 +89,15 @@
               @endif
               <img src="/dashboard/icons/settings.svg" alt="Main" class="w-8 h-8 group-hover:mb-1 mr-14">
               <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Settings</p>
-            </a>
+            </a><a href="http://127.0.0.1:8000/chatify">
+            <div id="chatHead" class="bg-blue-500 text-white py-2 px-4 rounded-full fixed bottom-20 right-20">
+              Chat
+          </div></a>
           </div>
-
+          
         </div>
       </nav>
-
+      
       <div class="col-span-6 py-10 pr-10">
         <div class="bg-white rounded-3xl h-full">
           <main>

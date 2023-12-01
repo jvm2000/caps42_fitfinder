@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Payment;
+use App\Models\Contract;
 use App\Models\UserRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
@@ -13,53 +16,54 @@ class PaymentController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        //
-        $requests = UserRequest::all(); // Adjust as needed
+    {   
+        $payments = Payment::all();
+        $contracts = Contract::all(); // Adjust as needed
+        return view('payments.dashboard',[
+            'contracts' => $contracts,
+            'payments' => $payments,
+        ]);
+
+    }
+    public function paymentsIndex(){
+        $contracts = Contract::all(); // Adjust as needed
         return view('payments.index',[
-            'requests' => $requests
+            'contracts' => $contracts
         ]);
     }
-
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+        $coaches = User::where('role', 'coach')->get();
+        $idField = 'coach_id'; // Adjust this based on your actual requirements
+        return view('payments.index', compact('coaches', 'idField'));
     }
-
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-{
-    $request->validate([
-        'coach_id' => 'required|exists:users,id',
-        'reference' => 'required|string',
-        'amount' => 'required|numeric',
-        'startdate' => 'required|date',
-        'enddate' => 'required|date|after_or_equal:startdate',
-    ]);
+    public function makePayment(Request $request, $contractId)
+    {
+        // Additional validation and error handling can be added
+        $request->validate([
+            'amount' => 'required|numeric',
+            'reference' => 'required|string|max:255',
+        ]);
 
-    // Create a new payment instance
-    $paymentData = [
-        'trainee_id' => $request->user()->id,  // Assuming you want to store the coach's ID here
-        'coach_id' => $request->input('coach_id'), 
-        'reference' => $request->input('reference'),
-        'amount' => $request->input('amount'),
-        'startdate' => $request->input('startdate'),
-        'enddate' => $request->input('enddate'),
-        'status' => 'Pending',
-    ];
+        $payment = new Payment([
+            'contract_id' => $contractId,
+            'amount' => $request->input('amount'),
+            'reference' => $request->input('reference'),
+            'status' => $request->input('status', 'pending'), 
+        ]);
 
-    // Save the payment to the database
-    Payment::create($paymentData);
+        $payment->save();
 
-    // Redirect or perform any additional actions as needed
-    return redirect()->route('payments.index')->with('success', 'Payment created successfully');
-}
+        // You might want to update the contract status or other details here
 
+        return redirect()->back()->with('success', 'Payment successful!');
+    }
     /**
      * Display the specified resource.
      */
