@@ -33,9 +33,9 @@
 					</thead>
 					<tbody>
 						@foreach($payments as $payment)
-						<tr>
+						<tr>       
 							<td class="text-sm text-black py-4 text-left">{{ $payment->contract->id }}</td>
-							<td class="text-sm text-black py-4 text-left">{{ $payment->contract->trainee->first_name }} {{ $payment->contract->trainee->last_name }}</td>
+							<td class="text-sm text-black py-4 text-left">{{ $payment->contract->trainee->first_name }} {{ $payment->contract->trainee->last_name }} </td>
 							<td class="text-sm text-black py-4 text-left">{{ $payment->contract->coach->first_name }} {{ $payment->contract->coach->last_name }}</td>
 							<td class="text-sm text-black py-4 text-left">{{ $payment->contract->payment_type }}</td>
 							<td class="text-sm text-black py-4 text-left">{{ $payment->reference }}</td>
@@ -45,13 +45,15 @@
 								@if ($payment->status === 'pending')
 									<form action="/admin/payments/accept/{{ $payment->id }}" method="POST">
 										@csrf
+										<input type="hidden" name="temail" value="{{ $payment->contract->trainee->email }}">
+										<input type="hidden" name="cemail" value="{{ $payment->contract->coach->email }}">
 										<button type="submit">Accept Payment</button>
 									</form>
-								@else
+								{{-- @else
 									<form action="/admin/payments/accept/{{ $payment->id }}" method="POST">
 										@csrf
 										<button type="submit">Accept Payment</button>
-									</form>
+									</form> --}}
 								@endif
 							</td>
 						</tr>
