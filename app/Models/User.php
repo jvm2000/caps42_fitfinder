@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Program;
 use App\Models\Contract;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Auth\Notifications\VerifyEmail;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -42,6 +43,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'tags',
         'image',
         'status',
+        'program_id',
     ];
 
     /**
@@ -126,6 +128,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Contract::class);
     }
-    
+    public function enrolledPrograms()
+    {
+        return $this->belongsTo(Program::class,'program_id');
+    }
     
 }

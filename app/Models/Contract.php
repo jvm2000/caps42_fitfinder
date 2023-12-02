@@ -12,13 +12,14 @@ class Contract extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'programs_id',
         'coach_id',
         'trainee_id',
         'payment_type',
         'status',
         'startdate',
         'enddate',
+        'program_id',
+        'signature',
     ];
 
     public function coach() {
@@ -29,11 +30,14 @@ class Contract extends Model
         return $this->belongsTo(User::class, 'trainee_id');
     }
     public function program(){
-        return $this->belongsTo(Program::class, 'programs_id');
+        return $this->belongsTo(Program::class, 'program_id');
     }
 
-    public function getYourDateColumnAttribute($value)
-    {
+    public function payment(){
+        return $this->hasOne(Payment::class);
+    }
+
+    public function getYourDateColumnAttribute($value){
         return Carbon::parse($value)->format('m-d-Y');
     }
 }

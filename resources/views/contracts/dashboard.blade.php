@@ -51,30 +51,21 @@
         </div>
 
         <div class="mt-20 flex flex-col space-y-10">
-            <div class="flex items-center relative h-20">
-                <div class="flex items-center mr-auto z-20 tab">
-                    <button id="myButton"
-                        class="relative px-10 group border-b-8 py-[22px] cursor-pointer hover:border-indigo-400 tablinks"
-                        onclick="openTab(event, 'Active')">
-                        <p class="text-xl font-semibold group-hover:text-indigo-400">Active</p>
-                    </button>
+					<div class="flex items-center relative h-20">
+							<div class="flex items-center mr-auto z-20 tab">
+									<button id="myButton"
+											class="relative px-10 group border-b-8 py-[22px] cursor-pointer hover:border-indigo-400 tablinks"
+											onclick="openTab(event, 'Active')">
+											<p class="text-xl font-semibold group-hover:text-indigo-400">Active</p>
+									</button>
 
-                    <button
-                        class="relative px-10 justify-center border-b-8 group py-[22px] cursor-pointer hover:border-indigo-400 tablinks"
-                        onclick="openTab(event, 'Pending')">
-                        <p class="text-xl font-medium group-hover:text-indigo-400">Pending</p>
-                    </button>
-                </div>
-                @if (auth()->user()->role === 'Coach')
-                    <a href="/contracts/make" type="submit"
-                        class="rounded-full flex items-center space-x-4 px-6 py-3 text-md text-white bg-black cursor-pointer w-auto">
-                        <img src="/icons/programs/plus.svg" class="w-6 h-6">
-                        <p class="whitespace-nowrap">Create</p>
-                    </a>
-
-                    <div class="w-full border-t-8 absolute z-10 bottom-0"></div>
-                @endif
-            </div>
+									<button
+											class="relative px-10 justify-center border-b-8 group py-[22px] cursor-pointer hover:border-indigo-400 tablinks"
+											onclick="openTab(event, 'Pending')">
+											<p class="text-xl font-medium group-hover:text-indigo-400">Pending</p>
+									</button>
+							</div>
+					</div>
         </div>
 
         {{-- Table  --}}

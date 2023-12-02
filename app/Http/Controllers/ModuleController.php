@@ -66,8 +66,6 @@ class ModuleController extends Controller
             'program_id'=>['required']
         ]);
 
-     
-
         $module->update($form);
 
         return redirect('/programs/show/' . $form['program_id'])->with('message', 'Module updated successfully!');

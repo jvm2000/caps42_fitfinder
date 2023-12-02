@@ -7,7 +7,22 @@
   <div class="flex items-center justify-center h-full">
     <div class="w-full max-w-2xl bg-white rounded-xl absolute z-[9999]">
       <div class="w-full relative flex items-center py-5 indent-6 border-b">
-        <p class="text-xl font-medium">Contract Details</p>
+        <div class="flex items-center space-x-4">
+          <p class="text-xl font-medium">Contract Details</p>
+          @if(auth()->user()->role === 'Trainee')
+            @if(!$pending->payment)
+              <a href="/payments/create/{{ $pending->id }}">
+                <div class="flex items-center space-x-4 bg-green-500 rounded-full text-white text-lg pr-2">
+                  <p>Proceed to Payment -></p>
+                </div>
+              </a>
+            @else
+              <div class="flex items-center space-x-4 bg-gray-500 rounded-full text-black text-lg pr-6">
+                <p>Already Paid</p>
+              </div>
+            @endif
+          @endif
+        </div>
         <button onclick="closePreviewModal({{ $index }})" class="absolute right-8 ">
           <img src="/icons/programs/close.svg" alt="" class="w-4 h-4 cursor-pointer active:mt-1">
         </button>
@@ -87,7 +102,6 @@
 
             <div class="flex items-center justify-between">
               <div class="flex flex-col space-y-[2px]">
-                <div class="h-20 grid place-items-center w-36">'signature'</div>
                 <div class="">
                   <p class="text-base text-black font-bold underline">{{ $pending->coach->first_name }} {{ $pending->coach->last_name }}</p>
                   <p class="text-base text-black">Coach</p>
@@ -95,7 +109,6 @@
               </div>
 
               <div class="flex flex-col space-y-[2px] text-right">
-                <div class="h-20 grid place-items-center w-36">'signature'</div>
                 <div class="">
                   <p class="text-base text-black font-bold underline">{{ $pending->trainee->first_name }} {{ $pending->trainee->last_name }}</p>
                   <p class="text-base text-black">Trainee</p>

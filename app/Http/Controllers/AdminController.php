@@ -35,10 +35,19 @@ class AdminController extends Controller
 
         return redirect()->back()->with('success', 'Payment accepted!');
     }
-    public function paymentIndex(){
-        $pendingPayments = Payment::where('status', 'pending')->get();
 
-        return view('admin.payments', compact('pendingPayments'));
+    public function paymentIndex(Payment $payments){
+        $payments = Payment::all(); // Adjust as needed
+
+        return view('admin.payments', compact('payments'));
+    }
+
+    public function enroll(Program $program)
+    {
+        // Add the authenticated user to the program
+        auth()->user()->programs()->attach($program);
+
+        return redirect()->route('programs.show', $program);
     }
 
 

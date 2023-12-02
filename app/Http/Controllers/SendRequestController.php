@@ -17,13 +17,13 @@ class SendRequestController extends Controller
             $traineeId = $request->input('trainee_id');
             $coachId = $request->input('coach_id');
             $programId = $request->input('program_id');
+            $message = $request->input('message');
             
-
-
             DB::table('requests')->insert([
                 'trainee_id' => $traineeId,
                 'coach_id' => $coachId,
                 'program_id'=> $programId,
+                'message'=> $message,
                 'status' => 'Pending', // Set the initial status to "Pending"
             ]);
 

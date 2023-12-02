@@ -12,8 +12,14 @@
             <a href="/requests/dashboard/coach" class="font-semibold mr-auto">Notification</a>
         </div>
         <div class="absolute top-10 right-12 z-20 flex space-x-4">
-					<x-app.notification />
-					<x-menu-dropdown />
+            <div class="flex items-center space-x-4">
+                <div class="">
+                    <x-notification-component />
+                </div>
+                <div>
+                    <x-menu-dropdown />
+                </div>
+            </div>
         </div>
         {{-- Dashboard Tab  --}}
         <div class="mt-20 grid grid-cols-3 w-full">

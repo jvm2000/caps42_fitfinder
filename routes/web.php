@@ -85,7 +85,8 @@ Route::get('/admin/contracts', [AdminController::class, 'contractsIndex'])->name
 Route::put('/admin/suspend/{user}', [AdminController::class, 'suspendUser'])->name('admin.User');
 Route::delete('/admin/delete/{user}', [AdminController::class, 'destroy'])->name('admin.destroy');
 Route::get('/admin/payments', [AdminController::class, 'paymentIndex'])->name('admin.paymentsIndex');
-Route::post('/admin/payments/{paymentId}/accept', [AdminController::class, 'acceptPayment'])->name('admin.payments.accept');
+Route::post('/admin/payments/accept/{payment}', [AdminController::class, 'acceptPayment'])->name('admin.payments.accept');
+Route::post('/admin/payments/enroll/{program}', [AdminController::class, 'enroll'])->name('admin.payments.accept');
 
 // Test 
 Route::get('/test-verify', function () {return view('emails/verify-email');})->name('admin.dashboard');
@@ -117,11 +118,13 @@ Route::middleware(['auth'])->group(function () {
 	Route::post('/medcert/create/{user}', [MedicalCertificateController::class, 'store'])->name('medcert.create');
 	Route::put('/medcert/update/{medcert}', [MedicalCertificateController::class, 'update'])->name('medcert.update');
 	
-	//contracts
+	//Contracts
 	Route::post('/contracts/contract', [ContractDashboardController::class, 'contract']);
-	Route::get('/contracts/dashboard', [ContractDashboardController::class, 'listOfContracts'])->middleware(['auth', 'verified']);
+	Route::get('/contracts/list', [ContractDashboardController::class, 'listOfContracts'])->middleware(['auth', 'verified']);
 	Route::get('/contracts/make', [ContractController::class, 'index'])->name('generate.contract')->middleware(['auth', 'verified']);
-  Route::post('/contracts/create', [ContractController::class, 'store'])->name('contracts.store')->middleware(['auth', 'verified']);
+  Route::post('/contracts/generate/{user}', [ContractController::class, 'store'])->name('contracts.store');
+	Route::get('/contracts/create/{request}', [ContractController::class, 'showRequest'])->name('contracts.create');
+	Route::delete('/contracts/decline/{request}', [ContractController::class, 'destroy'])->name('contracts.decline');
 	
 	// Matchmake 
 	Route::get('/matchmakes', [MatchmakingController::class, 'index'])->name('matchmaking.index');
@@ -131,10 +134,13 @@ Route::middleware(['auth'])->group(function () {
 	
 	//SendRequest
 	Route::post('/matchmakes/send-request', [MatchmakingController::class, 'sendRequest'])->name('matchmaking.send');
-	//payments
+
+	//Payments
 	Route::get('/payments/dashboard', [PaymentController::class, 'index'])->name('payments.dashboard')->middleware(['auth', 'verified']);
-	Route::post('/contracts/{contractId}/make-payment', [PaymentController::class, 'makePayment'])->name('payments.make-payment');
-	Route::get('/payments/create', [PaymentController::class, 'paymentsIndex'])->name('payments.index');
+	// Route::post('/contracts/{contractId}/make-payment', [PaymentController::class, 'makePayment'])->name('payments.make-payment');
+	Route::post('/payments/generate/{contract}', [PaymentController::class, 'store'])->name('payments.create');
+	Route::get('/payments/create/{contract}', [PaymentController::class, 'showContractForPayment'])->name('payments.show');
+
 	//Programs
 	Route::get('/programs/make', [ProgramController::class, 'showAllPrograms'])->name('programs.index');
 	Route::get('/programs/list', [ProgramController::class, 'index'])->name('programs.index');
@@ -149,8 +155,10 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/profile/trainee/{user}', [MedicalCertificateController::class, 'index'])->name('medcert.index');
 	Route::post('/medcert/create/{user}', [MedicalCertificateController::class, 'store'])->name('medcert.create');
 	Route::put('/medcert/update/{medcert}', [MedicalCertificateController::class, 'update'])->name('medcert.update');
+
 	//Payments
 	Route::get('payment',[PaymentController::class,'index'])->name('payment.index');
+
 	// Modules 
 	Route::get('/programs/show/{program}', [ProgramController::class, 'showProgram'])->name('modules.program.show');
 	Route::get('/modules/make/{program}', function (Program $program) {return view('modules.create', compact('program'));})->name('modules.make');

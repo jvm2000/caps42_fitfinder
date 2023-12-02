@@ -6,7 +6,14 @@
   <div class="w-full py-10 px-12">
     <div class="flex items-center relative">
       <p class="text-3xl font-semibold mr-auto">Contracts</p>
-      <x-menu-dropdown />
+      <div class="flex items-center space-x-4">
+				<div class="">
+					<x-notification-component />
+				</div>
+				<div>
+					<x-menu-dropdown />
+				</div>
+			</div>
     </div>
 
 		<div class="mt-20 flex flex-col space-y-10">
@@ -19,15 +26,6 @@
 						<p class="text-xl font-semibold text-indigo-400">List</p>
 					</button>
 				</div>
-				@if (auth()->user()->role === 'Coach')		
-					<a 
-						href="/contracts/make"
-						type="submit"
-						class="rounded-full flex items-center space-x-4 px-6 py-3 text-md text-white bg-black cursor-pointer w-auto">
-						<img src="/icons/programs/plus.svg" class="w-6 h-6">
-						<p class="whitespace-nowrap">Create</p>
-					</a>
-				@endif
 				<div class="w-full border-t-8 absolute z-10 bottom-0"></div>
 			</div>
 		</div>
@@ -53,7 +51,7 @@
 						</thead>
 						<tbody>
 							@foreach($contracts as $index => $pending)
-								@if($pending->status === 'Pending')
+								@if($pending->status === 'pending')
 									<tr class="">
 										<td class="border-l-8 border-indigo-500 py-1">
 											<div class="flex items-center space-x-4 pl-4">
@@ -68,7 +66,15 @@
 											<p class="text-sm text-ellipsis">{{$pending->trainee->first_name}} {{$pending->trainee->last_name}}</p>
 										</td>
 										<td class="py-2">
-											<p class="text-sm">{{$pending->status}}</p>
+											<div class="flex items-center space-x-4">
+												@if($pending->status === 'pending')
+													<span class="w-2 h-2 bg-yellow-500 rounded-full"></span>
+													<p class="text-sm text-yellow-500">{{$pending->status}}</p>
+												@else
+													<span class="w-2 h-2 bg-green-500 rounded-full"></span>
+													<p class="text-sm text-green-500">{{$pending->status}}</p>
+												@endif
+											</div>
 										</td>
 										
 										<td class="py-2">
@@ -88,3 +94,8 @@
 		</div>
 	</div>
 </x-layout>
+
+@if(session('message'))
+	<x-app.toaster message="{{ session('message') }}">
+	</x-app.toaster>
+@endif

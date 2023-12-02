@@ -34,7 +34,10 @@ class Program extends Model
     {
         return $this->belongsTo(User::class);
     }
-
+    public function enrollees()
+    {
+        return $this->hasMany(User::class);
+    }
     public function hasTrainees()
     {
         return $this->hasMany(User::class);
@@ -59,6 +62,6 @@ class Program extends Model
 
     public function request()
     {
-        return $this->belongsTo(UserRequest::class);
+        return $this->hasOne(UserRequest::class);
     }
 }

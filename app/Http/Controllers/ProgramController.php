@@ -42,13 +42,14 @@ class ProgramController extends Controller
             'no_of_trainees' => ['nullable'],
             'prerequisite_program_id' => 'nullable|exists:programs,id',
         ]);
-        // $form['chosen_program'] = $request->filled('chosen_program');
+        
         $form['is_prerequisite'] = $request->filled('is_prerequisite');
 
         if (request()->hasFile('image') && request()->file('image')->isValid()) {
             $imagePath = request()->file('image')->store('programs', 'public');
             $form['image'] = $imagePath;
         }
+        
         $user->programs()->create($form);
 
         return redirect('/programs/list')->with('message', 'Program created successfully!');

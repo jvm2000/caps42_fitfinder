@@ -1,7 +1,7 @@
 <x-layout>
   {{-- Title  --}}
   <x-slot:title>
-    FitFinder - Modules
+    FitFinder - Create Module
   </x-slot>
   <div class="w-full py-10 px-12">
     <div class="flex items-center relative">
@@ -14,7 +14,7 @@
       <div class="mt-24 w-full grid place-items-center">
         <div class="max-w-4xl w-full">
           <div class="grid grid-cols-2 items-start w-full gap-x-8">
-            <div class="flex flex-col space-y-2">
+            <div class="flex flex-col space-y-0">
               <x-app.input 
                 type="text" 
                 label="Module Name" 
@@ -45,7 +45,7 @@
                 <span class="text-md text-gray-600">Procedure</span>
                 <textarea 
                   type="text" 
-                  class="bg-inherit text-sm px-8 py-4 w-full h-[120px] border-gray-500 border rounded-md" 
+                  class="bg-inherit text-sm px-8 py-4 w-full h-32 border-gray-500 border rounded-md" 
                   placeholder="What to do?"
                   name="procedure"
                 ></textarea>
