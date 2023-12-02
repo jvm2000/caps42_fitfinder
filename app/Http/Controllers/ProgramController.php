@@ -21,6 +21,7 @@ class ProgramController extends Controller
 
     public function showAllPrograms()
     {
+
         $user = Auth::user();
 
         $programs = $user->programs()->latest()->paginate(5);
@@ -60,9 +61,23 @@ class ProgramController extends Controller
     }
 
     public function showProgram(Program $program){
+    if($program->enrollees->count()>0){ 
+        $no_enrollee= $program->enrollees->count();
+        $finished = 0;
+        foreach($program->enrollees as $i){
+            if($i->completion === 1){
+                $finished++;
+            
+        }
+        $percentage = ($finished / $no_enrollee)*100;
+    }}
         $programWithModules = Program::with('modules')->find($program->id);
 
-        return view('modules.main', ['program' => $programWithModules]);
+        return view('modules.main', [
+            'program' => $programWithModules,
+            'finished' => $finished,
+            'percentage' => $percentage,
+        ]);
     }
 
     /**

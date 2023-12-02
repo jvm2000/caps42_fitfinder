@@ -8,8 +8,16 @@
       <p class="text-3xl font-semibold mr-auto">Matchmakes</p>
     </div>
     <div class="absolute top-10 right-12 z-20">
-      <x-menu-dropdown />
+      <div class="flex items-center space-x-4">
+				<div class="">
+					<x-notification-component />
+				</div>
+				<div>
+					<x-menu-dropdown />
+				</div>
+			</div>
     </div>
+    
     {{-- Matchmakes Tab  --}}
     <div class="mt-12 flex flex-col items-center w-full space-y-12 h-full max-h-[680px] overflow-y-auto">
       {{-- Matching Trainee  --}}

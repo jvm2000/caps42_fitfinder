@@ -12,6 +12,7 @@
     <form action="/payments/generate/{{ $contract->id }}" method="POST">
       @csrf
       <input type="hidden" name="contract_id" value="{{ $contract->id }}">
+      <input type="hidden" name="amount" value="{{ $contract->amount }}">
       <div class="mt-24 w-full grid place-items-center">
         <div class="max-w-md w-full">
           <div class="flex flex-col">
@@ -40,7 +41,12 @@
               </div>
             </div>
 
-            <div class="mt-6 space-y-2">
+            <div class="w-full text-center flex flex-col pt-4 pb-6">
+              <p class="text-black text-2xl font-semibold">Amount to Pay</p>
+              <p class="text-green-500 text-xl font-medium">P{{ $contract->amount }}.00</p>
+            </div>
+
+            <div class="space-y-2">
               <x-app.input 
                 type="text" 
                 label="Reference" 
@@ -53,22 +59,9 @@
                   @enderror
                 </x-slot>
               </x-app.input>
-
-              <x-app.input 
-                type="text" 
-                label="Amount" 
-                name="amount"
-                placeholder="Enter Amount"
-              >
-                <x-slot name="errors">
-                  @error('')
-                  <p class="text-red-500 text-sm error">{{$message}}</p>
-                  @enderror
-                </x-slot>
-              </x-app.input>
             </div>
 
-            <div class="mt-24 flex items-center relative mr-0">
+            <div class="mt-8 flex items-center relative mr-0">
               <div class="mr-auto"></div>
               <div class="flex items-center space-x-4">
                 <a 

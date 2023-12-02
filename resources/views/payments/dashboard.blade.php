@@ -6,7 +6,14 @@
 	<div class="w-full py-10 px-12">
     <div class="flex items-center relative">
       <p class="text-3xl font-semibold mr-auto">Payments</p>
-      <x-menu-dropdown />
+      <div class="flex items-center space-x-4">
+				<div class="">
+					<x-notification-component />
+				</div>
+				<div>
+					<x-menu-dropdown />
+				</div>
+			</div>
     </div>
 
 		<div class="mt-20 flex flex-col space-y-10">

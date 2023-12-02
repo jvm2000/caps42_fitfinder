@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Enrollee;
+use App\Models\Progress;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Module extends Model
 {
@@ -24,6 +26,16 @@ class Module extends Model
     public function program()
     {
         return $this->belongsTo(Program::class);
+    }
+
+    public function enrollee()
+    {
+        return $this->belongsTo(Enrollee::class);
+    }
+
+    public function progress()
+    {
+        return $this->hasMany(Progress::class);
     }
 
     public function getFileURL(){

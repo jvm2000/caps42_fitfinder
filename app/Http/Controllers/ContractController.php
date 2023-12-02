@@ -45,12 +45,13 @@ class ContractController extends Controller
             'startdate' => ['required'],
             'enddate' => ['required'],
         ]);
+        
+         $originalAmount = $request->input('amount');
 
-        $signatureData = $request->input('signature');
+        $calculatedAmount = $originalAmount - ($originalAmount * 0.10);
 
-        $contract = new Contract($form);
+        $contract = new Contract($form + ['amount' => $calculatedAmount]);
 
-        $contract->signature = $signatureData;
         
         $contract->save();
 
@@ -71,5 +72,18 @@ class ContractController extends Controller
         $request->delete();
 
         return back()->with('message', 'Successfully Decline User');
+    }
+    public function decline(Contract $contract)
+    {
+        $contract->delete();
+
+        return back()->with('message', 'Successfully Decline User');
+    }
+
+    public function enroll(Program $program)
+    {
+        auth()->user()->enrolledPrograms()->attach($program);
+
+        return redirect()->route('programs.show', $program);
     }
 }

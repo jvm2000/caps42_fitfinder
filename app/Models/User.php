@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Program;
 use App\Models\Contract;
+use App\Models\Enrollee;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Auth\Notifications\VerifyEmail;
@@ -94,31 +95,6 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Program::class);
     }
-   // Define a relationship for users making requests.
-   public function requestsMade()
-   {
-       return $this->hasMany(UserRequest::class, 'trainee_id');
-   }
-
-   // Define a relationship for users receiving requests.
-   public function requestsReceived()
-   {
-       return $this->hasMany(UserRequest::class, 'coach_id');
-   }
-
-   // Helper method to create a new request.
-   public function sendRequestToCoach($coach)
-   {
-       return $this->requestsMade()->create([
-           'coach_id' => $coach->id,
-           'status' => 'Pending', // Set the initial status to "Pending"
-       ]);
-   }
-   
-   public function status()
-    {
-    return $this->belongsTo(Status::class);
-    }
 
     public function sendEmailVerificationNotification()
     {
@@ -128,9 +104,8 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Contract::class);
     }
-    public function enrolledPrograms()
+    public function enrollees()
     {
-        return $this->belongsTo(Program::class,'program_id');
+        return $this->hasMany(Enrollee::class);
     }
-    
 }

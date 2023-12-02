@@ -24,6 +24,7 @@
 							<th class="text-sm font-medium text-gray-400 py-4 text-left">ID</th>
 							<th class="text-sm font-medium text-gray-400 py-4 text-left">Trainee</th>
 							<th class="text-sm font-medium text-gray-400 py-4 text-left">Coach</th>
+							<th class="text-sm font-medium text-gray-400 py-4 text-left">Program</th>
 							<th class="text-sm font-medium text-gray-400 py-4 text-left">Payment Type</th>
 							<th class="text-sm font-medium text-gray-400 py-4 text-left">Reference</th>
 							<th class="text-sm font-medium text-gray-400 py-4 text-left">Amount</th>
@@ -37,6 +38,7 @@
 							<td class="text-sm text-black py-4 text-left">{{ $payment->contract->id }}</td>
 							<td class="text-sm text-black py-4 text-left">{{ $payment->contract->trainee->first_name }} {{ $payment->contract->trainee->last_name }} </td>
 							<td class="text-sm text-black py-4 text-left">{{ $payment->contract->coach->first_name }} {{ $payment->contract->coach->last_name }}</td>
+							<td class="text-sm text-black py-4 text-left">{{ $payment->contract->program->name }}</td>
 							<td class="text-sm text-black py-4 text-left">{{ $payment->contract->payment_type }}</td>
 							<td class="text-sm text-black py-4 text-left">{{ $payment->reference }}</td>
 							<td class="text-sm text-black py-4 text-left">{{ $payment->amount }}</td>
@@ -49,11 +51,14 @@
 										<input type="hidden" name="cemail" value="{{ $payment->contract->coach->email }}">
 										<button type="submit">Accept Payment</button>
 									</form>
-								{{-- @else
-									<form action="/admin/payments/accept/{{ $payment->id }}" method="POST">
+								@else
+									<form action="/admin/payments/enroll" method="POST">
 										@csrf
-										<button type="submit">Accept Payment</button>
-									</form> --}}
+										<input type="hidden" name="trainee_id" value="{{ $payment->contract->trainee->id }}">
+										<input type="hidden" name="coach_id" value="{{ $payment->contract->coach->id }}">
+										<input type="hidden" name="program_id" value="{{ $payment->contract->program->id }}">
+										<button type="submit">Enroll</button>
+									</form>
 								@endif
 							</td>
 						</tr>

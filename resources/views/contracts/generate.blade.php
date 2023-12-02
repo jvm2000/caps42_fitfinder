@@ -89,25 +89,44 @@
                 </select>
               </div>
 
-              <x-app.input 
-                type="date" 
-                label="Start Date" 
-                name="startdate"
-              >
-                <x-slot name="errors">
-                  @error('startdate')
-                  <p class="text-red-500 text-sm error">{{$message}}</p>
-                  @enderror
-                </x-slot>
-              </x-app.input>
+              <div class="grid grid-cols-2 items-center gap-x-4 mt-1">
+                <x-app.input 
+                  type="date" 
+                  label="Start Date" 
+                  name="startdate"
+                  class="text-[16px]"
+                >
+                  <x-slot name="errors">
+                    @error('startdate')
+                    <p class="text-red-500 text-sm error">{{$message}}</p>
+                    @enderror
+                  </x-slot>
+                </x-app.input>
+
+                <x-app.input 
+                  type="date" 
+                  label="End Date" 
+                  name="enddate"
+                  class="text-[16px]"
+                >
+                  <x-slot name="errors">
+                    @error('enddate')
+                    <p class="text-red-500 text-sm error">{{$message}}</p>
+                    @enderror
+                  </x-slot>
+                </x-app.input>
+              </div>
 
               <x-app.input 
-                type="date" 
-                label="End Date" 
-                name="enddate"
+                type="number" 
+                label="Price Amount" 
+                name="amount"
+                placeholder="0.00"
+                id="amount"
+                oninput="calculate()"
               >
                 <x-slot name="errors">
-                  @error('enddate')
+                  @error('amount')
                   <p class="text-red-500 text-sm error">{{$message}}</p>
                   @enderror
                 </x-slot>
@@ -116,7 +135,9 @@
           </div>
 
           <div class="mt-20 flex items-center relative mr-0">
-            <div class="mr-auto"></div>
+            <div class="mr-auto">
+              <p id="result"></p>
+            </div>
             <div class="flex items-center space-x-4">
               <a 
                 href="/contracts/list"
@@ -165,4 +186,20 @@ checkboxes.forEach(function(checkbox) {
     selectedDaysParagraph.innerText = 'days: ' + selectedDays.join(', ');
   });
 });
+
+function calculate() {
+    var amountInput = document.getElementById('amount');
+    var amount = parseFloat(amountInput.value);
+
+    if (isNaN(amount)) {
+        document.getElementById('result').innerHTML = 'Result: Enter a valid number';
+        return;
+    }
+
+    var result = amount - (0.1 * amount);
+
+    document.getElementById('result').innerHTML = 'Result: ' + result;
+}
+
+calculate();
 </script>

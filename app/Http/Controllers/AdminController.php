@@ -44,6 +44,7 @@ class AdminController extends Controller
     $coachEmail = $request->input('cemail');
     $payment = Payment::findOrFail($paymentId);
     $payment->update(['status' => 'accepted']);
+    $payment->contract()->update(['status' => 'accepted']);
 
     Mail::to($traineeEmail)->send(new ReceiptMail($payment, $referenceNumber));
     Mail::to($coachEmail)->send(new ReceiptMail($payment, $referenceNumber));
@@ -58,10 +59,17 @@ class AdminController extends Controller
         return view('admin.payments', compact('payments'));
     }
 
-    public function enroll(Program $program)
+    public function enroll(Request $request, Program $program)
     {
-        // Add the authenticated user to the program
-        auth()->user()->programs()->attach($program);
+        $form = $request->validate([
+            'trainee_id' => ['required'],
+        ]);
+
+        $traineeId = $form['trainee_id'];
+
+        $trainee = User::findOrFail($traineeId);
+        
+        $trainee->enrolledPrograms()->attach($program);
 
         return redirect()->route('programs.show', $program);
     }

@@ -12,6 +12,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\requestController;
 use App\Http\Controllers\ContractController;
+use App\Http\Controllers\EnrolleeController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\MatchmakingController;
 use App\Http\Controllers\SendRequestController;
@@ -86,7 +87,12 @@ Route::put('/admin/suspend/{user}', [AdminController::class, 'suspendUser'])->na
 Route::delete('/admin/delete/{user}', [AdminController::class, 'destroy'])->name('admin.destroy');
 Route::get('/admin/payments', [AdminController::class, 'paymentIndex'])->name('admin.paymentsIndex');
 Route::post('/admin/payments/accept/{payment}', [AdminController::class, 'acceptPayment'])->name('admin.payments.accept');
-Route::post('/admin/payments/enroll/{program}', [AdminController::class, 'enroll'])->name('admin.payments.accept');
+
+//Enrolling
+Route::get('/progress/list', [EnrolleeController::class, 'index'])->name('trainee.progress')->middleware(['auth', 'verified']);
+Route::post('/admin/payments/enroll', [EnrolleeController::class, 'store'])->name('admin.enroll');
+Route::get('/progress/show/{enrollee}', [EnrolleeController::class, 'showProgress'])->name('progress.modules');
+Route::put('/progress/update/{progress}', [EnrolleeController::class, 'update'])->name('progress.update');
 
 // Test 
 Route::get('/test-verify', function () {return view('emails/verify-email');})->name('admin.dashboard');
@@ -121,10 +127,11 @@ Route::middleware(['auth'])->group(function () {
 	//Contracts
 	Route::post('/contracts/contract', [ContractDashboardController::class, 'contract']);
 	Route::get('/contracts/list', [ContractDashboardController::class, 'listOfContracts'])->middleware(['auth', 'verified']);
+	Route::delete('/contracts/remove/{contract}', [ContractController::class, 'decline'])->name('contracts.decline');
 	Route::get('/contracts/make', [ContractController::class, 'index'])->name('generate.contract')->middleware(['auth', 'verified']);
   Route::post('/contracts/generate/{user}', [ContractController::class, 'store'])->name('contracts.store');
 	Route::get('/contracts/create/{request}', [ContractController::class, 'showRequest'])->name('contracts.create');
-	Route::delete('/contracts/decline/{request}', [ContractController::class, 'destroy'])->name('contracts.decline');
+	Route::delete('/contracts/decline/{request}', [ContractController::class, 'destroy'])->name('contracts.destroy');
 	
 	// Matchmake 
 	Route::get('/matchmakes', [MatchmakingController::class, 'index'])->name('matchmaking.index');
@@ -161,6 +168,7 @@ Route::middleware(['auth'])->group(function () {
 
 	// Modules 
 	Route::get('/programs/show/{program}', [ProgramController::class, 'showProgram'])->name('modules.program.show');
+	
 	Route::get('/modules/make/{program}', function (Program $program) {return view('modules.create', compact('program'));})->name('modules.make');
 	Route::post('/modules/create/{program}', [ModuleController::class, 'store'])->name('modules.create');
 	Route::get('/modules/edit/{module}', [ModuleController::class, 'edit'])->name('modules.edit');

@@ -40,7 +40,7 @@
             </a>
 
             @if (auth()->user()->role === 'Trainee')
-            <a href="/matchmakes" class="flex items-center relative mt-14 group z-0">
+            <a href="/matchmakes" class="flex items-center relative mt-8 group z-0">
               <span class="w-2 h-9 rounded-r-md mr-32 z-10"></span>
               @if(Route::is(['matchmaking.index', 'matchmaking.show']))
                 <span class="w-2 h-9 rounded-r-md mr-32 absolute bg-white"></span>
@@ -51,7 +51,7 @@
             @endif
 
             @if (auth()->user()->role === 'Coach')
-            <a href="/programs/list" class="flex items-center relative mt-14 group z-0">
+            <a href="/programs/list" class="flex items-center relative mt-8 group z-0">
               <span class="w-2 h-9 rounded-r-md mr-32 z-10"></span>
               @if(in_array(Route::currentRouteName(), ['programs.index', 'programs.make']))
                 <span class="w-2 h-9 rounded-r-md mr-32 absolute bg-white"></span>
@@ -62,21 +62,29 @@
             @endif
 
        
-            <a href="/contracts/list"class="flex items-center relative mt-14 group">
+            <a href="/contracts/list"class="flex items-center relative mt-8 group">
 
               <span class="w-2 h-9 rounded-r-md mr-32"></span>
 
               <img src="/dashboard/icons/contracts.svg" alt="Main" class="w-6 h-6 mr-14 group-hover:mb-1">
               <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Contracts</p>
             </a>
-             <a href="/payments/dashboard"class="flex items-center relative mt-14 group">
-
-              <span class="w-2 h-9 rounded-r-md mr-32"></span>
-
-              <img src="/dashboard/icons/contracts.svg" alt="Main" class="w-6 h-6 mr-14 group-hover:mb-1">
-              <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Payments</p>
-            </a>
+             <a href="/payments/dashboard"class="flex items-center relative mt-8 group">
+                <span class="w-2 h-9 rounded-r-md mr-32"></span>
+                <img src="/dashboard/icons/contracts.svg" alt="Main" class="w-6 h-6 mr-14 group-hover:mb-1">
+                <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Payments</p>
+              </a>
             
+              @if (auth()->user()->role === 'Trainee')
+                <a href="/progress/list" class="flex items-center relative mt-8 group z-0">
+                  <span class="w-2 h-9 rounded-r-md mr-32 z-10"></span>
+                  @if(Route::is(['matchmaking.index', 'matchmaking.show']))
+                    <span class="w-2 h-9 rounded-r-md mr-32 absolute bg-white"></span>
+                  @endif
+                  <img src="/dashboard/icons/main.svg" alt="Main" class="w-6 h-6 group-hover:mb-1 mr-14">
+                  <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Programs</p>
+                </a>
+              @endif
           </div>
           
         

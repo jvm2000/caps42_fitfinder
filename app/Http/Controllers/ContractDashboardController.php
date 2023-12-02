@@ -17,21 +17,19 @@ class ContractDashboardController extends Controller
      */
     public function listOfContracts()
     {
-        //
-        $contracts = Contract::all();
-        $requests = UserRequest::all(); // Adjust as needed
-        $programs = Program::all();
-        $currentDate = now();
-            
-        return view('contracts.index', [
-            'contracts' => $contracts,
-            'requests' => $requests,
-            'programs' => $programs,
-            'currentDate' => $currentDate,
-          
-        ]);
+        $userId = auth()->user()->id;
+        $role = auth()->user()->role;
 
+        if ($role == "Trainee") {
+            $contracts = Contract::where('trainee_id', $userId)->get();
+        }
+        else{
+            $contracts = Contract::where('coach_id', $userId)->get();
+        }
+
+        return view('contracts.index', compact('contracts'));
     }
+
     public function contract(Request $request){
         $action = $request->input('action');
         if($action=='agree'){

@@ -18,6 +18,7 @@ class Contract extends Model
         'status',
         'startdate',
         'enddate',
+        'amount',
         'program_id',
         'signature',
     ];

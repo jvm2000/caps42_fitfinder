@@ -50,40 +50,38 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach($contracts as $index => $pending)
-								@if($pending->status === 'pending')
-									<tr class="">
-										<td class="border-l-8 border-indigo-500 py-1">
-											<div class="flex items-center space-x-4 pl-4">
-												<div class="w-9 h-9 rounded-full">
-													<img src="{{ $pending->program->getImageURL() }}" class="w-full h-full rounded-full">
-												</div>
-												<p class="text-sm">{{ $pending->program->name }}</p>
+							@foreach($contracts as $index => $contract)
+								<tr class="">
+									<td class="border-l-8 border-indigo-500 py-1">
+										<div class="flex items-center space-x-4 pl-4">
+											<div class="w-9 h-9 rounded-full">
+												<img src="{{ $contract->program->getImageURL() }}" class="w-full h-full rounded-full">
 											</div>
-										</td>
-										
-										<td class="py-1">
-											<p class="text-sm text-ellipsis">{{$pending->trainee->first_name}} {{$pending->trainee->last_name}}</p>
-										</td>
-										<td class="py-2">
-											<div class="flex items-center space-x-4">
-												@if($pending->status === 'pending')
-													<span class="w-2 h-2 bg-yellow-500 rounded-full"></span>
-													<p class="text-sm text-yellow-500">{{$pending->status}}</p>
-												@else
-													<span class="w-2 h-2 bg-green-500 rounded-full"></span>
-													<p class="text-sm text-green-500">{{$pending->status}}</p>
-												@endif
-											</div>
-										</td>
-										
-										<td class="py-2">
-											<div class="flex items-center space-x-3 relative">
-												<x-contracts.modal.preview :pending="$pending" :index="$index"/>
-											</div>
-										</td>
-									</tr>
-								@endif
+											<p class="text-sm">{{ $contract->program->name }}</p>
+										</div>
+									</td>
+									
+									<td class="py-1">
+										<p class="text-sm text-ellipsis">{{$contract->trainee->first_name}} {{$contract->trainee->last_name}}</p>
+									</td>
+									<td class="py-2">
+										<div class="flex items-center space-x-4">
+											@if($contract->status === 'contract')
+												<span class="w-2 h-2 bg-yellow-500 rounded-full"></span>
+												<p class="text-sm text-yellow-500">{{$contract->status}}</p>
+											@else
+												<span class="w-2 h-2 bg-green-500 rounded-full"></span>
+												<p class="text-sm text-green-500">{{$contract->status}}</p>
+											@endif
+										</div>
+									</td>
+									
+									<td class="py-2">
+										<div class="flex items-center space-x-3 relative">
+											<x-contracts.modal.preview :contract="$contract" :index="$index"/>
+										</div>
+									</td>
+								</tr>
 							@endforeach
 						</tbody>
 					</table>
