@@ -100,10 +100,17 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $this->notify(new VerifyEmail);
     }
+
     public function contracts()
     {
         return $this->hasMany(Contract::class);
     }
+
+    public function requests()
+    {
+        return $this->hasMany(UserRequest::class);
+    }
+    
     public function enrollees()
     {
         return $this->hasMany(Enrollee::class);

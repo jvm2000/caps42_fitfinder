@@ -16,7 +16,7 @@
     </div>
 
     <div class="py-7 flex items-center justify-between relative w-full border-b-8">
-      <div class="flex items-center space-x-6">
+      <div class="flex items-center space-x-6 relative w-full">
         <img src="{{$enrollee->program->getImageURL()}}" alt="Profile" class="w-36 h-36 rounded-full">
 
         <div class="space-y-1">
@@ -40,9 +40,32 @@
             </div>
           </div>
         </div>
+
+        <div class="grid grid-cols-2 w-[28rem] gap-y-6 absolute right-0">
+          <div class="flex flex-col space-y-1">
+            <p class="text-base font-medium w-36">No of modules overall</p>
+            <p class="text-sm">{{ $enrollee->program->count() }} module/s</p>
+          </div>
+
+          <div class="flex flex-col space-y-1">
+            <p class="text-base font-medium w-36">No of finished modules</p>
+            <p class="text-sm">{{ $finished }} module/s</p>
+          </div>
+
+          <div class="flex flex-col space-y-1">
+            <p class="text-base font-medium">Summary <span class="text-green-500">{{$percentage}}%</span></p>
+            <div class="w-24 h-3 rounded-full bg-gray-200 relative">
+              <span class="h-3 rounded-full bg-green-500 absolute" style="width: {{ $percentage }}%;"></span>
+            </div>
+          </div>
+
+          <div class="flex flex-col space-y-1">
+            <p class="text-base font-medium w-36">Created by:</p>
+            <p class="text-sm">{{ $enrollee->coach->first_name }} {{ $enrollee->coach->last_name }}</p>
+          </div>
+        </div>
       </div>
     </div>
-    <p>{{$percentage}}</p>
   
     @if($enrollee->progress->count() > 0)
     <div class="mt-2">
@@ -64,7 +87,14 @@
           @foreach ($enrollee->progress as $index => $mod)
           <tr>
             
-            <td class="border-l-8 border-indigo-500 py-1 indent-4 text-sm">{{ $mod->module->name }}</td>
+            <td class="border-l-8 
+              @if($mod->status === 'not done')
+              border-red-500
+              @else
+              border-green-500
+              @endif 
+              py-1 indent-4 text-sm
+              ">{{ $mod->module->name }}</td>
 
             <td class="py-1 text-neutral-950 text-sm">{{ $mod->module->procedure }}</td>
 
@@ -92,12 +122,12 @@
               <div class="flex items-center space-x-3">
                 @if( $mod->status === 'not done' )
                 <x-progress.preview :mod="$mod" :index="$index" :enrollee="$enrollee">
-                  <div class="bg-green-500 px-4 py-1 text-sm text-white font-medium rounded-lg">
+                  <div class="bg-red-500 px-4 py-1 text-sm text-white font-medium rounded-lg">
                     Start
                   </div>
                 </x-progress.preview>
                 @else
-                <div class="bg-red-500 px-4 py-1 text-sm text-white font-medium rounded-lg">
+                <div class="bg-green-500 px-4 py-1 text-sm text-white font-medium rounded-lg">
                   Finished
                 </div>
                 @endif

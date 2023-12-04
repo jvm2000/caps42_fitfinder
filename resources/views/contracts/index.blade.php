@@ -66,7 +66,7 @@
 									</td>
 									<td class="py-2">
 										<div class="flex items-center space-x-4">
-											@if($contract->status === 'contract')
+											@if($contract->status === 'pending')
 												<span class="w-2 h-2 bg-yellow-500 rounded-full"></span>
 												<p class="text-sm text-yellow-500">{{$contract->status}}</p>
 											@else

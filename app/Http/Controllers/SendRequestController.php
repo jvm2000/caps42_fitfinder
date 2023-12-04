@@ -17,7 +17,7 @@ class SendRequestController extends Controller
             $traineeId = $request->input('trainee_id');
             $coachId = $request->input('coach_id');
             $programId = $request->input('program_id');
-            $message = $request->input('message');
+            $message = $request->input('message') ?? null;
             
             DB::table('requests')->insert([
                 'trainee_id' => $traineeId,

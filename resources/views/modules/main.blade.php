@@ -40,6 +40,7 @@
                 <p class="text-sm text-neutral-800">{{$program->summary}}</p>
               </div>
             </div>
+
           </div>
         </div>
 
@@ -59,32 +60,7 @@
               <div class="flex flex-col space-y-1">
                 <p class="text-base font-medium">Summary <span class="text-green-500">{{$percentage}}%</span></p>
                 <div class="w-24 h-3 rounded-full bg-gray-200 relative">
-                  <div class="
-                    @if($percentage === 100)
-                      w-full 
-                    @elseif($percentage === 90)
-                      w-21
-                    @elseif($percentage === 80)
-                      w-18
-                    @elseif($percentage === 70)
-                      w-16
-                    @elseif($percentage === 60)
-                      w-14
-                    @elseif($percentage === 50)
-                      w-10
-                    @elseif($percentage === 40)
-                      w-8
-                    @elseif($percentage === 30)
-                      w-6
-                    @elseif($percentage === 20)
-                      w-4
-                    @elseif($percentage === 10)
-                      w-2
-                    @elseif($percentage === 0)
-                      w-0
-                    @endif
-                      h-3 rounded-full bg-green-500"
-                  ></div>
+                  <span class="h-3 rounded-full bg-green-500 absolute" style="width: {{ $percentage }}%;"></span>
                 </div>
               </div>
 

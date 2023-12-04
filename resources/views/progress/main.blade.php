@@ -70,19 +70,33 @@
 								</td>
 
 								<td class="py-1">
-									<p class="text-sm text-ellipsis capitalize">{{$enrollee->trainee->first_name}} {{$enrollee->trainee->last_name}}</p>
+									<div class="flex items-center space-x-4">
+										<img src="{{$enrollee->coach->getImageURL()}}" class="w-9 h-9 rounded-full">
+										<div class="text-left">
+											<p class="text-black text-sm">{{$enrollee->coach->first_name}} {{$enrollee->coach->last_name}}</p>
+											<p class="text-zinc-400 text-sm">{{$enrollee->coach->username}}</p>
+										</div>
+									</div>
 								</td>
 								<td class="py-2">
-									@if($enrollee->completion === 1)
-									<p class="text-sm text-ellipsis">Completed</p>
-									@else
-									<p class="text-sm text-ellipsis">Ongoing</p>
-									@endif
+									@if($enrollee->completion === 'completed')
+											<div class="flex items-center space-x-4">
+												<span class="w-2 h-2 bg-green-500 rounded-full"></span>
+												<p class="text-sm text-green-500">completed</p>
+											</div>
+										@else
+											<div class="flex items-center space-x-4">
+												<span class="w-2 h-2 bg-red-500 rounded-full"></span>
+												<p class="text-sm text-red-500">ongoing</p>
+											</div>
+										@endif
 								</td>
 
 								<td class="py-2">
 									<div class="flex items-center space-x-3 relative">
-                  
+										<a href="/progress/show/{{$enrollee->id}}" class="w-7 h-7 rounded-full p-1.5 bg-indigo-500">
+											<img src="/icons/programs/view.svg" alt="" class="w-4 h-4" title="View Program's Modules">
+										</a>
 									</div>
 								</td>
 							</tr>

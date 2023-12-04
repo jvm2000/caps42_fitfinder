@@ -27,6 +27,13 @@ class EnrolleeController extends Controller
     public function showProgress(Enrollee $enrollee){
         $a = $enrollee->progress->count();
         $b = $enrollee->stats;
+        $finished = 0;
+        foreach($enrollee->progress as $i){
+            if($i->status === 'done'){
+                $finished++;
+            }
+        }
+
         if($b>0){
              $percentage = ($b / $a)*100;
         }
@@ -38,6 +45,7 @@ class EnrolleeController extends Controller
             $enrollee->save();
         }
         return view('progress.module',[
+            'finished' => $finished,
             'enrollee' => $enrollee,
             'percentage'=>$percentage,
         ]);
