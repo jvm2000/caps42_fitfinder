@@ -11,6 +11,7 @@ class Payment extends Model
     use HasFactory;
     protected $fillable = [
         'contract_id',
+        'FFreference',
         'reference',
         'amount',
         'status',
