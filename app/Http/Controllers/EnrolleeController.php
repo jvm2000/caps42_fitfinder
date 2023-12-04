@@ -24,7 +24,7 @@ class EnrolleeController extends Controller
 
         return view('progress.main', compact('enrolled'));
     }
-    public function showProgress(Enrollee $enrollee,Request $request){
+    public function showProgress(Enrollee $enrollee){
         $a = $enrollee->progress->count();
         $b = $enrollee->stats;
         if($b>0){
@@ -34,7 +34,8 @@ class EnrolleeController extends Controller
              $percentage = 0;
         }
         if($b==$a){
-            $enrollee->increment('completion');
+            $enrollee->completion = 'completed';
+            $enrollee->save();
         }
         return view('progress.module',[
             'enrollee' => $enrollee,
@@ -90,6 +91,7 @@ class EnrolleeController extends Controller
     public function update(Request $request, Progress $progress)
     {
         $id = $request->input('enrollee_id');
+        $program = $request->input('program_id');
         $enrollee = Enrollee::find($id);
         // Increment the 'stats' column by 1
         $enrollee->increment('stats');
@@ -98,6 +100,8 @@ class EnrolleeController extends Controller
         ]);
         
         $progress->update($form);
+
+        return redirect('/progress/show/' . $program)->with('message', 'Module successfully finished!');
     }
 
     /**

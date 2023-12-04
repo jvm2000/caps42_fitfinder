@@ -14,7 +14,7 @@
       <div class="mt-24 w-full grid place-items-center">
         <div class="max-w-4xl w-full">
           <div class="grid grid-cols-2 items-start w-full gap-x-8">
-            <div class="flex flex-col space-y-0">
+            <div class="flex flex-col">
               <x-app.input 
                 type="text" 
                 label="Module Name" 
@@ -31,7 +31,7 @@
               <x-app.input 
                 type="text" 
                 label="Video Reference" 
-                placeholder="Enter Youtube's URL" 
+                placeholder="(note: please input the youtube id key only)" 
                 name="video_url"
               >
                 <x-slot name="errors">
@@ -41,7 +41,7 @@
                 </x-slot>
               </x-app.input>
   
-              <div class="space-y-2">
+              <div class="space-y-2 mt-2">
                 <span class="text-md text-gray-600">Procedure</span>
                 <textarea 
                   type="text" 

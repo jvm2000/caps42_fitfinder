@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('enrollees', function (Blueprint $table) {
             $table->id();     
             $table->integer('stats');
-            $table->integer('completion');
+            $table->string('completion');
             $table->foreignId('trainee_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('program_id')->constrained('programs')->onDelete('cascade');
             $table->foreignId('coach_id')->constrained('users')->onDelete('cascade');

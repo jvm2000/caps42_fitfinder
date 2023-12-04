@@ -3,9 +3,8 @@
   <x-slot:title>
     FitFinder - {{ $program->name }}
   </x-slot>
-
-<p>{{$finished}}</p>
-<p>{{$percentage}}</p>
+{{-- 
+<p>{{$finished}}</p> --}}
 
   <div class="w-full py-10 px-12 h-full max-h-[54rem] overflow-hidden">
     <div class="flex items-center relative">
@@ -13,12 +12,12 @@
         <a href="/programs/list">
             <img src="/icons/chevron-left-icon.svg" alt="View Profile" class="w-6 h-6 rotate-180">
         </a>
-        <p class="text-3xl font-semibold mr-auto">Program</p>
+        <p class="text-3xl font-semibold mr-auto">Back</p>
       </div>
       <x-menu-dropdown />
     </div>
 
-    <div class="py-7 flex items-center justify-between relative w-full border-b-8">
+    <div class="py-7 flex items-center relative w-full border-b-8">
       <div class="flex items-center space-x-6">
         <img src="{{$program->getImageURL()}}" alt="Profile" class="w-36 h-36 rounded-full">
 
@@ -43,8 +42,67 @@
             </div>
           </div>
         </div>
+
+        <div class="flex items-center space-x-4 pl-14">
+          @if($program->enrollees->count()>0)
+            <div class="grid grid-cols-2 w-[28rem] gap-y-6">
+              <div class="flex flex-col space-y-1">
+                <p class="text-base font-medium w-36">No of trainees enrolled:</p>
+                <p class="text-sm">{{ $program->enrollees->count() }} trainee/s</p>
+              </div>
+
+              <div class="flex flex-col space-y-1">
+                <p class="text-base font-medium">Trainees that are already finished the program:</p>
+                <p class="text-sm">{{ $finished }} trainee/s</p>
+              </div>
+
+              <div class="flex flex-col space-y-1">
+                <p class="text-base font-medium">Summary <span class="text-green-500">{{$percentage}}%</span></p>
+                <div class="w-24 h-3 rounded-full bg-gray-200 relative">
+                  <div class="
+                    @if($percentage === 100)
+                      w-full 
+                    @elseif($percentage === 90)
+                      w-21
+                    @elseif($percentage === 80)
+                      w-18
+                    @elseif($percentage === 70)
+                      w-16
+                    @elseif($percentage === 60)
+                      w-14
+                    @elseif($percentage === 50)
+                      w-10
+                    @elseif($percentage === 40)
+                      w-8
+                    @elseif($percentage === 30)
+                      w-6
+                    @elseif($percentage === 20)
+                      w-4
+                    @elseif($percentage === 10)
+                      w-2
+                    @elseif($percentage === 0)
+                      w-0
+                    @endif
+                      h-3 rounded-full bg-green-500"
+                  ></div>
+                </div>
+              </div>
+
+              <div class="flex flex-col space-y-1">
+                <p class="text-base font-medium">Legacy</p>
+                <div class="flex items-center space-x-6">
+                  <div class="flex items-center space-x-4">
+                    <span class="w-2 h-2 bg-green-500"></span>
+                    <p class="text-sm">Trainees that are done</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          @else
+          <p class="text-red-500">No trainees are enrolled yet.</p>
+          @endif
+        </div>
       </div>
-      
       <a 
 					href="/modules/make/{{$program->id}}"
 					type="submit"
@@ -72,7 +130,11 @@
         <tbody>
           @foreach ($program->modules as $index => $module)
           <tr>
-            <td class="border-l-8 border-indigo-500 py-1 indent-4 text-sm">{{ $module->name }}</td>
+            <td class="border-l-8 border-indigo-500 py-1 indent-4 text-sm">
+              <x-modules.modal.preview :module="$module" :index="$index">
+                {{ $module->name }}
+              </x-modules.modal.preview>
+            </td>
 
             <td class="py-1 text-neutral-950 text-sm w-96 overflow-hidden text-ellipsis">{{ $module->procedure }}</td>
 

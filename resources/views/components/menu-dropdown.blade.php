@@ -54,12 +54,7 @@
             <p class="text-xs text-blue-500">{{ auth()->user()->role }}</p>
           </div>
           <div class="flex items-center space-x-8">
-            <p class="text-xs">{{auth()->user()->username}}</p>
-            @if (auth()->user()->hasVerifiedEmail())
-            <p class="text-xs text-green-500 font-medium">verified</p>
-            @else
-            <p class="text-xs text-red-500 font-medium">not verified</p>
-            @endif
+            <p class="text-xs">{{auth()->user()->email}}</p>
           </div>
         </div>
       </a>
@@ -76,16 +71,11 @@
         </div>
         <div class="">
           <div class="flex items-center space-x-4">
-            <p class="text-base font-semibold"><span>@</span>{{auth()->user()->first_name}} {{auth()->user()->last_name}}</p>
-            <p class="text-xs text-blue-500">{{ auth()->user()->role }}</p>
+            <p class="text-base font-semibold">{{auth()->user()->first_name}} {{auth()->user()->last_name}}</p>
+            <p class="text-xs text-blue-500"><span>@</span>{{ auth()->user()->role }}</p>
           </div>
           <div class="flex items-center space-x-8">
-            <p class="text-xs">{{auth()->user()->username}}</p>
-            @if (auth()->user()->hasVerifiedEmail())
-            <p class="text-xs text-green-500 font-medium">verified</p>
-            @else
-            <p class="text-xs text-red-500 font-medium">not verified</p>
-            @endif
+            <p class="text-xs">{{auth()->user()->email}}</p>
           </div>
         </div>
       </a>

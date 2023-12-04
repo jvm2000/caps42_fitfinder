@@ -7,10 +7,10 @@
   <div class="w-full py-10 px-12 h-full max-h-[54rem] overflow-hidden">
     <div class="flex items-center relative">
       <div class="flex items-center space-x-4 mr-auto">
-        <a href="/programs/list">
+        <a href="/progress/list">
             <img src="/icons/chevron-left-icon.svg" alt="View Profile" class="w-6 h-6 rotate-180">
         </a>
-        <p class="text-3xl font-semibold mr-auto">Program</p>
+        <p class="text-3xl font-semibold mr-auto">Back</p>
       </div>
       <x-menu-dropdown />
     </div>
@@ -55,8 +55,8 @@
               <p class="text-xl font-medium text-gray-400 py-4 text-left w-44">Rest Period</p>
             </th>
             <th class="text-xl font-medium text-gray-400 py-4 text-left">Number of sets/reps</th>
-            <th class="text-xl font-medium text-gray-400 py-4 text-left">Actions</th>
             <th class="text-xl font-medium text-gray-400 py-4 text-left">Status</th>
+            <th class="text-xl font-medium text-gray-400 py-4 text-left">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -66,7 +66,7 @@
             
             <td class="border-l-8 border-indigo-500 py-1 indent-4 text-sm">{{ $mod->module->name }}</td>
 
-            <td class="py-1 text-neutral-950 text-sm w-96 overflow-hidden text-ellipsis">{{ $mod->module->procedure }}</td>
+            <td class="py-1 text-neutral-950 text-sm">{{ $mod->module->procedure }}</td>
 
             <td class="py-1 text-neutral-950 text-sm">{{ $mod->module->rest_period }} minute/s</td>
 
@@ -75,26 +75,32 @@
             </td>
 
             <td class="py-1 text-sm">
-              <p><span class="text-neutral-950">{{ $mod->status }}</span></p>
+              <div class="flex items-center space-x-4">
+                <span class="w-2 h-2 
+                  @if($mod->status === 'not done')
+                    bg-red-500
+                  @else
+                    bg-green-500
+                  @endif
+                  rounded-full"
+                ></span>
+                <p class="text-neutral-950 lowercase">{{ $mod->status }}</span></p>
+              </div>
             </td>
 
             <td class="py-1">
               <div class="flex items-center space-x-3">
-                <form action="/progress/update/{{$mod->id}}" method="POST" enctype="multipart/form-data" >
-                  @csrf
-                  @method('PUT')
-                  <input type="hidden" name="status" value="done">
-                  <input type="hidden" name="enrollee_id" value="{{$enrollee->id}}">
-                  @if($mod->status === 'done')
-                      <p>Done</p>
-                  @else
-                  <button type="submit">Mark as done</button>
-                  @endif
-                </form>
-                <a href="/modules/edit/{{$mod->id}}" class="w-7 h-7 rounded-full p-1.5 bg-indigo-500">
-                  <img src="/icons/programs/edit.svg" alt="" class="w-4 h-4">
-                </a>
-
+                @if( $mod->status === 'not done' )
+                <x-progress.preview :mod="$mod" :index="$index" :enrollee="$enrollee">
+                  <div class="bg-green-500 px-4 py-1 text-sm text-white font-medium rounded-lg">
+                    Start
+                  </div>
+                </x-progress.preview>
+                @else
+                <div class="bg-red-500 px-4 py-1 text-sm text-white font-medium rounded-lg">
+                  Finished
+                </div>
+                @endif
               </div>
             </td>
           </tr>

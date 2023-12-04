@@ -95,7 +95,7 @@ function openTab(evt, tabName) {
 							<th class="text-xl font-medium text-gray-400 py-4 text-left indent-16">Program's Info</th>
 							<th class="text-xl font-medium text-gray-400 py-4 text-left">Summary</th>
 							<th class="py-4">
-								<p class="text-xl font-medium text-gray-400 py-4 text-left w-44">Number of Trainees Enrolled</p>
+								<p class="text-xl font-medium text-gray-400 py-4 text-left whitespace-nowrap">Number of Trainees Enrolled</p>
 							</th>
 							<th class="text-xl font-medium text-gray-400 py-4 text-left">Action</th>
 						</tr>
@@ -130,7 +130,7 @@ function openTab(evt, tabName) {
 								</td>
 								<td class="py-2">
 									<p class="text-sm">
-										<span class="text-red-500">{{ $active->enrollees->count() }} /</span>
+										<span class="text-green-500">{{ $active->enrollees->count() }} trainees /</span>
 											@if($active->no_of_trainees === null) 
 											<span class="text-indigo-500">No limit</span> 
 											@else 
@@ -195,7 +195,7 @@ function openTab(evt, tabName) {
 									<p class="text-sm text-ellipsis">{{$archived->summary}}</p>
 								</td>
 								<td class="py-2">
-									<p class="text-sm"><span class="text-red-500">10</span> / 30</p>
+									<p class="text-sm text-ellipsis">{{$archived->updated_at}}</p>
 								</td>
 
 								<td class="py-2">
