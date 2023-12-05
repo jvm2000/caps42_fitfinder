@@ -27,7 +27,7 @@ class SendRequestController extends Controller
                 'status' => 'Pending', // Set the initial status to "Pending"
             ]);
 
-            return view('request.test', ['status' => 'Pending']); // You can adjust the status as needed
+            // return view('request.test', ['status' => 'Pending']); // You can adjust the status as needed
         } else {
             return "Something is wrong.";
         }
