@@ -29,7 +29,7 @@ class AdminController extends Controller
         return view('admin.coaches', compact('coaches'));
     }
     public function acceptPayment(Request $request, $paymentId)
-{
+    {
     $letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $randomLetters = '';
     
@@ -45,12 +45,12 @@ class AdminController extends Controller
     $payment = Payment::findOrFail($paymentId);
     $payment->update(['status' => 'accepted']);
     $payment->contract()->update(['status' => 'accepted']);
-
+    $payment->update(['FFreference' => $referenceNumber]);
     Mail::to($traineeEmail)->send(new ReceiptMail($payment, $referenceNumber));
     Mail::to($coachEmail)->send(new ReceiptMail($payment, $referenceNumber));
 
     return redirect()->back()->with('success', 'Payment accepted!');
-}
+    }
 
 
     public function paymentIndex(Payment $payments){
