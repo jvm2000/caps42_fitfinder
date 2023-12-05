@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->string('reference');
+            $table->string('FFreference');
             $table->decimal('amount', 10, 2);
             $table->string('status')->default('pending');
             $table->foreignIdFor(Contract::class);

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Program;
 use App\Models\User;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -31,6 +32,7 @@ return new class extends Migration
             $table->json('tags')->nullable();
             $table->string('image')->nullable();
             $table->string('status')->default('active');
+            $table->foreignIdFor(Program::class);
             $table->rememberToken();
             $table->timestamps();
         });

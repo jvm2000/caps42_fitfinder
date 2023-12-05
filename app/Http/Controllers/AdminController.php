@@ -6,8 +6,10 @@ use App\Models\User;
 use App\Models\Module;
 use App\Models\Payment;
 use App\Models\Program;
+use App\Mail\ReceiptMail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 
 
 class AdminController extends Controller
@@ -26,19 +28,50 @@ class AdminController extends Controller
         
         return view('admin.coaches', compact('coaches'));
     }
-    public function acceptPayment($paymentId)
+    public function acceptPayment(Request $request, $paymentId)
     {
-        $payment = Payment::findOrFail($paymentId);
-        $payment->update(['status' => 'accepted']);
-
-        // Additional logic, e.g., update contract status or perform other actions
-
-        return redirect()->back()->with('success', 'Payment accepted!');
+    $letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $randomLetters = '';
+    
+    for ($i = 0; $i < 3; $i++) {
+        $randomLetters .= $letters[rand(0, strlen($letters) - 1)];
     }
-    public function paymentIndex(){
-        $pendingPayments = Payment::where('status', 'pending')->get();
+    
+    $randomNumbers = rand(1000, 9999);
+    $referenceNumber = $randomLetters . $randomNumbers;
 
-        return view('admin.payments', compact('pendingPayments'));
+    $traineeEmail = $request->input('temail');
+    $coachEmail = $request->input('cemail');
+    $payment = Payment::findOrFail($paymentId);
+    $payment->update(['status' => 'accepted']);
+    $payment->contract()->update(['status' => 'accepted']);
+    $payment->update(['FFreference' => $referenceNumber]);
+    Mail::to($traineeEmail)->send(new ReceiptMail($payment, $referenceNumber));
+    Mail::to($coachEmail)->send(new ReceiptMail($payment, $referenceNumber));
+
+    return redirect()->back()->with('success', 'Payment accepted!');
+    }
+
+
+    public function paymentIndex(Payment $payments){
+        $payments = Payment::all(); // Adjust as needed
+
+        return view('admin.payments', compact('payments'));
+    }
+
+    public function enroll(Request $request, Program $program)
+    {
+        $form = $request->validate([
+            'trainee_id' => ['required'],
+        ]);
+
+        $traineeId = $form['trainee_id'];
+
+        $trainee = User::findOrFail($traineeId);
+        
+        $trainee->enrolledPrograms()->attach($program);
+
+        return redirect()->route('programs.show', $program);
     }
 
 

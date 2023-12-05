@@ -11,9 +11,8 @@
 <div id="container" class="bg-white absolute z-[9999] w-screen h-screen">
   <div class="relative">
     <div class="flex items-center h-full">
-      <div class="grid place-items-center w-full animate-bounce">
-        <img src="/empty/matchmake.svg" alt="Loading">
-        loading...
+      <div class="grid place-items-center w-full">
+        <img src="/dashboard/loading.gif" alt="Loading" class="w-44 h-44 animate-pulse">
       </div>
     </div>
   </div>

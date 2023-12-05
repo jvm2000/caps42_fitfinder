@@ -7,7 +7,10 @@
   <div class="flex items-center justify-center h-full">
     <div class="w-full max-w-2xl bg-white rounded-xl absolute z-[9999]">
       <div class="w-full relative flex items-center py-5 indent-6 border-b">
-        <p class="text-xl font-medium">Contract Details</p>
+        <div class="flex items-center space-x-4">
+          <p class="text-xl font-medium">Contract Details</p>
+          {{-- --}}
+        </div>
         <button onclick="closePreviewModal({{ $index }})" class="absolute right-8 ">
           <img src="/icons/programs/close.svg" alt="" class="w-4 h-4 cursor-pointer active:mt-1">
         </button>
@@ -17,17 +20,17 @@
         <div class="px-8 pt-6 pb-4">
           <div class="space-y-8">
             <div class="flex flex-col space-y-[2px]">
-              <p class="text-base text-black">{{ $pending->coach->first_name }} {{ $pending->coach->last_name }} - <span class="font-medium">Coach</span></p>
-              <p class="text-base text-black">{{ $pending->coach->address }} {{ $pending->coach->province }} {{ $pending->coach->zip_code }}</span></p>
-              <p class="text-base text-black">{{ $pending->coach->email }}</p>
-              <p class="text-base text-black">{{ $pending->coach->phone_number }}</p>
+              <p class="text-base text-black">{{ $contract->coach->first_name }} {{ $contract->coach->last_name }} - <span class="font-medium">Coach</span></p>
+              <p class="text-base text-black">{{ $contract->coach->address }} {{ $contract->coach->province }} {{ $contract->coach->zip_code }}</span></p>
+              <p class="text-base text-black">{{ $contract->coach->email }}</p>
+              <p class="text-base text-black">{{ $contract->coach->phone_number }}</p>
             </div>
   
             <div class="flex flex-col space-y-[2px]">
-              <p class="text-base text-black">{{ $pending->trainee->first_name }} {{ $pending->trainee->last_name }} - <span class="font-medium">Trainee</span></p>
-              <p class="text-base text-black">{{ $pending->trainee->address }} {{ $pending->trainee->city }}</p>
-              <p class="text-base text-black">{{ $pending->trainee->email }}</p>
-              <p class="text-base text-black">{{ $pending->trainee->phone_number }}</p>
+              <p class="text-base text-black">{{ $contract->trainee->first_name }} {{ $contract->trainee->last_name }} - <span class="font-medium">Trainee</span></p>
+              <p class="text-base text-black">{{ $contract->trainee->address }} {{ $contract->trainee->city }}</p>
+              <p class="text-base text-black">{{ $contract->trainee->email }}</p>
+              <p class="text-base text-black">{{ $contract->trainee->phone_number }}</p>
             </div>
   
             <div class="flex flex-col space-y-[2px]">
@@ -37,7 +40,7 @@
             </div>
   
             <div class="flex flex-col space-y-8 indent-14">
-              <p class="text-base text-black">WHEREAS, <span class="font-bold">{{ $pending->coach->first_name }} {{ $pending->coach->last_name }}</span> should provide coaching and training services, and <span class="font-bold">{{ $pending->trainee->first_name }} {{ $pending->trainee->last_name }}</span> seeks to engage the Coach to receive coaching and training services; and FitFinder, Inc. FitFinder operates a platform connecting Coaches and Trainees;</p>
+              <p class="text-base text-black">WHEREAS, <span class="font-bold">{{ $contract->coach->first_name }} {{ $contract->coach->last_name }}</span> should provide coaching and training services, and <span class="font-bold">{{ $contract->trainee->first_name }} {{ $contract->trainee->last_name }}</span> seeks to engage the Coach to receive coaching and training services; and FitFinder, Inc. FitFinder operates a platform connecting Coaches and Trainees;</p>
   
               <p class="text-base text-black">NOW, THEREFORE, in consideration of the mutual covenants contained herein, the parties agree as
                 follows:</p>
@@ -46,7 +49,7 @@
             <div class="flex flex-col space-y-4">
               <p class="text-base text-black font-bold">1. COACHING AND TRAINING SERVICES</p>
               <p class="text-base text-black indent-14">1.1 The Coach agrees to provide coaching and training services to the Trainee. 
-                These services may include, but are not limited to {{ $pending->program->name }}</p>
+                These services may include, but are not limited to {{ $contract->program->name }}</p>
             </div>
 
             <div class="flex flex-col space-y-4">
@@ -57,7 +60,7 @@
 
             <div class="flex flex-col space-y-4">
               <p class="text-base text-black font-bold">3. TERM</p>
-              <p class="text-base text-black indent-14">3.1 This Contract shall commence on {{ $pending->startdate }} and continue until terminated by either party with {{ $pending->enddate }} written notice.</p>
+              <p class="text-base text-black indent-14">3.1 This Contract shall commence on {{ $contract->startdate }} and continue until terminated by either party with {{ $contract->enddate }} written notice.</p>
             </div>
 
             <div class="flex flex-col space-y-4">
@@ -87,17 +90,15 @@
 
             <div class="flex items-center justify-between">
               <div class="flex flex-col space-y-[2px]">
-                <div class="h-20 grid place-items-center w-36">'signature'</div>
                 <div class="">
-                  <p class="text-base text-black font-bold underline">{{ $pending->coach->first_name }} {{ $pending->coach->last_name }}</p>
+                  <p class="text-base text-black font-bold underline">{{ $contract->coach->first_name }} {{ $contract->coach->last_name }}</p>
                   <p class="text-base text-black">Coach</p>
                 </div>
               </div>
 
               <div class="flex flex-col space-y-[2px] text-right">
-                <div class="h-20 grid place-items-center w-36">'signature'</div>
                 <div class="">
-                  <p class="text-base text-black font-bold underline">{{ $pending->trainee->first_name }} {{ $pending->trainee->last_name }}</p>
+                  <p class="text-base text-black font-bold underline">{{ $contract->trainee->first_name }} {{ $contract->trainee->last_name }}</p>
                   <p class="text-base text-black">Trainee</p>
                 </div>
               </div>
@@ -105,7 +106,26 @@
           </div>
         </div>
       </div>
-  
+      
+      <form action="/contracts/remove/{{$contract->id}}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('DELETE')
+        @if(auth()->user()->role === 'Trainee')
+            @if(!$contract->payment)
+              <a href="/payments/create/{{ $contract->id }}">
+                <div class="flex items-center space-x-4 bg-green-500 rounded-full text-white text-lg pr-2">
+                  <p>Proceed to Payment -></p>
+                </div>
+              </a>
+              <button type="submit">Decline</button>
+            @else 
+              <div class="flex items-center space-x-4 bg-gray-500 rounded-full text-black text-lg pr-6">
+                <p>Already Paid</p>
+              </div>
+            @endif
+          @endif
+         
+      </form>
     </div>
   </div>
 </div>

@@ -21,6 +21,7 @@ class ProgramController extends Controller
 
     public function showAllPrograms()
     {
+
         $user = Auth::user();
 
         $programs = $user->programs()->latest()->paginate(5);
@@ -42,13 +43,14 @@ class ProgramController extends Controller
             'no_of_trainees' => ['nullable'],
             'prerequisite_program_id' => 'nullable|exists:programs,id',
         ]);
-        // $form['chosen_program'] = $request->filled('chosen_program');
+        
         $form['is_prerequisite'] = $request->filled('is_prerequisite');
 
         if (request()->hasFile('image') && request()->file('image')->isValid()) {
             $imagePath = request()->file('image')->store('programs', 'public');
             $form['image'] = $imagePath;
         }
+        
         $user->programs()->create($form);
 
         return redirect('/programs/list')->with('message', 'Program created successfully!');
@@ -59,9 +61,28 @@ class ProgramController extends Controller
     }
 
     public function showProgram(Program $program){
+    if($program->enrollees->count()>0){ 
+        $no_enrollees= $program->enrollees->count();
+        $finished = 0;
+        foreach($program->enrollees as $i){
+            if($i->completion === 'completed'){
+                $finished++;
+        }
+        $percentage = ($finished / $no_enrollees)*100;
+    }}
         $programWithModules = Program::with('modules')->find($program->id);
-
-        return view('modules.main', ['program' => $programWithModules]);
+        if($program->enrollees->count()>0){ 
+            return view('modules.main', [
+                'program' => $programWithModules,
+                'finished' => $finished,
+                'percentage' => $percentage,
+            ]);
+        }
+        else{
+            return view('modules.main', [
+                'program' => $programWithModules,
+            ]);
+        }
     }
 
     /**

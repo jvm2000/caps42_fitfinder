@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\Enrollee;
+use App\Models\Progress;
 use App\Models\UserRequest;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
@@ -59,6 +61,16 @@ class Program extends Model
 
     public function request()
     {
-        return $this->belongsTo(UserRequest::class);
+        return $this->hasOne(UserRequest::class);
+    }
+
+    public function enrollees()
+    {
+        return $this->hasMany(Enrollee::class);
+    }
+    
+    public function progress()
+    {
+        return $this->belongsTo(Progress::class);
     }
 }

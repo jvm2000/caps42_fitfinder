@@ -31,6 +31,10 @@ class PaymentController extends Controller
             'contracts' => $contracts
         ]);
     }
+
+    public function showContractForPayment(Contract $contract){
+        return view('payments.create',['contract' => $contract]);
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -43,26 +47,17 @@ class PaymentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function makePayment(Request $request, $contractId)
+    public function store(Request $request, Contract $contract)
     {
-        // Additional validation and error handling can be added
-        $request->validate([
-            'amount' => 'required|numeric',
-            'reference' => 'required|string|max:255',
+        $form = $request->validate([
+            'contract_id' => ['required'],
+            'reference' => ['required'],
+            'amount' => ['required'],
         ]);
 
-        $payment = new Payment([
-            'contract_id' => $contractId,
-            'amount' => $request->input('amount'),
-            'reference' => $request->input('reference'),
-            'status' => $request->input('status', 'pending'), 
-        ]);
+        $contract->payment()->create($form);
 
-        $payment->save();
-
-        // You might want to update the contract status or other details here
-
-        return redirect()->back()->with('success', 'Payment successful!');
+        return redirect('payments/dashboard')->with('success', 'Payment successful!');
     }
     /**
      * Display the specified resource.

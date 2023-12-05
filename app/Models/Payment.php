@@ -10,7 +10,8 @@ class Payment extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'contract_id', // Add this line
+        'contract_id',
+        'FFreference',
         'reference',
         'amount',
         'status',

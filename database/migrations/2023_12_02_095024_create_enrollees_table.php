@@ -11,17 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contracts', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('program_id')->constrained('programs')->onDelete('cascade');
+        Schema::create('enrollees', function (Blueprint $table) {
+            $table->id();     
+            $table->integer('stats');
+            $table->string('completion');
             $table->foreignId('trainee_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('program_id')->constrained('programs')->onDelete('cascade');
             $table->foreignId('coach_id')->constrained('users')->onDelete('cascade');
-            $table->string('payment_type')->default(''); // Keep the payment_type column
-            $table->string('status')->default('pending');
-            $table->string('signature')->nullable();
-            $table->date('startdate');
-            $table->date('enddate');
-            $table->integer('amount');
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contracts');
+        Schema::dropIfExists('enrollees');
     }
 };

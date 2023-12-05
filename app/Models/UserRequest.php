@@ -3,15 +3,24 @@
 namespace App\Models;
 
 use App\Models\Program;
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class UserRequest extends Model
 {
-    use HasFactory;
+    use HasApiTokens, HasFactory, Notifiable;
+
     protected $table = 'requests';
 
-    protected $fillable = ['status', 'trainee_id', 'coach_id','program_id','message','status'];
+    protected $fillable = [
+        'trainee_id', 
+        'coach_id',
+        'program_id',
+        'status',
+        'message',
+    ];
 
     // Define a relationship to the User model for the requester (trainee).
     public function requester()
@@ -24,8 +33,8 @@ class UserRequest extends Model
     {
         return $this->belongsTo(User::class, 'coach_id');
     }
-    public function program()
+    public function programs()
     {
-        return $this->hasOne(Program::class, 'program_id');
+        return $this->belongsTo(Program::class, 'program_id');
     }
 }

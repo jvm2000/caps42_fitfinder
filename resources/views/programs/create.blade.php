@@ -93,17 +93,6 @@
               </div>
 
               <div id="prerequisiteContainer" class="space-y-2 hidden">
-                {{-- <label class="text-md text-gray-600">Choose Program</label>
-                <select 
-                  type="text" 
-                  class="bg-inherit text-lg px-6 py-2 w-full border-gray-500 border rounded-md col-span-2 appearance-none" 
-                  name="prerequisite_program_id"
-                >
-                  <option value="" selected>Choose Program</option>
-                  @foreach($programs as $index => $program)
-                  <option class="relative" value="{{ $program->id }}">{{ $program->name }}</option>
-                  @endforeach
-                </select> --}}
                 <x-app.radio-select label="Choose Program">
                   <x-slot name="data">
                     <p class="text-sm text-black" id="selectedRadio">Select Program</p>

@@ -11,7 +11,6 @@ use App\Http\Controllers\Controller;
 
 class ContractController extends Controller
 {
-    //
     public function index(){
         
         $contracts = Contract::all();
@@ -38,34 +37,53 @@ class ContractController extends Controller
     }
     
     public function store(Request $request){
-
-        $request->validate([
-            // Add your validation rules here
-            'traineeUsername' => 'required',
-            'traineeAddress' => 'required',
-            'traineeEmailAddress' => 'required|email',
-            'traineePhoneNumber' => 'required',
-            'programs' => 'required',
-            'paymentType' => 'required',
-            'startDate' => 'required|date',
-            'endDate' => 'required|date|after_or_equal:startDate',
+        $form = $request->validate([
+            'program_id' => ['required'],  
+            'trainee_id' => ['required'],  
+            'coach_id' => ['required'],  
+            'payment_type' => ['required'],
+            'startdate' => ['required'],
+            'enddate' => ['required'],
         ]);
-        $coach = auth()->user();
-        // Create a new contract instance
-        $contract = new Contract([
-            'programs_id' => $request->input('programs'),
-            'trainee_id' => $request->input('traineeUsername'),
-            'coach_id' => $coach->id,
-            'payment_type' => $request->input('paymentType'),
-            'startdate' => $request->input('startDate'),
-            'enddate' => $request->input('endDate'),
-            'status' => 'Pending',
-        ]); 
-        // Save the contract to the database
+        
+         $originalAmount = $request->input('amount');
+
+        $calculatedAmount = $originalAmount - ($originalAmount * 0.10);
+
+        $contract = new Contract($form + ['amount' => $calculatedAmount]);
+
+        
         $contract->save();
 
-        // Redirect or perform any additional actions as needed
-        return redirect()->route('home.index')->with('success', 'Contract created successfully');
+        $requestid = $request->input('request_id');
+
+        UserRequest::destroy($requestid);
+
+        return redirect('/contracts/list')->with('message', 'Contract created successfully!');
     }
-    
+
+    public function showRequest(UserRequest $request)
+    {
+        return view('contracts.generate',['request' => $request]);
+    }
+
+    public function destroy(UserRequest $request)
+    {
+        $request->delete();
+
+        return back()->with('message', 'Successfully Decline User');
+    }
+    public function decline(Contract $contract)
+    {
+        $contract->delete();
+
+        return back()->with('message', 'Successfully Decline User');
+    }
+
+    public function enroll(Program $program)
+    {
+        auth()->user()->enrolledPrograms()->attach($program);
+
+        return redirect()->route('programs.show', $program);
+    }
 }
