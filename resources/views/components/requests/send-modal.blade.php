@@ -18,7 +18,6 @@
         <p class="text-sm font-semibold">To:</p>
         <p class="text-sm">{{$user->first_name}} {{$user->last_name}} / <span class="text-indigo-500 font-medium">{{$user->username}}</span></p>
       </div>
-  
       <div class="space-y-2">
         <label class="text-sm text-black">Select Program</label>
         <select 
@@ -28,7 +27,10 @@
         >
           <option value="" selected>Choose Program to Enroll</option>
           @foreach($programs as $index => $program)
-          <option value="{{ $program->id }}">{{ $program->name }}</option>
+          {{-- Still need fix --}}
+          @if(auth()->user()->contracts() )
+            <option value="{{ $program->id }}">{{ $program->name }}</option>
+          @endif
           @endforeach
         </select>
         @error('program_id')

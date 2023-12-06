@@ -97,8 +97,7 @@
 									</div>
 									<div class="mt-10 flex items-center space-x-8">
 											<div class="w-64 h-[350px] border">
-													<img id="preview" width="100" height="100" class="w-full h-full z-40"
-															src="{{ $user->portfolio->getPortfolioURL() }}" />
+													<x-requests.preview-modal :user="$user" />
 											</div>
 									</div>
 							</div>
@@ -197,7 +196,7 @@
         {{-- Request  --}}
 			<div class="mt-8 flex items-center relative w-full">
 					<div class="mr-auto"></div>
-					<x-requests.send-modal :user="$user" :programs="$user->programs" />
+						<x-requests.send-modal :user="$user" :programs="$user->programs" />
 			</div>
     </div>
 	</div>

@@ -28,7 +28,6 @@
               <div class="flex items-center space-x-6">
                 <p class="text-4xl font-medium">{{$program->name}}</p>
                 @if($program->status === 'active')
-                <div class="px-4 py-1 rounded-full bg-green-200 border border-green-800 text-green-800 text-xs">Active</div>
                 <div class="px-4 py-1 rounded-full bg-indigo-200 border border-indigo-800 text-indigo-800 text-xs">
                   {{ $program->prerequisite ? $program->prerequisite->name : 'No Prerequisite' }}
                 </div>

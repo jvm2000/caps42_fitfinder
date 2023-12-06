@@ -84,8 +84,8 @@
                 >
                   <option value="" selected disabled>Select Prefered Payment</option>
                   <option value="gcash">GCash</option>
-                  <option value="paypal">PayPal</option>
-                  <option value="applepay">ApplePay</option>
+                  <option disabled value="paypal">PayPal</option>
+                  <option disabled value="applepay">ApplePay</option>
                 </select>
               </div>
 
@@ -124,6 +124,7 @@
                 placeholder="0.00"
                 id="amount"
                 oninput="calculate()"
+                value="0.00"
               >
                 <x-slot name="errors">
                   @error('amount')
@@ -135,7 +136,10 @@
           </div>
 
           <div class="mt-20 flex items-center relative mr-0">
-            <div class="mr-auto">
+            <div class="mr-auto flex flex-col space-y-1 border-l-4 border-indigo-500 pl-6">
+              <p class="text-base"><span class="font-medium text-indigo-500">
+                NOTE</span>: Be minded that our system will commission for what's your price that's by <span class="text-red-500 font-medium">10%</span>
+              </p>
               <p id="result"></p>
             </div>
             <div class="flex items-center space-x-4">
@@ -192,7 +196,7 @@ function calculate() {
     var amount = parseFloat(amountInput.value);
 
     if (isNaN(amount)) {
-        document.getElementById('result').innerHTML = 'Result: Enter a valid number';
+        document.getElementById('result').innerHTML = 'Result: ';
         return;
     }
 
