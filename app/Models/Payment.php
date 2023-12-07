@@ -30,5 +30,6 @@ class Payment extends Model
         if($this->image){
             return url('storage/'. $this->image);
         }
+        return '/icons/settings/profile-icon.svg';
     }
 }

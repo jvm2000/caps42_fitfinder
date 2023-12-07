@@ -8,7 +8,11 @@
       <p class="text-3xl font-semibold mr-auto">Payments</p>
       <div class="flex items-center space-x-4">
 				<div class="">
-					<x-notification-component />
+					@if(auth()->user()->role === 'Coach')
+						<x-notification-component />
+					@else
+						<x-contract-pending-notification />
+					@endif
 				</div>
 				<div>
 					<x-menu-dropdown />
