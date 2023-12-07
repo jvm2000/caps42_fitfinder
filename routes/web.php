@@ -16,6 +16,7 @@ use App\Http\Controllers\EnrolleeController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\MatchmakingController;
 use App\Http\Controllers\SendRequestController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ContractDashboardController;
 use App\Http\Controllers\MedicalCertificateController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -75,6 +76,11 @@ Route::get('/register', function () {return view('auth/register');});
 Route::post('/auth-register', [AuthController::class, 'store'])->name('user.register');
 Route::post('/auth-login', [AuthController::class, 'login'])->name('user.login');
 Route::post('/verify-login', [AuthController::class, 'verify'])->name('verify.login');
+
+//Setup GCash
+Route::get('/payment/create', function () {return view('user/create-transaction');})->name('create.transaction');
+Route::post('/payment/create/{user}', [TransactionController::class, 'store'])->name('transaction.create');
+
 
 //	Admin
 Route::get('/admin', function () {return view('admin/index');})->name('admin.dashboard');

@@ -1,5 +1,5 @@
 <style>
-  .modal {
+  .requestModal {
     opacity: 0;
     display: none;
     transition: opacity 0.3s ease-in-out, display 0s linear 0.3s;
@@ -11,7 +11,7 @@
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
   }
-  .modal.active {
+  .requestModal.active {
     opacity: 1;
     display: block;
     transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s;
@@ -21,17 +21,17 @@
   
   @props(['name'])
   
-  <div id="openPreviewModal">
+  <div id="openSendRequestModal">
     {{ $button }}
   </div>
   
   <!-- The Modal -->
-  <div id="previewModal" class="modal grid place-items-center w-screen h-screen">
+  <div id="sendRequestModal" class="requestModal grid place-items-center w-screen h-screen">
     <!-- Modal content -->
     <div {{ $attributes->class(['w-full bg-white m-auto rounded-xl']) }}>
       <div class="w-full relative flex items-center py-5 indent-6 border-b">
         <p class="text-xl font-medium">{{ $name }}</p>
-        <img id="closePreview" src="/icons/programs/close.svg" alt="" class="w-4 h-4 absolute right-8 cursor-pointer active:mt-1">
+        <img id="closeSendRequestModal" src="/icons/programs/close.svg" alt="" class="w-4 h-4 absolute right-8 cursor-pointer active:mt-1">
       </div>
       <div class="px-8 pt-6 pb-4">
         {{ $slot }}
@@ -41,35 +41,35 @@
   </div>
   
   <script>
-  var modal = document.getElementById("previewModal");
+  var requestModal = document.getElementById("sendRequestModal");
   
-  var btn = document.getElementById("openPreviewModal");
+  var requestbtn = document.getElementById("openSendRequestModal");
   
-  var closeBtn = document.getElementById("closePreview");
+  var closeRequest = document.getElementById("closeSendRequestModal");
   
   var cancelBtn = document.getElementById("cancel");
   
-  var span = document.getElementsByClassName("closePreview")[0];
+  var span = document.getElementsByClassName("closeSendRequestModal")[0];
   
-  btn.onclick = function() {
-    modal.classList.add("active");
+  requestbtn.onclick = function() {
+    requestModal.classList.add("active");
   }
   
-  closeBtn.onclick = function() {
-     modal.classList.remove("active");
+  closeRequest.onclick = function() {
+     requestModal.classList.remove("active");
   }
   
   cancelBtn.onclick = function() {
-     modal.classList.remove("active");
+     requestModal.classList.remove("active");
   }
   
   success.onclick = function() {
-    modal.classList.add("active");
+    requestModal.classList.add("active");
   }
   
   window.onclick = function(event) {
-    if (event.target == modal) {
-      modal.classList.remove("active");
+    if (event.target == requestModal) {
+      requestModal.classList.remove("active");
     }
   }
   </script>

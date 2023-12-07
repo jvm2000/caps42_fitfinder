@@ -110,21 +110,28 @@
       <form action="/contracts/remove/{{$contract->id}}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('DELETE')
-        @if(auth()->user()->role === 'Trainee')
+        <div class="flex items-center relative w-full pr-8 pt-2 pb-2">
+          <div class="mr-auto"></div>
+          @if(auth()->user()->role === 'Trainee')
             @if(!$contract->payment)
-              <a href="/payments/create/{{ $contract->id }}">
-                <div class="flex items-center space-x-4 bg-green-500 rounded-full text-white text-lg pr-2">
-                  <p>Proceed to Payment -></p>
-                </div>
-              </a>
-              <button type="submit">Decline</button>
+              <div class="flex items-center space-x-4">
+                <button 
+                  type="submit"
+                  class="rounded-md flex items-center px-6 py-3 text-md text-white bg-red-500 cursor-pointer active:mt-[1px]"
+                >Decline</button>
+                <a href="/payments/create/{{ $contract->id }}">
+                  <div class="rounded-md flex items-center px-6 py-3 text-md text-white bg-green-500 cursor-pointer active:mt-[1px]">
+                    <p>Proceed</p>
+                  </div>
+                </a>
+              </div>
             @else 
-              <div class="flex items-center space-x-4 bg-gray-500 rounded-full text-black text-lg pr-6">
+              <div class="rounded-md flex items-center px-6 py-3 text-md text-white bg-gray-500 cursor-pointer active:mt-[1px]">
                 <p>Already Paid</p>
               </div>
             @endif
           @endif
-         
+        </div>
       </form>
     </div>
   </div>

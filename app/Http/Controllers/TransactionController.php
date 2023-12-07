@@ -30,14 +30,15 @@ class Transaction extends Controller
     public function store(Request $request, TransactionInfo $transaction)
     {
         $form = $request->validate([
-            'full_name'=>['required','string'],
+            'first_name'=>['required','string'],
+            'last_name'=>['required','string'],
             'mobile_number'=>['required','string'],
         ]);
 
 
         TransactionInfo::create(['user_id' => $transaction->id] + $form);
 
-        return back()->with('success', 'Transaction Completed');
+        return back()->with('success', 'Payment Account Completed');
     }
 
     /**
@@ -47,13 +48,14 @@ class Transaction extends Controller
     {
         // Get the currently authenticated user
         $form = $request->validate([
-            'full_name'=>['required','string'],
-            'mobile_number'=>['required','string'],
+            'first_name'=>['nullable','string'],
+            'last_name'=>['nullable','string'],
+            'mobile_number'=>['nullable','string'],
         ]);
 
         $transaction->update($form);
 
-        return back()->with('success', 'Transaction Updated successfully');
+        return back()->with('success', 'Payment Account Updated successfully');
     }
 
     /**
@@ -63,6 +65,6 @@ class Transaction extends Controller
     {
         $transaction->delete();
 
-        return back()->with('message', 'Successfully Deleted Transaction');
+        return back()->with('message', 'Successfully Deleted Payment');
     }
 }

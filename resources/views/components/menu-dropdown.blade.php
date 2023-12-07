@@ -84,6 +84,14 @@
       <div class="px-4 border-t pt-2 pb-1">
         <a 
           class="flex w-full items-center space-x-8 cursor-pointer py-2 hover:bg-gray-100"
+          href="/payment/create"
+        >
+          <img src="/icons/settings/payment-icon.svg" alt="Gear Icon" class="w-6 h-6">
+          <p class="text-sm font-medium">Setup Payment</p>
+        </a>
+
+        <a 
+          class="flex w-full items-center space-x-8 cursor-pointer py-2 hover:bg-gray-100"
           href="/auth/profile/{{auth()->user()->id}}"
         >
           <img src="/icons/settings/gear-icon.svg" alt="Gear Icon" class="w-6 h-6">
