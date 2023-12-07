@@ -16,8 +16,10 @@ class TransactionInfo extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'full_name',
-        'contact_number'
+        'first_name',
+        'last_name',
+        'contact_number',
+        'user_id',
     ];
 
     public function user()

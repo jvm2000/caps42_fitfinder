@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Program;
 use App\Models\Contract;
 use App\Models\Enrollee;
+use App\Models\TransactionInfo;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Auth\Notifications\VerifyEmail;
@@ -116,7 +117,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Enrollee::class);
     }
 
-    public function transaction()
+    public function transactions()
     {
         return $this->hasMany(TransactionInfo::class);
     }
