@@ -136,7 +136,8 @@ Route::middleware(['auth'])->group(function () {
   Route::post('/contracts/generate/{user}', [ContractController::class, 'store'])->name('contracts.store');
 	Route::get('/contracts/create/{request}', [ContractController::class, 'showRequest'])->name('contracts.create');
 	Route::delete('/contracts/decline/{request}', [ContractController::class, 'destroy'])->name('contracts.destroy');
-	
+	Route::get('/contracts/earnings', [ContractDashboardController::class, 'coachEarnings'])->name('contracts.earnings');
+
 	// Matchmake 
 	Route::get('/matchmakes', [MatchmakingController::class, 'index'])->name('matchmaking.index');
 	

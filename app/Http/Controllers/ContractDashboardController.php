@@ -40,6 +40,17 @@ class ContractDashboardController extends Controller
         }
 
     }
+    
+    public function coachEarnings(){
+    
+        $userId = auth()->user()->id;
+        
+        $coachEarnings = Contract::where('coach_id', $userId)->sum('amount');
+
+        return view('contracts.sample', [
+            'coachEarnings' => $coachEarnings,
+        ]);
+    }
 
     /**
      * Show the form for creating a new resource.

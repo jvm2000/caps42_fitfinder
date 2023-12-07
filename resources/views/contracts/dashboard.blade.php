@@ -49,7 +49,7 @@
             <p class="text-3xl font-semibold mr-auto">Contracts</p>
             <x-menu-dropdown />
         </div>
-
+        
         <div class="mt-20 flex flex-col space-y-10">
 					<div class="flex items-center relative h-20">
 							<div class="flex items-center mr-auto z-20 tab">
