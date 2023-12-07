@@ -6,8 +6,11 @@ use App\Models\User;
 use App\Models\Module;
 use App\Models\Payment;
 use App\Models\Program;
+use App\Models\Contract;
+use App\Models\Enrollee;
 use App\Mail\ReceiptMail;
 use Illuminate\Http\Request;
+use App\Models\TotalEarnings;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 
@@ -71,7 +74,7 @@ class AdminController extends Controller
         
         $trainee->enrolledPrograms()->attach($program);
 
-        return redirect()->route('programs.show', $program);
+        return redirect()->back()->with('success', 'User Enrolled Successfully!');
     }
 
 
@@ -104,5 +107,28 @@ class AdminController extends Controller
     {
         $user->delete();
         return back()->with('message', 'Successfully deleted User');
+    }
+
+    public function dashboardOverall(){
+        $users = User::all();
+        $coaches = User::where('role', 'Coach')->get();
+        $trainees = User::where('role', 'Trainee')->get();
+        $enrollees = Enrollee::all();
+        $programs = Program::all();
+        $earnings = TotalEarnings::all();
+        $contracts = Contract::all();
+        $totalEarnings = TotalEarnings::all()->sum('earnings');
+
+
+        return view('admin.index', [
+            'users' => $users,
+            'coaches' => $coaches,
+            'trainees' => $trainees,
+            'enrollees' => $enrollees,
+            'programs' => $programs,
+            'earnings' => $earnings,
+            'totalEarnings' => $totalEarnings,
+            'contracts' => $contracts,
+        ]);
     }
 }

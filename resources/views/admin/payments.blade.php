@@ -21,7 +21,7 @@
 				<table class="w-full table-auto border-spacing-y-6 border-separate">
 					<thead>
 						<tr>
-							<th class="text-sm font-medium text-gray-400 py-4 text-left">ID</th>
+							<th class="text-sm font-medium text-gray-400 py-4 text-left indent-6">ID</th>
 							<th class="text-sm font-medium text-gray-400 py-4 text-left">Trainee</th>
 							<th class="text-sm font-medium text-gray-400 py-4 text-left">Coach</th>
 							<th class="text-sm font-medium text-gray-400 py-4 text-left">Program</th>
@@ -29,27 +29,34 @@
 							<th class="text-sm font-medium text-gray-400 py-4 text-left">Reference</th>
 							<th class="text-sm font-medium text-gray-400 py-4 text-left">Amount</th>
 							<th class="text-sm font-medium text-gray-400 py-4 text-left">Status</th>
-							<th class="text-sm font-medium text-gray-400 py-4 text-left">Action</th>
+							<th class="text-sm font-medium text-gray-400 py-4 text-center">Action</th>
 						</tr>
 					</thead>
 					<tbody>
 						@foreach($payments as $index => $payment)
 						<tr>       
-							<td class="text-sm text-black py-4 text-left">{{ $payment->contract->id }}</td>
-							<td class="text-sm text-black py-4 text-left">{{ $payment->contract->trainee->first_name }} {{ $payment->contract->trainee->last_name }} </td>
-							<td class="text-sm text-black py-4 text-left">{{ $payment->contract->coach->first_name }} {{ $payment->contract->coach->last_name }}</td>
-							<td class="text-sm text-black py-4 text-left">{{ $payment->contract->program->name }}</td>
-							<td class="text-sm text-black py-4 text-left">
+							<td class="py-2 text-sm border-l-4 border-indigo-500 indent-6">{{ $payment->contract->id }}</td>
+							<td class="text-sm text-black py-2 text-left">{{ $payment->contract->trainee->first_name }} {{ $payment->contract->trainee->last_name }} </td>
+							<td class="text-sm text-black py-2 text-left">{{ $payment->contract->coach->first_name }} {{ $payment->contract->coach->last_name }}</td>
+							<td class="text-sm text-black py-2 text-left">{{ $payment->contract->program->name }}</td>
+							<td class="text-sm text-black py-2 text-left">
 								<div class="flex items-center space-x-4">
 									<p>{{ $payment->contract->payment_type }}</p>
 									<x-admin.modal.preview-payment :index="$index" :payment="$payment"/>
 								</div>
 							</td>
-							<td class="text-sm text-black py-4 text-left">{{ $payment->reference }}</td>
-							<td class="text-sm text-black py-4 text-left">{{ $payment->amount }}</td>
-							<td class="text-sm text-black py-4 text-left">{{ $payment->status }}</td>
-							<td class="text-sm text-black py-4 text-left">
-								@if ($payment->status === 'pending')
+							<td class="text-sm text-black py-2 text-left">{{ $payment->reference }}</td>
+							<td class="text-sm text-black py-2 text-left">{{ $payment->amount }}</td>
+							<td class="text-sm text-black py-2 text-left">{{ $payment->status }}</td>
+							<td class="text-sm text-black py-2 justify-center">
+								<div class="w-full grid place-items-center">
+									@if ($payment->status === 'pending')
+										<x-admin.modal.open-payment :index="$index" :payment="$payment" />
+									@else
+										<x-admin.modal.open-enrollment :index="$index" :payment="$payment" />
+									@endif
+								</div>
+								{{-- @if ($payment->status === 'pending')
 									<form action="/admin/payments/accept/{{ $payment->id }}" method="POST">
 										@csrf
 										<input type="hidden" name="temail" value="{{ $payment->contract->trainee->email }}">
@@ -64,7 +71,7 @@
 										<input type="hidden" name="program_id" value="{{ $payment->contract->program->id }}">
 										<button type="submit">Enroll</button>
 									</form>
-								@endif
+								@endif --}}
 							</td>
 						</tr>
 						@endforeach

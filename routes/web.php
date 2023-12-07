@@ -82,7 +82,7 @@ Route::get('/payment/create', function () {return view('user/create-transaction'
 Route::post('/payment/create/{user}', [TransactionController::class, 'store'])->name('transaction.create');
 
 //	Admin
-Route::get('/admin', function () {return view('admin/index');})->name('admin.dashboard');
+Route::get('/admin/analytics', [AdminController::class, 'dashboardOverall'])->name('admin.dashboard');
 Route::get('/admin/trainees', [AdminController::class, 'traineesIndex'])->name('admin.trainees');
 Route::get('/admin/coaches', [AdminController::class, 'coachesIndex'])->name('admin.coaches');
 Route::get('/admin/programs', [AdminController::class, 'programsIndex'])->name('admin.programs');
@@ -90,7 +90,7 @@ Route::get('/admin/modules', [AdminController::class, 'modulesIndex'])->name('ad
 Route::get('/admin/contracts', [AdminController::class, 'contractsIndex'])->name('admin.contracts');
 Route::put('/admin/suspend/{user}', [AdminController::class, 'suspendUser'])->name('admin.User');
 Route::delete('/admin/delete/{user}', [AdminController::class, 'destroy'])->name('admin.destroy');
-Route::get('/admin/payments', [AdminController::class, 'paymentIndex'])->name('admin.paymentsIndex');
+Route::get('/admin/payments', [AdminController::class, 'paymentIndex'])->name('admin.payments');
 Route::post('/admin/payments/accept/{payment}', [AdminController::class, 'acceptPayment'])->name('admin.payments.accept');
 
 //Enrolling
