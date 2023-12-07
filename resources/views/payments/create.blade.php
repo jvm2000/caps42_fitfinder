@@ -46,6 +46,8 @@
               <p class="text-green-500 text-xl font-medium">P{{ $contract->amount }}.00</p>
             </div>
 
+            
+
             <div class="space-y-2">
               <x-app.input 
                 type="text" 
@@ -60,7 +62,12 @@
                 </x-slot>
               </x-app.input>
             </div>
-
+            <div class="space-y-2">
+                  <div>
+                  <label for="image">Upload a image:</label>
+                  <input type="file" id="image" name="image">
+                  </div>
+            </div>
             <div class="mt-8 flex items-center relative mr-0">
               <div class="mr-auto"></div>
               <div class="flex items-center space-x-4">

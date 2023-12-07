@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('reference');
             $table->string('FFreference');
             $table->decimal('amount', 10, 2);
+            $table->string('image');
             $table->string('status')->default('pending');
             $table->foreignIdFor(Contract::class);
             $table->timestamps();

@@ -13,8 +13,10 @@ class Payment extends Model
         'contract_id',
         'FFreference',
         'reference',
+        'payments',
         'amount',
         'status',
+        'image',
         'startdate',
         'enddate',
     ];

@@ -53,6 +53,7 @@ class PaymentController extends Controller
             'contract_id' => ['required'],
             'reference' => ['required'],
             'amount' => ['required'],
+            'image' => ['required'],
         ]);
 
         $contract->payment()->create($form);
