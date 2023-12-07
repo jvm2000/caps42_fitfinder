@@ -1,4 +1,4 @@
-<x-app.modal name="Make Request" class="max-w-lg mt-44">
+<x-app.request-modal name="Make Request" class="max-w-lg mt-44">
   <x-slot name="button">
     <button class="rounded-md text-center px-6 py-3 text-md text-black border-2 active:mt-[1px] cursor-pointer">Make Request</button>
   </x-slot>
