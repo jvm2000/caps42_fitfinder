@@ -74,9 +74,8 @@ class EnrolleeController extends Controller
                 // Copy other attributes as needed
             ]);
         }
-      
     }
-  // return redirect('/programs/show/' . $program->id)->with('message', 'Module created successfully!');
+
     /**
      * Display the specified resource.
      */

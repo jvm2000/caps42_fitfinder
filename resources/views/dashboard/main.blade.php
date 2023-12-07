@@ -67,3 +67,15 @@
 	<x-app.toaster message="{{ session('message') }}">
 	</x-app.toaster>
 @endif
+
+@if(auth()->user()->role === 'Coach')
+    @if(!auth()->user()->portfolio)
+    <x-user.need-portfolio/>
+    @endif
+@endif
+
+@if(auth()->user()->role === 'Trainee')
+    @if(!auth()->user()->medcert)
+    <x-user.need-portfolio/>
+    @endif
+@endif

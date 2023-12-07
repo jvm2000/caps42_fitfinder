@@ -71,16 +71,22 @@ class ProgramController extends Controller
         $percentage = ($finished / $no_enrollees)*100;
     }}
         $programWithModules = Program::with('modules')->find($program->id);
+        
+        $modulesPerPage = 6;
+        $modules = $programWithModules->modules()->paginate($modulesPerPage);
+
         if($program->enrollees->count()>0){ 
             return view('modules.main', [
                 'program' => $programWithModules,
                 'finished' => $finished,
                 'percentage' => $percentage,
+                'modules' => $modules,
             ]);
         }
         else{
             return view('modules.main', [
                 'program' => $programWithModules,
+                'modules' => $modules,
             ]);
         }
     }

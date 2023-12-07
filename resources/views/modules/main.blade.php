@@ -88,56 +88,60 @@
 				</a>
     </div>
  
-    @if($program->modules->count() > 0)
-    <div class="mt-2">
-      <table class="w-full table-auto border-spacing-y-6 border-separate">
-        <thead>
-          <tr>
-            <th class="text-xl font-medium text-gray-400 py-4 text-left indent-16">Model's Info</th>
-            <th class="text-xl font-medium text-gray-400 py-4 text-left">Procedure</th>
-            <th class="py-4">
-              <p class="text-xl font-medium text-gray-400 py-4 text-left w-44">Rest Period</p>
-            </th>
-            <th class="text-xl font-medium text-gray-400 py-4 text-left">Number of sets/reps</th>
-            <th class="text-xl font-medium text-gray-400 py-4 text-left">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          @foreach ($program->modules as $index => $module)
-          <tr>
-            <td class="border-l-8 border-indigo-500 py-1 indent-4 text-sm">
-              <x-modules.modal.preview :module="$module" :index="$index">
-                {{ $module->name }}
-              </x-modules.modal.preview>
-            </td>
+    <div class="w-full h-[31.5rem]">
+      @if($modules->count() > 0)
+      <div class="mt-2">
+        <table class="w-full table-auto border-spacing-y-6 border-separate">
+          <thead>
+            <tr>
+              <th class="text-xl font-medium text-gray-400 py-4 text-left indent-16">Module's Info</th>
+              <th class="text-xl font-medium text-gray-400 py-4 text-left">Procedure</th>
+              <th class="py-4">
+                <p class="text-xl font-medium text-gray-400 py-4 text-left w-44">Rest Period</p>
+              </th>
+              <th class="text-xl font-medium text-gray-400 py-4 text-left">Number of sets/reps</th>
+              <th class="text-xl font-medium text-gray-400 py-4 text-left">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach ($modules as $index => $module)
+            <tr>
+              <td class="border-l-8 border-indigo-500 py-1 indent-4 text-sm">
+                <x-modules.modal.preview :module="$module" :index="$index">
+                  {{ $module->name }}
+                </x-modules.modal.preview>
+              </td>
 
-            <td class="py-1 text-neutral-950 text-sm w-96 overflow-hidden text-ellipsis">{{ $module->procedure }}</td>
+              <td class="py-1 text-neutral-950 text-sm w-96 overflow-hidden text-ellipsis">{{ $module->procedure }}</td>
 
-            <td class="py-1 text-neutral-950 text-sm">{{ $module->rest_period }} minute/s</td>
+              <td class="py-1 text-neutral-950 text-sm">{{ $module->rest_period }} minute/s</td>
 
-            <td class="py-1 text-sm">
-              <p><span class="text-neutral-950">{{ $module->sets }} sets</span> / <span class="text-indigo-500">{{ $module->reps }} reps</span></p>
-            </td>
+              <td class="py-1 text-sm">
+                <p><span class="text-neutral-950">{{ $module->sets }} sets</span> / <span class="text-indigo-500">{{ $module->reps }} reps</span></p>
+              </td>
 
-            <td class="py-1">
-              <div class="flex items-center space-x-3">
-                <a href="/modules/edit/{{$module->id}}" class="w-7 h-7 rounded-full p-1.5 bg-indigo-500">
-                  <img src="/icons/programs/edit.svg" alt="" class="w-4 h-4">
-                </a>
+              <td class="py-1">
+                <div class="flex items-center space-x-3">
+                  <a href="/modules/edit/{{$module->id}}" class="w-7 h-7 rounded-full p-1.5 bg-indigo-500">
+                    <img src="/icons/programs/edit.svg" alt="" class="w-4 h-4">
+                  </a>
 
-                <x-modules.modal.delete :module="$module" :index="$index" />
+                  <x-modules.modal.delete :module="$module" :index="$index" />
 
-              </div>
-            </td>
-          </tr>
-          @endforeach
-        </tbody>
-      </table>
+                </div>
+              </td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+      </div>
+
+      @else
+        <div>Empty Modules</div>
+      @endif
     </div>
-
-    @else
-    <div>Empty Modules</div>
-    @endif
+    
+    <div>{{ $modules->links() }}</div>
   </div>
 
   @if(session('message'))
