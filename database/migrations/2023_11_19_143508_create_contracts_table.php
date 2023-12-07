@@ -22,6 +22,7 @@ return new class extends Migration
             $table->date('startdate');
             $table->date('enddate');
             $table->integer('amount');
+            $table->integer('not_discounted');
             $table->timestamps();
         });
     }

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Contract extends Model
 {
     use HasFactory;
+    
     protected $fillable = [
         'coach_id',
         'trainee_id',
@@ -19,6 +20,7 @@ class Contract extends Model
         'startdate',
         'enddate',
         'amount',
+        'not_discounted',
         'program_id',
         'signature',
     ];

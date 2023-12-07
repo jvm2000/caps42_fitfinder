@@ -33,13 +33,18 @@
 						</tr>
 					</thead>
 					<tbody>
-						@foreach($payments as $payment)
+						@foreach($payments as $index => $payment)
 						<tr>       
 							<td class="text-sm text-black py-4 text-left">{{ $payment->contract->id }}</td>
 							<td class="text-sm text-black py-4 text-left">{{ $payment->contract->trainee->first_name }} {{ $payment->contract->trainee->last_name }} </td>
 							<td class="text-sm text-black py-4 text-left">{{ $payment->contract->coach->first_name }} {{ $payment->contract->coach->last_name }}</td>
 							<td class="text-sm text-black py-4 text-left">{{ $payment->contract->program->name }}</td>
-							<td class="text-sm text-black py-4 text-left">{{ $payment->contract->payment_type }}</td>
+							<td class="text-sm text-black py-4 text-left">
+								<div class="flex items-center space-x-4">
+									<p>{{ $payment->contract->payment_type }}</p>
+									<x-admin.modal.preview-payment :index="$index" :payment="$payment"/>
+								</div>
+							</td>
 							<td class="text-sm text-black py-4 text-left">{{ $payment->reference }}</td>
 							<td class="text-sm text-black py-4 text-left">{{ $payment->amount }}</td>
 							<td class="text-sm text-black py-4 text-left">{{ $payment->status }}</td>

@@ -81,7 +81,6 @@ Route::post('/verify-login', [AuthController::class, 'verify'])->name('verify.lo
 Route::get('/payment/create', function () {return view('user/create-transaction');})->name('create.transaction');
 Route::post('/payment/create/{user}', [TransactionController::class, 'store'])->name('transaction.create');
 
-
 //	Admin
 Route::get('/admin', function () {return view('admin/index');})->name('admin.dashboard');
 Route::get('/admin/trainees', [AdminController::class, 'traineesIndex'])->name('admin.trainees');

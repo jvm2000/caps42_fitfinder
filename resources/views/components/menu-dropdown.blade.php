@@ -54,7 +54,7 @@
             <p class="text-xs text-blue-500">{{ auth()->user()->role }}</p>
           </div>
           <div class="flex items-center space-x-8">
-            <p class="text-xs">{{auth()->user()->email}}</p>
+            <p class="text-xs truncate w-32">{{auth()->user()->email}}</p>
           </div>
         </div>
       </a>
@@ -75,7 +75,7 @@
             <p class="text-xs text-blue-500"><span>@</span>{{ auth()->user()->role }}</p>
           </div>
           <div class="flex items-center space-x-8">
-            <p class="text-xs">{{auth()->user()->email}}</p>
+            <p class="text-xs truncate w-32">{{auth()->user()->email}}</p>
           </div>
         </div>
       </a>

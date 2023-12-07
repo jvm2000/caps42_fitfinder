@@ -25,4 +25,10 @@ class Payment extends Model
     {
         return $this->belongsTo(Contract::class, 'contract_id'); 
     }
+
+    public function getImageURL(){
+        if($this->image){
+            return url('storage/'. $this->image);
+        }
+    }
 }

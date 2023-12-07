@@ -1,4 +1,14 @@
-@props(['label','id' => null,'oninput' => null,'placeholder' => null,'name','type','value' => null, 'disabled' => false,])
+@props([
+  'label','id' => null,
+  'oninput' => null,
+  'placeholder' => null,
+  'value' => null,
+  'minlength' => null,
+  'maxlength' => null,
+  'disabled' => false,
+  'name',
+  'type',
+])
 
 <div class="space-y-2">
   <span class="text-md text-gray-600">{{ $label }}</span>
@@ -9,9 +19,19 @@
     placeholder="{{ $placeholder }}"
     name="{{ $name }}"
     value="{{ $value }}"
+    minlength="{{ $minlength }}"
+    maxlength="{{ $maxlength }}"
     oninput="{{ $oninput }}"
   />
   <div>
     {{ $errors }}
   </div>
 </div>
+
+<script>
+$(document).ready(function() {
+  $('input').click(function() {
+      $('.error').hide();
+  });
+});
+</script>
