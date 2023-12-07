@@ -86,4 +86,15 @@ class ContractController extends Controller
 
         return redirect()->route('programs.show', $program);
     }
+
+    public function endContract(Contract $contract)
+    {
+        $contract->delete();
+
+        $contract->payment()->delete();
+
+        foreach ($contract->program->progress as $progress) {
+            $progress->delete();
+        }
+    }
 }

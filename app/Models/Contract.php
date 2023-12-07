@@ -30,12 +30,17 @@ class Contract extends Model
     public function trainee() {
         return $this->belongsTo(User::class, 'trainee_id');
     }
+    
     public function program(){
         return $this->belongsTo(Program::class, 'program_id');
     }
 
     public function payment(){
         return $this->hasOne(Payment::class);
+    }
+
+    public function enrollee(){
+        return $this->hasOne(Enrollee::class);
     }
 
     public function getYourDateColumnAttribute($value){

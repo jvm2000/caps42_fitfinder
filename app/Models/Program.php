@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\Contract;
 use App\Models\Enrollee;
 use App\Models\Progress;
 use App\Models\UserRequest;
@@ -67,6 +68,11 @@ class Program extends Model
     public function enrollees()
     {
         return $this->hasMany(Enrollee::class);
+    }
+
+    public function contracts()
+    {
+        return $this->hasMany(Contract::class);
     }
     
     public function progress()

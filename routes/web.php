@@ -125,8 +125,7 @@ Route::middleware(['auth'])->group(function () {
 	Route::put('/medcert/update/{medcert}', [MedicalCertificateController::class, 'update'])->name('medcert.update');
 	
 	//Contracts
-	Route::post('/contracts/contract', [ContractDashboardController::class, 'contract']);
-	Route::get('/contracts/list', [ContractDashboardController::class, 'listOfContracts'])->middleware(['auth', 'verified']);
+	Route::get('/contracts/list', [ContractDashboardController::class, 'listOfContracts'])->name('contracts.list')->middleware(['auth', 'verified']);
 	Route::delete('/contracts/remove/{contract}', [ContractController::class, 'decline'])->name('contracts.decline');
 	Route::get('/contracts/make', [ContractController::class, 'index'])->name('generate.contract')->middleware(['auth', 'verified']);
   Route::post('/contracts/generate/{user}', [ContractController::class, 'store'])->name('contracts.store');
@@ -143,7 +142,7 @@ Route::middleware(['auth'])->group(function () {
 	Route::post('/matchmakes/send-request', [MatchmakingController::class, 'sendRequest'])->name('matchmaking.send');
 
 	//Payments
-	Route::get('/payments/dashboard', [PaymentController::class, 'index'])->name('payments.dashboard')->middleware(['auth', 'verified']);
+	Route::get('/payments/list', [PaymentController::class, 'index'])->name('payments.list')->middleware(['auth', 'verified']);
 	// Route::post('/contracts/{contractId}/make-payment', [PaymentController::class, 'makePayment'])->name('payments.make-payment');
 	Route::post('/payments/generate/{contract}', [PaymentController::class, 'store'])->name('payments.create');
 	Route::get('/payments/create/{contract}', [PaymentController::class, 'showContractForPayment'])->name('payments.show');

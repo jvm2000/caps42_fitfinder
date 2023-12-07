@@ -92,31 +92,12 @@
                 <label for="prerequisite_checkbox" class="texzt-lg text-neutral-900 cursor-default">Does this program has a prerequisite?</label>                
               </div>
 
-              <div id="prerequisiteContainer" class="space-y-2 hidden">
-                <x-app.radio-select label="Choose Program">
-                  <x-slot name="data">
-                    <p class="text-sm text-black" id="selectedRadio">Select Program</p>
-                  </x-slot>
-
-                  @foreach($programs as $index => $program)
-                  <label for="{{ $index }}" class="py-3 hover:bg-gray-200 flex items-center relative w-full space-x-4">
-                    <img src="{{ $program->getImageURL() }}" alt="" class="w-6 h-6 rounded-full ml-4">
-                    <p class="text-sm">{{ $program->name }}</p>
-                    <input id="{{ $index }}" type="radio" name="prerequisite_program_id" value="{{$program->id}}" class="invisible">
-
-                    <div class="text-xs rounded-full py-0  border px-4 border-dashed items-center absolute right-4
-                      @if ($program->prerequisite)
-                        bg-indigo-200 border-indigo-800 text-indigo-800
-                      @else
-                        bg-red-200 border-red-800 text-red-800
-                      @endif
-                    ">
-                      {{ $program->prerequisite ? $program->prerequisite->name : 'No Prerequisite' }}
-                    </div>
-                  </label>
-                  @endforeach
-                </x-app.radio-select>
-              </div>
+              <select name="prerequisite_program_id" class="bg-inherit text-sm px-8 py-2 w-full border-gray-500 border rounded-md">
+                <option value="" disabled selected>Select Program</option>
+                @foreach($programs as $index => $program)
+                  <option value="{{ $program->id }}">{{ $program->name }}</option>
+                @endforeach
+              </select>
               @endif
             </div>
     

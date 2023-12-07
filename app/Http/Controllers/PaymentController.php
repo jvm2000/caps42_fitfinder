@@ -57,7 +57,7 @@ class PaymentController extends Controller
 
         $contract->payment()->create($form);
 
-        return redirect('payments/dashboard')->with('success', 'Payment successful!');
+        return redirect('payments/list')->with('success', 'Payment successful!');
     }
     /**
      * Display the specified resource.
