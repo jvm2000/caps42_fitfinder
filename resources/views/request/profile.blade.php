@@ -197,7 +197,9 @@
 			<div class="mt-8 flex items-center relative w-full">
 					<div class="mr-auto"></div>
 						<x-requests.send-modal :user="$user" :programs="$user->programs" />
+							<a href="http://127.0.0.1:8000/chatify/{{$user->id}}">Send Message </a>
 			</div>
+			
     </div>
 	</div>
 </x-layout>

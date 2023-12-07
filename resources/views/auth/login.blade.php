@@ -32,11 +32,11 @@
         <div class="grid space-y-5 px-2 pt-8">
           <div class="space-y-2">
             <input 
-              type="email" 
+              type="text" 
               class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border rounded-md" 
-              placeholder="Email"
-              name="email"
-              value="{{ old('email') }}"
+              placeholder="Username"
+              name="login"
+              value="{{ old('login') }}"
             >
             @error('email')
             <p class="text-red-500 text-sm error">{{$message}}</p>
