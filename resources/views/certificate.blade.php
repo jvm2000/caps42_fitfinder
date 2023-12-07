@@ -64,7 +64,7 @@
             <h1>Certificate of Completion</h1>
         </div>
         <p>This is to certify that</p>
-        <h2>{{ $enrollee->trainee->first_name }}</h2>
+        <h2>{{ $enrollee->trainee->first_name }}{{ $enrollee->trainee->last_name }}</h2>
         <div class="message">
             <p>has successfully completed the course on</p>
             <p><strong>{{ $enrollee->program->name }}</strong></p>
@@ -72,7 +72,7 @@
             <p>Issued on {{ date('F j, Y') }}</p>
         </div>
         <div class="signature">
-            <p>{{ $enrollee->coach->first_name }}</p>
+            <p>{{ $enrollee->coach->first_name }}{{ $enrollee->coach->last_name }}</p>
             <p>Course Instructor</p>
         </div>
     </div>
