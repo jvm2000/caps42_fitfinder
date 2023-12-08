@@ -36,11 +36,6 @@
             </div>
 
           </div>
-          <div class="flex flex-col items-center pt-4 space-y-2 px-3">
-            <p class="text-base">Please type <span class="font-semibold">"agree"</span> to continue enrolling</p>
-            <input type="text" class="bg-inherit text-sm px-8 py-2 w-full border-gray-500 border rounded-md text-center" id="agreeInput">
-          </div>
-
           <div class="w-full px-3 pt-4">
             <form action="/admin/payments/enroll" method="POST">
               @csrf
@@ -50,8 +45,6 @@
               <button 
                 class="rounded-md flex items-center w-full py-4 justify-center text-base text-white bg-gray-800 cursor-pointer font-semibold disabled:bg-gray-600 disabled:cursor-not-allowed" 
                 type="submit"
-                id="submitButton" 
-                disabled
               >Enroll</button>
             </form>
           </div>
@@ -72,17 +65,4 @@ function closeEnrollmentModal(index){
   var enrollmentModal = document.getElementById('enrollmentModal_' + index);
   enrollmentModal.style.display = 'none';
 }
-
-document.addEventListener("DOMContentLoaded", function () {
-  var agreeInput = document.getElementById("agreeInput");
-  var submitButton = document.getElementById("submitButton");
-
-  agreeInput.addEventListener("input", function () {
-    if (agreeInput.value.toLowerCase() === "agree") {
-      submitButton.removeAttribute("disabled");
-    } else {
-      submitButton.setAttribute("disabled", "disabled");
-    }
-  });
-});
 </script>

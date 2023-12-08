@@ -52,7 +52,7 @@ class AdminController extends Controller
     Mail::to($traineeEmail)->send(new ReceiptMail($payment, $referenceNumber));
     Mail::to($coachEmail)->send(new ReceiptMail($payment, $referenceNumber));
 
-    return redirect()->back()->with('success', 'Payment accepted!');
+    return redirect()->back()->with('message', 'Payment Accepted Successfully');
     }
 
 
@@ -117,7 +117,12 @@ class AdminController extends Controller
         $programs = Program::all();
         $earnings = TotalEarnings::all();
         $contracts = Contract::all();
+        $payments = Payment::all();
         $totalEarnings = TotalEarnings::all()->sum('earnings');
+        $eachEarnings = Payment::pluck('amount');
+        $eachEarned = $eachEarnings->toArray();
+        $totalCommisions = TotalEarnings::pluck('earnings');
+        $eachCommisioned = $totalCommisions->toArray();
 
 
         return view('admin.index', [
@@ -129,6 +134,9 @@ class AdminController extends Controller
             'earnings' => $earnings,
             'totalEarnings' => $totalEarnings,
             'contracts' => $contracts,
+            'payments' => $payments,
+            'eachEarned' => $eachEarned,
+            'eachCommisioned' => $eachCommisioned,
         ]);
     }
 }

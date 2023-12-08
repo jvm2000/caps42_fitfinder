@@ -80,4 +80,9 @@
 			@endif
 		</div>
 	</div>
-</x-admin-layout>
+</x-admin-layout>	
+
+@if(session('message'))
+	<x-app.toaster message="{{ session('message') }}">
+	</x-app.toaster>
+@endif

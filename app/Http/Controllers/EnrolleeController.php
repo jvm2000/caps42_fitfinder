@@ -74,6 +74,8 @@ class EnrolleeController extends Controller
                 // Copy other attributes as needed
             ]);
         }
+
+        return redirect('/admin/payments')->with('message', 'Trainee Enrolled Successfully');
     }
 
     /**

@@ -89,18 +89,21 @@
           </div>
 
           <div style="width: 100%; margin: auto;">
-            <canvas id="revenueChart"></canvas>
+            <div id="area-chart"></div>
           </div>
         </div>
         <div class="col-span-2 bg-white shadow-sm rounded-lg px-6 py-4 flex flex-col relative space-y-4">
           <div class="flex items-center w-full relative">
-            <p class="text-lg font-semibold mr-auto">Overall User Activity</p>
+            <p class="text-lg font-semibold mr-auto">Total Comissions Earned</p>
             <p class="text-lg font-semibold">2023</p>
+          </div>
+          <div style="width: 100%; margin: auto;">
+            <div id="commision-chart"></div>
           </div>
         </div>
       </div>
       
-      <div class="grid grid-cols-2 gap-x-6">
+      <div class="grid grid-cols-2 gap-x-6 gap-y-4">
         <div class="bg-white shadow-sm rounded-lg px-6 py-4 flex flex-col relative">
           <img src="/icons/admin/analytics/wallet2.svg" alt="" class="w-16 h-16">
 
@@ -120,46 +123,192 @@
             <p class="text-base text-gray-400">Overall FitFinder Earnings</p>
           </div>
         </div>
+
+        <div class="bg-white shadow-sm rounded-lg px-6 py-4 flex flex-col relative col-span-2 space-y-4">
+          <div class="flex items-center w-full relative">
+            <p class="text-lg font-semibold mr-auto">Payments Recorded</p>
+            <p class="text-lg font-semibold">Summary</p>
+          </div>
+          <div class="h-36 overflow-y-auto w-full">
+            <table class="table-auto w-full">
+              <thead>
+                <tr>
+                  <th class="text-left font-normal">Payment ID</th>
+                  <th class="font-normal text-left">Program</th>
+                  <th class="font-normal text-left">Coach</th>
+                  <th class="font-normal text-left">Amount</th>
+                  <th class="font-normal text-left">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach($payments as $payment)
+                  <tr class="border-b">
+                    <td class="text-left font-normal py-2">{{ $payment->id }}</td>
+                    <td class="font-normal py-2">{{ $payment->contract->program->name }}</td>
+                    <td class="font-normal py-2">{{ $payment->contract->coach->username }}</td>
+                    <td class="font-normal py-2">{{ $payment->amount }}</td>
+                    <td class="font-normal py-2">{{ $payment->status }}</td>
+                  </tr>
+                @endforeach
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </x-admin-layout>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
-var months = ['AUG', 'SEP', 'OCT', 'NOV', 'DEC', 'JAN', 'FEB'];
-var revenueData = [2000, 3000, 4000, 2500, 3500, 2800, 3200];
-
-var ctx = document.getElementById('revenueChart').getContext('2d');
-
-var chart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: months,
-        datasets: [{
-            label: 'Revenue',
-            data: revenueData,
-            backgroundColor: 'rgba(75, 0, 130, 0.7)',
-            borderColor: 'rgba(75, 0, 130, 1)', 
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true,
-                title: {
-                    display: true,
-                    text: 'Revenue ($)'
-                }
-            },
-            x: {
-                title: {
-                    display: true,
-                    text: 'Months'
-                }
-            }
-        }
+  var coachEarnings = @json($eachEarned);
+  var eachCommisioned = @json($eachCommisioned);
+  // ApexCharts options and config
+  window.addEventListener("load", function() {
+    let options = {
+      chart: {
+        height: "100%",
+        maxWidth: "100%",
+        type: "area",
+        fontFamily: "Inter, sans-serif",
+        dropShadow: {
+          enabled: false,
+        },
+        toolbar: {
+          show: false,
+        },
+      },
+      tooltip: {
+        enabled: true,
+        x: {
+          show: false,
+        },
+      },
+      fill: {
+        type: "gradient",
+        gradient: {
+          opacityFrom: 0.55,
+          opacityTo: 0,
+          shade: "#1C64F2",
+          gradientToColors: ["#1C64F2"],
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        width: 6,
+      },
+      grid: {
+        show: false,
+        strokeDashArray: 4,
+        padding: {
+          left: 2,
+          right: 2,
+          top: 0
+        },
+      },
+      series: [
+        {
+          name: "New users",
+          data: [0, ...coachEarnings],
+          color: "#1A56DB",
+        },
+      ],
+      xaxis: {
+        categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
+        labels: {
+          show: false,
+        },
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+      },
+      yaxis: {
+        show: false,
+      },
     }
-});
+
+    if (document.getElementById("area-chart") && typeof ApexCharts !== 'undefined') {
+      const chart = new ApexCharts(document.getElementById("area-chart"), options);
+      chart.render();
+    }
+  });
+
+  window.addEventListener("load", function() {
+    let options = {
+      chart: {
+        height: "100%",
+        maxWidth: "100%",
+        type: "area",
+        fontFamily: "Inter, sans-serif",
+        dropShadow: {
+          enabled: false,
+        },
+        toolbar: {
+          show: false,
+        },
+      },
+      tooltip: {
+        enabled: true,
+        x: {
+          show: false,
+        },
+      },
+      fill: {
+        type: "gradient",
+        gradient: {
+          opacityFrom: 0.55,
+          opacityTo: 0,
+          shade: "#1C64F2",
+          gradientToColors: ["#1C64F2"],
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        width: 6,
+      },
+      grid: {
+        show: false,
+        strokeDashArray: 4,
+        padding: {
+          left: 2,
+          right: 2,
+          top: 0
+        },
+      },
+      series: [
+        {
+          name: "New users",
+          data: [0, ...eachCommisioned],
+          color: "#1A56DB",
+        },
+      ],
+      xaxis: {
+        categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
+        labels: {
+          show: false,
+        },
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+      },
+      yaxis: {
+        show: false,
+      },
+    }
+
+    if (document.getElementById("commision-chart") && typeof ApexCharts !== 'undefined') {
+      const chart = new ApexCharts(document.getElementById("commision-chart"), options);
+      chart.render();
+    }
+  });
 </script>

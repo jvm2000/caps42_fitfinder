@@ -8,7 +8,7 @@ use App\Models\Contract;
 use App\Models\UserRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use App\Models\Payment;
 
 class ContractDashboardController extends Controller
 {
@@ -44,11 +44,19 @@ class ContractDashboardController extends Controller
     public function coachEarnings(){
     
         $userId = auth()->user()->id;
-        
+
         $coachEarnings = Contract::where('coach_id', $userId)->sum('amount');
 
-        return view('contracts.sample', [
+        $payments = Payment::where('status', 'accepted')->get();
+
+        $eachEarnings = Payment::pluck('amount');
+        
+        $eachEarned = $eachEarnings->toArray();
+
+        return view('user.coach-earnings', [
             'coachEarnings' => $coachEarnings,
+            'payments' => $payments,
+            'eachEarned' => $eachEarned,
         ]);
     }
 
