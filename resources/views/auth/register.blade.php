@@ -83,6 +83,10 @@
                     1 => 'taekwando',
                     2 => 'boxing',
                     4 => 'muay thai',
+                    5 => 'strength training',
+                    6 => 'weight training',
+                    7 => 'pilates',
+                    8 => 'body building',
                   ];
               @endphp
 
