@@ -53,7 +53,7 @@
           @if(Route::is('admin.payments'))
           <span class="h-[21px] w-1 bg-white rounded-r-md"></span>
           @endif
-          <img src="/icons/admin/coaches.svg" alt="Coaches Icon" class="w-5 h-5 ml-12">
+          <img src="/icons/admin/modules.svg" alt="Coaches Icon" class="w-5 h-5 ml-12">
           <p class="text-base text-white ml-10">Payments</p>
         </a>
       </div>

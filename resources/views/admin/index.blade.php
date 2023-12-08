@@ -57,7 +57,7 @@
 
         <div class="bg-white shadow-sm rounded-lg px-6 py-4 flex flex-col relative">
           <p class="text-lg font-medium pt-0">Contracts</p>
-          <p class="text-4xl pt-4 font-semibold">{{ $contracts->count() }} <span class="text-indigo-500">enrolled</span></p>
+          <p class="text-4xl pt-4 font-semibold">{{ $contracts->count() }} <span class="text-indigo-500">contracts</span></p>
           <div class="flex items-center space-x-4 absolute left-6 top-36">
             <span class="w-4 h-4 bg-red-500"></span>
             <p class="text-sm font-medium w-24">contracts that are currently on</p>

@@ -20,7 +20,7 @@
 >
   @if(auth()->user()->role === 'Coach')
     <p class="text-lg font-medium mb-4">Notifications</p>
-    @foreach($requests as $request)
+    @foreach($requests as $index => $request)
       <form method="POST" action="/contracts/decline/{{$request->id}}" enctype="multipart/form-data">
         @csrf
         @method('DELETE')
@@ -31,7 +31,10 @@
             </div>
             <div class="flex flex-col space-y-0">
               <p class="text-base font-medium">{{ $request->requester->first_name }} {{ $request->requester->last_name }}</p>
-              <p class="text-sm text-indigo-500">Trainee</p>
+              <div class="flex items-center space-x-2">
+                <p class="text-sm text-indigo-500">Trainee</p>
+                <x-user.medcert-preview-modal :index="$index" :requester="$request->requester" />
+              </div>
             </div>
             <div class="flex flex-col space-y-0 absolute right-0 top-0">
               <p class="text-base font-medium">Requested:</p>

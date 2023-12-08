@@ -102,10 +102,10 @@
               <img src="/dashboard/icons/settings.svg" alt="Main" class="w-8 h-8 group-hover:mb-1 mr-14">
               <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Settings</p>
             </a>
-            <a href="http://127.0.0.1:8000/chatify">
+            <a href="http://192.168.0.110/chatify">
               <div id="chatHead" class="bg-blue-500 text-white py-2 px-4 rounded-full fixed bottom-20 right-20">
                   Chat
-              </div>
+              </div></a>
             </a>
           </div>
           

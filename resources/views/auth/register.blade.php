@@ -13,12 +13,12 @@
 		<link rel="icon" type="image/svg" href="{{ asset('/icons/fitfinder-icon.svg') }}">
   </head>
   <body>
-    <div class="h-screen w-screen bg-white grid place-items-center overflow-hidden">
+    <div class="h-screen w-screen bg-white grid place-items-center sm:overflow-hidden overflow-y-auto">
   
-      <img src="/auth/bg.png" alt="Beautiful Background" class="w-full mt-60 z-20">
-      <div class="max-w-5xl w-full h-auto py-6 px-8 drop-shadow-xl rounded-lg bg-white font-inter z-30 fixed">
+      <img src="/auth/bg.png" alt="Beautiful Background" class="w-full mt-60 z-20 sm:block hidden">
+      <div class="max-w-5xl w-full h-auto sm:py-6 px-8 drop-shadow-xl rounded-lg bg-white font-inter z-30 sm:fixed block">
         <!-- Header -->
-        <div class="grid place-items-center space-y-4">
+        <div class="grid place-items-center space-y-4 sm:mt-0 mt-8">
           <p class=" text-black text-center">
             <span class="text-4xl font-semibold">Welcome to FitFinder</span><br>
             <span class="text-md font-light">Sign up your account</span>
@@ -27,7 +27,7 @@
         <!-- Credentials Input -->
         <form method="POST" action="/auth-register">
           @csrf
-          <div class="grid items-center grid-cols-2 space-y-0 gap-y-4 px-2 pt-8 gap-x-14">
+          <div class="grid items-center sm:grid-cols-2 grid-cols-1 space-y-0 gap-y-4 px-2 pt-8 gap-x-14">
   
             <x-app.input 
               type="text" 
