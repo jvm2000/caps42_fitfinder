@@ -4,10 +4,10 @@
 			FitFinder - Dashboard
 	</x-slot>
 
-	<div class="w-full py-10 px-12">
-		<div class="flex items-center relative">
+	<div class="w-full sm:py-10 sm:px-12">
+		<div class="flex items-center relative sm:pt-0 pt-8 sm:pr-0 pr-8">
 			<p class="text-3xl font-semibold mr-auto"></p>
-			<div class="flex items-center space-x-4">
+			<div class="flex items-center space-x-4 ">
 				<div class="">
 					<x-notification-component />
 				</div>
@@ -18,7 +18,7 @@
 		</div>
 
 		<div class="mt-8 px-8">
-			<div class="grid grid-cols-2 gap-x-6">
+			<div class="grid sm:grid-cols-2 grid-cols-1 gap-x-6">
 				<div class="flex flex-col space-y-12">
 					<div class="space-y-2">
 						<p class="text-3xl text-indigo-500 font-semibold">Hi {{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</p>
@@ -76,7 +76,7 @@
 					</div>
 				</div>
 
-				<div class="h-[44rem] w-full relative">
+				<div class="h-[44rem] w-full relative sm:block hidden">
 					<img src="/images/dashboard.png" alt="">
 					<img src="/images/dashboard-2.png" alt="" class="w-96 h-96 absolute bottom-8">
 					<img src="/images/dashboard-3.png" alt="" class="w-44 h-44 absolute bottom-8 right-0">

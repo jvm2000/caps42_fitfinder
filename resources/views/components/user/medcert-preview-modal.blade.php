@@ -13,9 +13,35 @@
         </div>
       </div>
       {{-- Slot  --}}
-      <div class="px-8 pt-6 pb-4 h-[44rem] overflow-y-auto">
-        <div class="w-full h-auto">
-          {{-- <img src="{{ $payment->getImageURL() }}" alt="GCash" class="w-full h-full"> --}}
+      <div class="px-8 pt-6 pb-10 h-[52rem] overflow-y-auto">
+        <div class="w-full h-auto space-y-4">
+          <div class="space-y-2">
+            <span class="text-md text-gray-600 text-left">Description</span>
+            <div class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border-b rounded-md">
+              <p>{{ $requester->medcert->description }}</p>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <span class="text-md text-gray-600 text-left">Medical Status Uploaded:</span>
+            <div class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border-b rounded-md">
+              <p>{{ $requester->medcert->status }}</p>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <span class="text-md text-gray-600 text-left">Started Fitness</span>
+            <div class="bg-inherit text-lg px-8 py-2 w-full border-gray-500 border-b rounded-md">
+              <p>{{ $requester->medcert->started_fitness }}</p>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <span class="text-md text-gray-600 text-left">Medical Certificate</span>
+            <div class="bg-inherit text-lg px-8 py-2 w-full h-44 border-gray-500 border-b rounded-md">
+              <img src="{{ $requester->medcert->getMedURL() }}" alt="">
+            </div>
+          </div>
         </div>
       </div>
   
