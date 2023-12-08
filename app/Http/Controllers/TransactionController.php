@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 
 
-class Transaction extends Controller
+class TransactionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,39 +21,41 @@ class Transaction extends Controller
 
         $transaction = $user->transaction()->with('user')->latest();
 
-        return view('user.transaction', compact('Transactions'));
+        return view('user.payment-profile', compact('Transactions'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, TransactionInfo $transaction)
+    public function store(Request $request, User $user)
     {
         $form = $request->validate([
-            'full_name'=>['required','string'],
+            'first_name'=>['required','string'],
+            'last_name'=>['required','string'],
             'mobile_number'=>['required','string'],
         ]);
 
 
-        TransactionInfo::create(['user_id' => $transaction->id] + $form);
+        TransactionInfo::create(['user_id' => $user->id] + $form);
 
-        return back()->with('success', 'Transaction Completed');
+        return back()->with('success', 'Payment Account Completed');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TransactionInfo $transaction)
+    public function update(Request $request, User $user)
     {
         // Get the currently authenticated user
         $form = $request->validate([
-            'full_name'=>['required','string'],
-            'mobile_number'=>['required','string'],
+            'first_name'=>['nullable','string'],
+            'last_name'=>['nullable','string'],
+            'mobile_number'=>['nullable','string'],
         ]);
 
-        $transaction->update($form);
+        $user->update($form);
 
-        return back()->with('success', 'Transaction Updated successfully');
+        return back()->with('message', 'Payment Account Updated successfully');
     }
 
     /**
@@ -63,6 +65,6 @@ class Transaction extends Controller
     {
         $transaction->delete();
 
-        return back()->with('message', 'Successfully Deleted Transaction');
+        return back()->with('message', 'Successfully Deleted Payment');
     }
 }

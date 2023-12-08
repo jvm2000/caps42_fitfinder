@@ -8,6 +8,7 @@ use App\Models\Contract;
 use App\Models\UserRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\TotalEarnings;
 
 class ContractController extends Controller
 {
@@ -44,15 +45,19 @@ class ContractController extends Controller
             'payment_type' => ['required'],
             'startdate' => ['required'],
             'enddate' => ['required'],
+            'enddate' => ['required'],
         ]);
         
          $originalAmount = $request->input('amount');
 
-        $calculatedAmount = $originalAmount - ($originalAmount * 0.10);
+         $notDiscounted = isset($form['not_discounted']) ? $form['not_discounted'] : $originalAmount;
 
-        $contract = new Contract($form + ['amount' => $calculatedAmount]);
+         $commissionedAmount = $originalAmount * 0.10;
 
-        
+        $calculatedAmount = $originalAmount - $commissionedAmount;
+
+        $contract = new Contract($form + ['amount' => $calculatedAmount, 'not_discounted' => $notDiscounted]);
+
         $contract->save();
 
         $requestid = $request->input('request_id');

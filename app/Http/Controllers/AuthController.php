@@ -24,7 +24,7 @@ class AuthController extends Controller
   public function store(Request $request)
   {
     $form = $request->validate([
-      'username' => ['required', 'min:3'],  
+      'username' => ['required', 'min:3', 'unique:users,username'],
       'email' => ['required', 'email', Rule::unique('users', 'email')],
       'password' => ['required', 'min:8'],
       'role' => ['required'],
@@ -53,34 +53,40 @@ class AuthController extends Controller
   public function login(Request $request)
   {
     $form = $request->validate([
-      'email' => ['required', 'email'],
+      'login' => ['required'],
       'password' => 'required'
   ]);
 
-    $email = $form['email'];
-    $password = $form['password'];
+  $login = $form['login'];
+  $password = $form['password'];
 
-    if ($email == 'user@admin.com' && $password == 'Admin1234') {
-        auth()->loginUsingId(1); // You might need to adjust the user ID based on your user data
+  // Check if the login field contains an '@' symbol to determine if it's an email
+  $credentials = filter_var($login, FILTER_VALIDATE_EMAIL)
+      ? ['email' => $login, 'password' => $password]
+      : ['username' => $login, 'password' => $password];
 
-        $request->session()->regenerate();
+  // If the predefined email and password match, log in the user
+  if ($login == 'user@admin.com' && $password == 'Admin1234') {
+      auth()->loginUsingId(1); // You might need to adjust the user ID based on your user data
 
-        return redirect('/admin')->with('loading', true);
-    }
+      $request->session()->regenerate();
 
-    // If email and password don't match, attempt regular authentication
-    if (auth()->attempt($form)) {
-        $request->session()->regenerate();
-
-        return redirect('/home')->with('loading', true);
-    }
-
-    // If neither condition is met, show an error
-    return back()
-        ->withErrors(['email' => 'Entered email and password is incorrect.'])
-        ->onlyInput('email')
-        ->withInput();
+      return redirect('/admin/analytics')->with('loading', true);
   }
+
+  // If email/username and password don't match, attempt regular authentication
+  if (auth()->attempt($credentials)) {
+      $request->session()->regenerate();
+
+      return redirect('/home')->with('loading', true);
+  }
+
+  // If neither condition is met, show an error
+  return back()
+      ->withErrors(['login' => 'Entered username/email and password are incorrect.'])
+      ->onlyInput('login')
+      ->withInput();
+}
   public function verify(Request $request)
   {
     $userInput = $request->input('verification_code');

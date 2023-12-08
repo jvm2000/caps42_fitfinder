@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Contract extends Model
 {
     use HasFactory;
+    
     protected $fillable = [
         'coach_id',
         'trainee_id',
@@ -19,6 +20,7 @@ class Contract extends Model
         'startdate',
         'enddate',
         'amount',
+        'not_discounted',
         'program_id',
         'signature',
     ];
@@ -36,7 +38,7 @@ class Contract extends Model
     }
 
     public function payment(){
-        return $this->hasOne(Payment::class);
+        return $this->belongsTo(Payment::class);
     }
 
     public function enrollee(){

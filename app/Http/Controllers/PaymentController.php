@@ -8,6 +8,7 @@ use App\Models\Contract;
 use App\Models\UserRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\TotalEarnings;
 use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
@@ -51,8 +52,22 @@ class PaymentController extends Controller
     {
         $form = $request->validate([
             'contract_id' => ['required'],
-            'reference' => ['required'],
+            'reference' => ['required', 'min:8'],
             'amount' => ['required'],
+            'image' => ['required'],
+        ]);
+
+        if (request()->hasFile('image') && request()->file('image')->isValid()) {
+            $imagePath = request()->file('image')->store('payments', 'public');
+            $form['image'] = $imagePath;
+        }
+
+        $amount = $request->input('not_discounted');
+
+        $commissionedAmount = $amount * 0.10;
+
+        TotalEarnings::create([
+            'earnings' => $commissionedAmount,
         ]);
 
         $contract->payment()->create($form);

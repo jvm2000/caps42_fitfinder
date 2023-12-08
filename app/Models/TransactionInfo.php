@@ -18,7 +18,7 @@ class TransactionInfo extends Model
     protected $fillable = [
         'first_name',
         'last_name',
-        'contact_number',
+        'mobile_number',
         'user_id',
     ];
 

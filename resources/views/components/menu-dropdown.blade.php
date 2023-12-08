@@ -54,7 +54,7 @@
             <p class="text-xs text-blue-500">{{ auth()->user()->role }}</p>
           </div>
           <div class="flex items-center space-x-8">
-            <p class="text-xs">{{auth()->user()->email}}</p>
+            <p class="text-xs truncate w-32">{{auth()->user()->email}}</p>
           </div>
         </div>
       </a>
@@ -75,13 +75,39 @@
             <p class="text-xs text-blue-500"><span>@</span>{{ auth()->user()->role }}</p>
           </div>
           <div class="flex items-center space-x-8">
-            <p class="text-xs">{{auth()->user()->email}}</p>
+            <p class="text-xs truncate w-32">{{auth()->user()->email}}</p>
           </div>
         </div>
       </a>
       @endif
 
       <div class="px-4 border-t pt-2 pb-1">
+        @if(auth()->user()->role === 'Coach')
+          <a 
+            class="flex w-full items-center space-x-8 cursor-pointer py-2 hover:bg-gray-100"
+            href="/payment/create"
+          >
+            <img src="/icons/settings/payment-icon.svg" alt="Gear Icon" class="w-6 h-6">
+            <p class="text-sm font-medium">
+              @if(!auth()->user()->transaction)
+                Setup Payment
+              @else
+                See GCash Account
+              @endif
+            </p>
+          </a>
+        @endif
+
+        @if(auth()->user()->role === 'Coach')
+          <a 
+            class="flex w-full items-center space-x-8 cursor-pointer py-2 hover:bg-gray-100"
+            href="/contracts/earnings"
+          >
+            <img src="/icons/settings/wallet-icon.svg" alt="Gear Icon" class="w-6 h-6">
+            <p class="text-sm font-medium">See Earnings</p>
+          </a>
+        @endif
+
         <a 
           class="flex w-full items-center space-x-8 cursor-pointer py-2 hover:bg-gray-100"
           href="/auth/profile/{{auth()->user()->id}}"

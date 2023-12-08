@@ -1,66 +1,89 @@
-<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
 <x-layout>
-    {{-- Title  --}}
-    <x-slot:title>
-        FitFinder - Dashboard
-    </x-slot>
-    <div class="w-full py-14 px-12 relative">
-        <div class="flex items-center relative">
-            <p class="text-3xl font-semibold mr-auto">Dashboard</p>
-        </div>
-        <div class="absolute top-10 right-12 z-20 flex space-x-4">
-            <div class="flex items-center space-x-4">
-                <div class="">
-                    <x-notification-component />
-                </div>
-                <div>
-                    <x-menu-dropdown />
-                </div>
-            </div>
-        </div>
-        {{-- Dashboard Tab  --}}
-        <div class="mt-20 grid grid-cols-3 w-full">
-            <div class="col-span-2 space-y-5">
-                {{-- Rectangle 1 --}}
-                <div class="rectangle rounded-2xl p-5 w-[40rem] h-25 bg-zinc-300 overflow-auto flex relative">
-                    <h1 class="text-xl">
-                        <p> Hi {{ auth()->user()->first_name }} </p>
-                        <p> Welcome to FitFinder </p>
-                    </h1>
-                    <img src="/dashboard/fitness.svg" alt="Fitness Image"
-                        class="ml-auto custom-svg absolute bottom-0 right-0">
-                </div>
+	{{-- Title  --}}
+	<x-slot:title>
+			FitFinder - Dashboard
+	</x-slot>
 
-                {{-- Rectangle 3 --}}
-                <div class="rectangle rounded-2xl p-5 w-[30rem] h-[230px] bg-zinc-300 overflow-auto flex flex-col">
-                    <img src="/dashboard/prcnt1.svg" alt="Percent Image" class="ml-auto custom-svg fixed">
+	<div class="w-full sm:py-10 sm:px-12">
+		<div class="flex items-center relative sm:pt-0 pt-8 sm:pr-0 pr-8">
+			<p class="text-3xl font-semibold mr-auto"></p>
+			<div class="flex items-center space-x-4 ">
+				<div class="">
+					<x-notification-component />
+				</div>
+				<div>
+					<x-menu-dropdown />
+				</div>
+			</div>
+		</div>
 
-                </div>
+		<div class="mt-8 px-8">
+			<div class="grid sm:grid-cols-2 grid-cols-1 gap-x-6">
+				<div class="flex flex-col space-y-12">
+					<div class="space-y-2">
+						<p class="text-3xl text-indigo-500 font-semibold">Hi {{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</p>
+						<p class="text-xl font-semibold">Welcome to FitFinder Matchmaking System</p>
+					</div>
 
-                {{-- Rectangle 4 --}}
-                <div class="rectangle rounded-2xl p-5 w-[38rem] h-[245px] bg-zinc-300 overflow-auto flex flex-col">
-                    <img src="/dashboard/graph.svg" alt="Fitness Image" class="ml-auto custom-svg absolute">
-                </div>
+					<div class="space-y-4">
+						<p class="text-2xl text-indigo-500 font-semibold">Available Features (FitFinder v1.0)</p>
+						<div class="grid grid-cols-2 gap-x-6">
+							<div class="space-y-1">
+								<div class="flex items-center space-x-4">
+									<span class="w-2 h-2 bg-indigo-500 rounded-full"></span>
+									<p class="text-base capitalize">Find a coach or trainee</p>
+								</div>
 
-            </div>
+								<div class="flex items-center space-x-4">
+									<span class="w-2 h-2 bg-indigo-500 rounded-full"></span>
+									<p class="text-base capitalize">View coach or Trainee Profile</p>
+								</div>
 
-            {{-- Rectangle 2 --}}
-            <div class="col-span-1">
-                <img src="/dashboard/person.svg" alt="Person Image" class="position w-[220px]">
-                <div class="rectangle rounded-2xl p-5 w-[230px] h-[230px] bg-zinc-300">
-                    <div class="text-center">
-                        <h1 class="text-xl"> Ongoing Contracts </h1>
-                        <div class="mt-5 space-y-3 text-left text-m">
-                            <p> Trainee Sample </p>
-                            <p> Trainee Sample 01</p>
-                            <p>Trainee Sample 02</p>
-                            <p>Trainee Sample 03</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+								<div class="flex items-center space-x-4">
+									<span class="w-2 h-2 bg-indigo-500 rounded-full"></span>
+									<p class="text-base capitalize">Setup a Contract</p>
+								</div>
+							</div>
+
+							<div class="space-y-1">
+								<div class="flex items-center space-x-4">
+									<span class="w-2 h-2 bg-indigo-500 rounded-full"></span>
+									<p class="text-base capitalize">Provide coach modules</p>
+								</div>
+
+								<div class="flex items-center space-x-4">
+									<span class="w-2 h-2 bg-indigo-500 rounded-full"></span>
+									<p class="text-base capitalize">Manage Trainee Progress</p>
+								</div>
+
+								<div class="flex items-center space-x-4">
+									<span class="w-2 h-2 bg-indigo-500 rounded-full"></span>
+									<p class="text-base capitalize">View Total Earnings</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="space-y-4">
+						<p class="text-2xl text-indigo-500 font-semibold">Features Coming Soon</p>
+						<p class="text-base">Exciting features, tailored to enhance the coaching experience for both coaches and trainees, are on the horizon, promising a more dynamic and personalized interaction on our website.</p>
+						<div class="space-y-1">
+							<div class="flex items-center space-x-4">
+								<span class="w-2 h-2 bg-gray-500 rounded-full"></span>
+								<p class="text-base capitalize text-gray-500">Realtime Online Coaching</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="h-[44rem] w-full relative sm:block hidden">
+					<img src="/images/dashboard.png" alt="">
+					<img src="/images/dashboard-2.png" alt="" class="w-96 h-96 absolute bottom-8">
+					<img src="/images/dashboard-3.png" alt="" class="w-44 h-44 absolute bottom-8 right-0">
+				</div>
+			</div>
+		</div>
+	</div>
 </x-layout>
 
 @if (session('message'))

@@ -10,7 +10,11 @@
     <div class="absolute top-10 right-12 z-20">
       <div class="flex items-center space-x-4">
 				<div class="">
-					<x-notification-component />
+					@if(auth()->user()->role === 'Coach')
+						<x-notification-component />
+					@else
+						<x-contract-pending-notification />
+					@endif
 				</div>
 				<div>
 					<x-menu-dropdown />

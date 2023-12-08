@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Module;
 use App\Models\Program;
 use App\Models\Enrollee;
 use App\Models\Progress;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Module;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class EnrolleeController extends Controller
 {
@@ -24,32 +25,46 @@ class EnrolleeController extends Controller
 
         return view('progress.main', compact('enrolled'));
     }
-    public function showProgress(Enrollee $enrollee){
-        $a = $enrollee->progress->count();
-        $b = $enrollee->stats;
-        $finished = 0;
-        foreach($enrollee->progress as $i){
-            if($i->status === 'done'){
-                $finished++;
-            }
-        }
+    public function showProgress(Enrollee $enrollee)
+{
+    $a = $enrollee->progress->count();
+    $b = $enrollee->stats;
+    $finished = 0;
 
-        if($b>0){
-             $percentage = ($b / $a)*100;
+    foreach ($enrollee->progress as $i) {
+        if ($i->status === 'done') {
+            $finished++;
         }
-        else{
-             $percentage = 0;
-        }
-        if($b==$a){
-            $enrollee->completion = 'completed';
-            $enrollee->save();
-        }
-        return view('progress.module',[
-            'finished' => $finished,
-            'enrollee' => $enrollee,
-            'percentage'=>$percentage,
-        ]);
     }
+
+    if ($a > 0) {
+        $percentage = ($b / $a) * 100;
+    } else {
+        $percentage = 0;
+    }
+
+    if ($b == $a && !$enrollee->completion_email_sent) {
+        $enrollee->completion = 'completed';
+        $enrollee->completion_email_sent = true; // Set the flag to true
+        $enrollee->save();
+    
+        // Get the current logged-in user's name and email
+        $userName = Auth::user()->name; // Replace with the actual attribute containing the user's name
+        $userEmail = Auth::user()->email;
+    
+        // Send email with the certificate template
+        $subject = 'Congratulations on Completion';
+        
+        Mail::send('certificate', ['userName' => $userName, 'enrollee' => $enrollee], function ($message) use ($userEmail, $subject) {
+            $message->to($userEmail)->subject($subject);
+        });
+    }
+    
+    return view('progress.module', [
+        'finished' => $finished,
+        'enrollee' => $enrollee,
+        'percentage' => $percentage,
+    ]);}
     /**
      * Store a newly created resource in storage.
      */
@@ -74,6 +89,8 @@ class EnrolleeController extends Controller
                 // Copy other attributes as needed
             ]);
         }
+
+        return redirect('/admin/payments')->with('message', 'Trainee Enrolled Successfully');
     }
 
     /**

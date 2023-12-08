@@ -9,27 +9,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
- @vite('resources/css/app.css')
+     @vite('resources/css/app.css')
    
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-    <link rel="icon" type="image/png" href="{{ asset('icon.ico') }}">
+    <link rel="icon" type="image/svg" href="{{ asset('/icons/fitfinder-icon.svg') }}">
 
     <title>{{ $title ?? 'FitFinder' }}</title>
   </head>
 
   <div class="antialiased">
-    <div class="w-screen h-screen grid grid-cols-8 bg-[#1A1A1A] overflow-hidden z-10">
+    <div class="w-screen h-screen grid sm:grid-cols-8 grid-cols-1 bg-[#1A1A1A] overflow-hidden z-10">
 
-      <nav class="col-span-2 py-24">
+      <nav class="col-span-2 py-24 sm:block hidden">
         <div class="relative h-full w-full">
-          <div class="flex flex-col items-center">
+          <div class="sm:flex hidden flex-col items-center">
             <img src="/dashboard/logo-sidebar.svg" alt="Sidebar Logo">
           </div>
 
-          <div class="mt-36 w-full">
+          <div class="mt-36 w-full sm:block hidden">
             <a href="/home" class="flex items-center relative group z-0">
               <span class="w-2 h-9 rounded-r-md mr-32 z-10"></span>
               @if(Route::is('home.index') )
@@ -101,18 +101,20 @@
               @endif
               <img src="/dashboard/icons/settings.svg" alt="Main" class="w-8 h-8 group-hover:mb-1 mr-14">
               <p class="text-lg font-bold text-white group-hover:mb-1 cursor-pointer">Settings</p>
-            </a><a href="http://127.0.0.1:8000/chatify">
-            <div id="chatHead" class="bg-blue-500 text-white py-2 px-4 rounded-full fixed bottom-20 right-20">
-              Chat
-          </div></a>
+            </a>
+            <a href="http://192.168.0.110/chatify">
+              <div id="chatHead" class="bg-blue-500 text-white py-2 px-4 rounded-full fixed bottom-20 right-20">
+                  Chat
+              </div></a>
+            </a>
           </div>
           
         </div>
       </nav>
       
-      <div class="col-span-6 py-10 pr-10">
-        <div class="bg-white rounded-3xl h-full">
-          <main>
+      <div class="col-span-6 sm:py-10 py-0 sm:pr-10 pr-0">
+        <div class="bg-white sm:rounded-3xl rounded-none h-full">
+          <main class="sm:overflow-hidden overflow-y-auto sm:h-auto h-screen">
           @yield('content')
           {{$slot}}
           </main>

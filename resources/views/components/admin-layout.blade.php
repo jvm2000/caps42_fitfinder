@@ -15,12 +15,12 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-    <link rel="icon" type="image/png" href="{{ asset('icon.ico') }}">
+    <link rel="icon" type="image/svg" href="{{ asset('/icons/fitfinder-icon.svg') }}">
 
     <title>{{ $title ?? 'Admin' }}</title>
   </head>
 
-  <div class="antialiased flex">
+  <div class="antialiased flex bg-[#f3f3f3]">
     <div class="h-screen w-80 bg-[#1A1A1A] overflow-hidden z-10 border-none py-10">
       <div class="flex items-center relative w-full px-14">
         <p class="text-2xl text-white mr-auto">Admin</p>
@@ -28,7 +28,7 @@
       </div>
 
       <div class="flex flex-col mt-16">
-        <a href="/admin" class="flex items-center py-4 mt-[1px] cursor-pointer">
+        <a href="/admin/analytics" class="flex items-center py-4 mt-[1px] cursor-pointer">
           @if(Route::is('admin.dashboard'))
           <span class="h-[21px] w-1 bg-white rounded-r-md"></span>
           @endif
@@ -49,22 +49,12 @@
           <img src="/icons/admin/coaches.svg" alt="Coaches Icon" class="w-5 h-5 ml-12">
           <p class="text-base text-white ml-10">Coaches</p>
         </a>
-        <div class="flex items-center py-4 mt-[1px] cursor-pointer">
+        <a href="/admin/payments" class="flex items-center py-4 mt-[1px] cursor-pointer">
+          @if(Route::is('admin.payments'))
           <span class="h-[21px] w-1 bg-white rounded-r-md"></span>
-          <img src="/icons/admin/programs.svg" alt="Programs Icon" class="w-5 h-5 ml-12">
-          <p class="text-base text-white ml-10">Programs</p>
-        </div>
-        <div class="flex items-center py-4 mt-[1px] cursor-pointer">
-          <span class="h-[21px] w-1 bg-white rounded-r-md"></span>
-          <img src="/icons/admin/modules.svg" alt="Modules Icon" class="w-5 h-5 ml-12">
-          <p class="text-base text-white ml-10">Modules</p>
-        </div>
-        <a  href="/admin/payments" class="flex items-center py-4 mt-[1px] cursor-pointer" >
-        <div class="flex items-center py-4 mt-[1px] cursor-pointer">
-          <span class="h-[21px] w-1 bg-white rounded-r-md"></span>
-          <img src="/icons/admin/contracts.svg" alt="Contracts Icon" class="w-5 h-5 ml-12">
+          @endif
+          <img src="/icons/admin/modules.svg" alt="Coaches Icon" class="w-5 h-5 ml-12">
           <p class="text-base text-white ml-10">Payments</p>
-        </div>
         </a>
       </div>
     </div>
