@@ -14,10 +14,10 @@
 </head>
 
 <body class="antialiased">
-  <div class="h-screen w-screen bg-white grid place-items-center overflow-hidden">
+  <div class="h-screen w-screen bg-white grid place-items-center overflow-hidden sm:overflow-y-hidden overflow-y-hidden">
 
-    <img src="/auth/bg.png" alt="Beautiful Background" class="w-full mt-60 z-20">
-    <div class="max-w-lg w-full h-auto py-6 px-8 drop-shadow-xl rounded-lg bg-white font-inter z-30 fixed">
+    <img src="/auth/bg.png" alt="Beautiful Background" class="w-full mt-60 z-20 sm:block hidden">
+    <div class="max-w-lg w-full sm:h-auto py-6 px-8 sm:drop-shadow-xl drop-shadow-none rounded-lg bg-white font-inter z-30 sm:fixed block">
       <!-- Header -->
       <div class="grid place-items-center space-y-4">
         <img src="/auth/fitfinder-black.svg" alt="Logo Black">
