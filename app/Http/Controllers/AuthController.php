@@ -71,7 +71,7 @@ class AuthController extends Controller
 
       $request->session()->regenerate();
 
-      return redirect('/admin')->with('loading', true);
+      return redirect('/admin/analytics')->with('loading', true);
   }
 
   // If email/username and password don't match, attempt regular authentication
