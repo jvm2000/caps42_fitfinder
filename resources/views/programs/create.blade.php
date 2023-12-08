@@ -40,6 +40,10 @@
                     <option value="Karate">Karate</option>
                     <option value="Muay Thai">Muay Thai</option>
                     <option value="Punching">Punching</option>
+                    <option value="Punching">Strength Training</option>
+                    <option value="Punching">Weight Training</option>
+                    <option value="Punching">Pilates</option>
+                    <option value="Punching">Body building</option>
                   </select> 
                   @error('category')
                   <p class="text-red-500 text-sm">{{$message}}</p>
