@@ -14,7 +14,7 @@ class Module extends Model
     protected $fillable = [
         'name',
         'procedure',
-        '',
+        'schedule',
         'sets',
         'reps',
         'rest_period',
