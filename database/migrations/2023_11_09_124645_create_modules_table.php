@@ -15,14 +15,13 @@ return new class extends Migration
         Schema::create('modules', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('schedule');
+            $table->date('schedule');
             $table->string('procedure');
             $table->smallInteger('sets');
             $table->smallInteger('reps');
             $table->string('rest_period');
             $table->string('difficulty');
             $table->string('notes');
-            $table->string('meet_link');
             $table->string('video_url');
             $table->foreignIdFor(Program::class);
             $table->timestamps();

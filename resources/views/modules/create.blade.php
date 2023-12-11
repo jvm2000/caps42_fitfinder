@@ -96,7 +96,6 @@
                   <option value="expert">Expert</option>
                 </select>
               </div>
-
               <x-app.input 
                 type="text" 
                 label="Notes" 

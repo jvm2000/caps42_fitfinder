@@ -21,6 +21,8 @@ class Enrollee extends Model
     protected $fillable = [
         'completion',
         'stats',
+        'meet_link',
+        'evaluation',
         'trainee_id',
         'coach_id',
         'program_id',

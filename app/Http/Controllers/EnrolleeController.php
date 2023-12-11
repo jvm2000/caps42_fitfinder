@@ -92,6 +92,17 @@ class EnrolleeController extends Controller
         return redirect('/admin/payments')->with('message', 'Trainee Enrolled Successfully');
     }
 
+    public function meetingLink(Request $request)
+    {
+        //
+        $form = $request->validate([
+            'meet_link'=>['required'],
+        ]);
+
+        Enrollee::create(['meet_link' => $form['meet_link']]);
+
+        return redirect('/home')->with('message', 'Successfully');
+    }
     /**
      * Display the specified resource.
      */
