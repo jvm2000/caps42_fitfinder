@@ -117,7 +117,11 @@ class AdminController extends Controller
         $programs = Program::all();
         $earnings = TotalEarnings::all();
         $contracts = Contract::all();
-        $payments = Payment::all();
+        $payments = Payment::join('contracts', 'payments.contract_id', '=', 'contracts.id')
+        ->join('programs', 'contracts.program_id', '=', 'programs.id')
+        ->groupBy('contracts.program_id')
+        ->selectRaw('contracts.program_id, programs.name as program_name, sum(payments.amount) as total_amount')
+        ->get();
         $totalEarnings = TotalEarnings::all()->sum('earnings');
         $eachEarnings = Payment::pluck('amount');
         $eachEarned = $eachEarnings->toArray();

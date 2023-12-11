@@ -44,20 +44,19 @@ class EnrolleeController extends Controller
     }
 
     if ($b == $a && !$enrollee->completion_email_sent) {
-        $enrollee->completion = 'completed';
-        $enrollee->completion_email_sent = true; // Set the flag to true
+        $enrollee->completion = 'submitted for evaluation';
+
         $enrollee->save();
-    
-        // Get the current logged-in user's name and email
-        $userName = Auth::user()->name; // Replace with the actual attribute containing the user's name
-        $userEmail = Auth::user()->email;
-    
-        // Send email with the certificate template
-        $subject = 'Congratulations on Completion';
+
+        // $userName = Auth::user()->name;
+
+        // $userEmail = Auth::user()->email;
+
+        // $subject = 'Congratulations on Completion';
         
-        Mail::send('certificate', ['userName' => $userName, 'enrollee' => $enrollee], function ($message) use ($userEmail, $subject) {
-            $message->to($userEmail)->subject($subject);
-        });
+        // Mail::send('certificate', ['userName' => $userName, 'enrollee' => $enrollee], function ($message) use ($userEmail, $subject) {
+        //     $message->to($userEmail)->subject($subject);
+        // });
     }
     
     return view('progress.module', [

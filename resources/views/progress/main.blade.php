@@ -83,17 +83,22 @@
 									</div>
 								</td>
 								<td class="py-2">
-									@if($enrollee->completion === 'completed')
-											<div class="flex items-center space-x-4">
-												<span class="w-2 h-2 bg-green-500 rounded-full"></span>
-												<p class="text-sm text-green-500">completed</p>
-											</div>
-										@else
-											<div class="flex items-center space-x-4">
-												<span class="w-2 h-2 bg-red-500 rounded-full"></span>
-												<p class="text-sm text-red-500">ongoing</p>
-											</div>
-										@endif
+									@if($enrollee->completion === 'submitted for evaluation')
+										<div class="flex items-center space-x-4">
+											<span class="w-2 h-2 bg-yellow-500 rounded-full"></span>
+											<p class="text-sm text-yellow-500">submitted for evaluation</p>
+										</div>
+									@elseif($enrollee->completion === 'completed')
+										<div class="flex items-center space-x-4">
+											<span class="w-2 h-2 bg-green-500 rounded-full"></span>
+											<p class="text-sm text-green-500">completed</p>
+										</div>
+									@else
+										<div class="flex items-center space-x-4">
+											<span class="w-2 h-2 bg-red-500 rounded-full"></span>
+											<p class="text-sm text-red-500">ongoing</p>
+										</div>
+									@endif
 								</td>
 
 								<td class="py-2">
