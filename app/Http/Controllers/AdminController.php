@@ -124,6 +124,7 @@ class AdminController extends Controller
         $totalCommisions = TotalEarnings::pluck('earnings');
         $eachCommisioned = $totalCommisions->toArray();
 
+        $totalPayments = $eachEarnings->sum();
 
         return view('admin.index', [
             'users' => $users,
@@ -137,6 +138,7 @@ class AdminController extends Controller
             'payments' => $payments,
             'eachEarned' => $eachEarned,
             'eachCommisioned' => $eachCommisioned,
+            'totalPayments' => $totalPayments,
         ]);
     }
 }
