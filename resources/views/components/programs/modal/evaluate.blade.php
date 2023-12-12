@@ -54,20 +54,22 @@
             @endforeach
           </tbody>
         </table>
-
+        <form action="/enrollee/create" method="post">
+          @csrf
         <div class="space-y-2">
           <span class="text-sm text-gray-900">Type meeting link</span>
           <input 
             id="inputText"
-            name="password"
+            name="meet_link"
             type="text" 
             class="'bg-inherit text-sm px-8 py-2 w-full border-gray-500 border rounded-md"
             autocomplete="off"
             placeholder="Enter Meeting Link"
           />
+          <button type="submit">Submit</button>
         </div>
+        </form>
       </div>
-  
     </div>
   </div>
 </div>

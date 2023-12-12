@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\Progress;
+use App\Models\Evaluation;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -46,4 +47,9 @@ class Enrollee extends Model
     {
         return $this->hasMany(Progress::class);
     }
+    public function evaluation()
+    {
+        return $this->hasMany(Evaluation::class);
+    }
+
 }

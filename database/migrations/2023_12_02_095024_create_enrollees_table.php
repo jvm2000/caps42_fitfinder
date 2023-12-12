@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();     
             $table->integer('stats');
             $table->string('completion');
-            $table->string('meet_link');
-            $table->text('evaluation');
             $table->foreignId('trainee_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('program_id')->constrained('programs')->onDelete('cascade');
             $table->foreignId('coach_id')->constrained('users')->onDelete('cascade');

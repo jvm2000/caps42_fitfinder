@@ -18,6 +18,7 @@ use App\Http\Controllers\MatchmakingController;
 use App\Http\Controllers\SendRequestController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ContractDashboardController;
+use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\MedicalCertificateController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
@@ -162,6 +163,9 @@ Route::middleware(['auth'])->group(function () {
 	Route::put('/programs/restore/{program}', [ProgramController::class, 'restore'])->name('programs.restore');
 	Route::put('/programs/update/{program}', [ProgramController::class, 'update'])->name('programs.update');
 	Route::delete('/programs/delete/{program}', [ProgramController::class, 'destroy'])->name('programs.delete');
+
+	//Evaluations
+	Route::post('/programs/evaluate/{enrollee}', [EvaluationController::class, 'store'])->name('evaluation.create');
 
 	//Medcerts
 	Route::get('/profile/trainee/{user}', [MedicalCertificateController::class, 'index'])->name('medcert.index');
