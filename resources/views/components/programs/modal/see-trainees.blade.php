@@ -19,10 +19,11 @@
             <tr>
               <th class="text-sm font-medium text-gray-400 py-4 text-left indent-16">Full Name</th>
 							<th class="text-sm font-medium text-gray-400 py-4 text-left">Status</th>
+							<th class="text-sm font-medium text-gray-400 py-4 text-left">Action</th>
             </tr>
           </thead>
           <tbody>
-            @foreach($active->enrollees as $enrollee)
+            @foreach($active->enrollees as $index => $enrollee)
               <tr class="border-t">
                 <td class="text-sm font-medium text-gray-400 py-4">
                   <div class="flex items-center space-x-4">
@@ -35,8 +36,8 @@
                 <td class="text-sm font-medium text-gray-400 py-4">
                   <div class="flex items-center space-x-4">
                     <span class="w-3 h-3 
-                      @if($enrollee->completion === 'completed')
-                        bg-green-500
+                      @if($enrollee->completion === 'submitted for evaluation')
+                        bg-yellow-500
                       @else
                         bg-red-500
                       @endif
@@ -49,6 +50,9 @@
                       @endif
                     </p>
                   </div>
+                </td>
+                <td class="text-sm font-medium text-gray-400 py-4">
+                  <x-programs.modal.evaluate :index="$index" :enrollee="$enrollee" />
                 </td>
               </tr>
             @endforeach
