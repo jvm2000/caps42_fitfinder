@@ -86,7 +86,11 @@
 									@if($enrollee->completion === 'submitted for evaluation')
 										<div class="flex items-center space-x-4">
 											<span class="w-2 h-2 bg-yellow-500 rounded-full"></span>
-											<p class="text-sm text-yellow-500">submitted for evaluation</p>
+											@if($enrollee->evaluation->count() === 0)
+												<p class="text-sm text-yellow-500">{{$enrollee->evaluation}}</p>
+											@else
+											ss
+											@endif
 										</div>
 									@elseif($enrollee->completion === 'completed')
 										<div class="flex items-center space-x-4">
