@@ -26,7 +26,7 @@ class EnrolleeController extends Controller
         return view('progress.main', compact('enrolled'));
     }
     public function showProgress(Enrollee $enrollee)
-{
+    {
     $a = $enrollee->progress->count();
     $b = $enrollee->stats;
     $finished = 0;

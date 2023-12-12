@@ -100,7 +100,6 @@
             <p class="text-xl font-bold text-indigo-500">Meeting Link</p>
             @foreach($enrollee->evaluation as $evaluation)
             <a href="{{ $evaluation->meeting_link }}" class="text-lg text-blue-300">{{ $evaluation->meeting_link }}</a>
-
             <div class="flex items-center space-x-4">
               <div class="flex flex-col space-y-1 text-center">
                 <p class="text-lg font-medium text-gray-900">Schedule</p>
@@ -111,6 +110,20 @@
                 <p class="text-lg font-medium text-gray-900">Time</p>
                 <p class="text-base text-gray-600">{{ $evaluation->time }}</p>
               </div>
+
+              <form action="/programs/evaluate/update/{{$enrollee->id}}" method="POST" enctype="multipart/form-data" >
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="completion" value="completed">
+                <div class="flex flex-col space-y-2 items-center sticky bottom-0 pt-6 pb-3 w-full bg-white z-20 px-8">
+                  <button 
+                    type="submit"
+                    class="rounded-md flex items-center px-6 py-3 text-base text-white bg-black cursor-pointer active:mt-[1px] w-full justify-center"
+                  >
+                    Mark as Done
+                  </button>
+                </div>
+              </form>
             </div>
             @endforeach
           </div>

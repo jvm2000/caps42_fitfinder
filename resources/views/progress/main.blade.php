@@ -45,6 +45,7 @@
 							<th class="py-4">
 								<p class="text-xl font-medium text-gray-400 py-4 text-left w-44">Status</p>
 							</th>
+							<th class="text-xl font-medium text-gray-400 py-4 text-left">Meeting Link</th>
 							<th class="text-xl font-medium text-gray-400 py-4 text-left">Action</th>
 							
 						</tr>
@@ -85,12 +86,8 @@
 								<td class="py-2">
 									@if($enrollee->completion === 'submitted for evaluation')
 										<div class="flex items-center space-x-4">
-											<span class="w-2 h-2 bg-yellow-500 rounded-full"></span>
-											@if($enrollee->evaluation->count() === 0)
-												<p class="text-sm text-yellow-500">{{$enrollee->evaluation}}</p>
-											@else
-											ss
-											@endif
+											<span class="w-2 h-2 bg-yellow-500 rounded-full"></span>							
+											<p class="text-sm text-yellow-500">Submitted for evaluation</p>
 										</div>
 									@elseif($enrollee->completion === 'completed')
 										<div class="flex items-center space-x-4">
@@ -105,6 +102,19 @@
 									@endif
 								</td>
 
+								<td class="py-2">
+									<div class="flex items-center space-x-4">
+											<span class="w-2 h-2 bg-green-500 rounded-full"></span>
+											@if($enrollee->evaluation->count() === 0)
+											<p class="text-sm text-green-500">Meeting link Unavailable</p>
+											@else
+												@foreach($enrollee->evaluation as $eval)
+												<a href="{{$eval->meeting_link}}" class="text-sm text-green-500">{{$eval->meeting_link}} {{$eval->schedule}} {{$eval->time}}</a>
+												@endforeach
+											@endif
+										</div>
+								</td>
+								
 								<td class="py-2">
 									<div class="flex items-center space-x-3 relative">
 										<a href="/progress/show/{{$enrollee->id}}" class="w-7 h-7 rounded-full p-1.5 bg-indigo-500">

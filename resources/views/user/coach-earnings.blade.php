@@ -16,7 +16,7 @@
             <img src="{{ auth()->user()->getImageURL() }}" alt="" class="w-24 h-24 rounded-xl">
             <p class="text-black text-2xl font-semibold">My Total Earnings</p>
           </div>
-
+          
           <div class="space-y-4 w-full mt-10">
             <div class="space-y-2">
               <span class="text-md text-gray-600 text-left">Number of Transactions made:</span>
@@ -37,6 +37,32 @@
               <div id="area-chart"></div>
             </div>
           </div>
+          <div class="space-y-2 ">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead>
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Trainee</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Program</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payment Type</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Start Date</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">End Date</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    @foreach($payments as $payment)
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">{{$payment->contract->trainee->first_name}} {{$payment->contract->trainee->last_name}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{$payment->contract->program->name}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{$payment->amount}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{$payment->contract->payment_type}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{$payment->contract->startdate}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{$payment->contract->enddate}}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
         </div>
       </div>
     </div>

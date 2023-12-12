@@ -24,4 +24,16 @@ class EvaluationController extends Controller
 
         return redirect('/programs/list')->with('message', 'Evaluation created successfully!');
     }
+
+
+    public function update(Request $request, Enrollee $enrollee)
+    {
+        $form = $request->validate([
+            'completion'=>['required'],
+        ]);
+
+        $enrollee->update($form);
+
+        return redirect('/programs/list')->with('message', 'Done Evaluating!');
+    }
 }

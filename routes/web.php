@@ -166,7 +166,7 @@ Route::middleware(['auth'])->group(function () {
 
 	//Evaluations
 	Route::post('/programs/evaluate/{enrollee}', [EvaluationController::class, 'store'])->name('evaluation.create');
-
+	Route::put('/programs/evaluate/update/{enrollee}', [EvaluationController::class, 'update'])->name('evaluation.update');
 	//Medcerts
 	Route::get('/profile/trainee/{user}', [MedicalCertificateController::class, 'index'])->name('medcert.index');
 	Route::post('/medcert/create/{user}', [MedicalCertificateController::class, 'store'])->name('medcert.create');
