@@ -53,6 +53,15 @@
           </div>
 
           <div class="flex flex-col space-y-1">
+            <p class="text-base font-medium">Scheduled Days</p>
+            <p class="text-base">
+              @foreach($module->schedule as $sched)
+              <span class="text-base capitalize text-blue-500">{{ $sched }} ,</span>
+              @endforeach
+            </p>
+          </div>
+
+          <div class="flex flex-col space-y-1">
             <p class="text-base font-medium">You may follow this video link for reference</p>
             <div class="mt-6">
               <iframe width="450" height="315" src="https://www.youtube.com/embed/{{$module->video_url}}" frameborder="0" allowfullscreen></iframe>

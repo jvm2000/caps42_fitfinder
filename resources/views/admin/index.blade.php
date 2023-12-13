@@ -109,7 +109,7 @@
 
           <div class="flex flex-col space-y-3 pt-6">
             <p class="text-lg text-gray-400 font-medium">Transactions Made:</p>
-            <p class="text-4xl text-black font-bold">{{ $earnings->count() }} transacs</p>
+            <p class="text-4xl text-black font-bold">{{ $earnings->count() }} transactions</p>
             <p class="text-base text-gray-400">Overall transactions</p>
           </div>
         </div>
@@ -126,28 +126,21 @@
 
         <div class="bg-white shadow-sm rounded-lg px-6 py-4 flex flex-col relative col-span-2 space-y-4">
           <div class="flex items-center w-full relative">
-            <p class="text-lg font-semibold mr-auto">Payments Recorded</p>
-            <p class="text-lg font-semibold">Summary</p>
+            <p class="text-lg font-semibold mr-auto">Programs Total Income</p>
           </div>
           <div class="h-36 overflow-y-auto w-full">
             <table class="table-auto w-full">
               <thead>
                 <tr>
-                  <th class="text-left font-normal">Payment ID</th>
                   <th class="font-normal text-left">Program</th>
-                  <th class="font-normal text-left">Coach</th>
                   <th class="font-normal text-left">Amount</th>
-                  <th class="font-normal text-left">Status</th>
                 </tr>
               </thead>
               <tbody>
                 @foreach($payments as $payment)
                   <tr class="border-b">
-                    <td class="text-left font-normal py-2">{{ $payment->id }}</td>
-                    <td class="font-normal py-2">{{ $payment->contract->program->name }}</td>
-                    <td class="font-normal py-2">{{ $payment->contract->coach->username }}</td>
-                    <td class="font-normal py-2">{{ $payment->amount }}</td>
-                    <td class="font-normal py-2">{{ $payment->status }}</td>
+                    <td class="font-normal py-2">{{ $payment->program_name }}</td>
+                    <td class="font-normal py-2">{{ $payment->total_amount }}</td>
                   </tr>
                 @endforeach
               </tbody>

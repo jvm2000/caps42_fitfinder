@@ -14,6 +14,7 @@ class Progress extends Model
     
     protected $fillable = [
         'module_id',
+        'next_stage',
         'program_id',
         'enrollee_id',
         'status',

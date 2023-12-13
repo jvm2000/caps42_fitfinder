@@ -3,7 +3,7 @@
   <x-slot:title>
     FitFinder - Create Module
   </x-slot>
-  <div class="w-full py-10 px-12">
+  <div class="w-full pt-10 pb-28 px-12">
     <div class="flex items-center relative">
       <p class="text-3xl font-semibold mr-auto">Create Module</p>
       <x-menu-dropdown />
@@ -71,45 +71,78 @@
                 </div>
               </div>
 
-              <x-app.input 
-                type="number" 
-                label="Rest Period (minute/s)" 
-                placeholder="Enter Required Rest Period" 
-                name="rest_period"
-              >
-                <x-slot name="errors">
-                  @error('rest_period')
-                  <p class="text-red-500 text-sm error">{{$message}}</p>
-                  @enderror
-                </x-slot>
-              </x-app.input>
-
-              <div class="space-y-2">
-                <span class="text-md text-gray-600">Difficulty</span>
-                <select 
-                  name="difficulty" 
-                  class="bg-inherit text-lg pl-8 py-2 w-full border-gray-500 border rounded-md" 
+              <div class="grid grid-cols-2 items-center gap-x-4">
+                <x-app.input 
+                  type="number" 
+                  label="Rest Period (minute/s)" 
+                  placeholder="1 minute/s" 
+                  name="rest_period"
                 >
-                  <option value="" selected disabled>Select Difficulty</option>
-                  <option value="beginner">Beginner</option>
-                  <option value="intermediate">Intermediate</option>
-                  <option value="expert">Expert</option>
-                </select>
+                  <x-slot name="errors">
+                    @error('rest_period')
+                    <p class="text-red-500 text-sm error">{{$message}}</p>
+                    @enderror
+                  </x-slot>
+                </x-app.input>
+
+                <div class="space-y-2">
+                  <span class="text-xs text-gray-600 invisible">Difficulty</span>
+                  <select 
+                    name="difficulty" 
+                    class="bg-inherit text-lg pl-8 py-2 w-full border-gray-500 border rounded-md" 
+                  >
+                    <option value="" selected disabled>Select Difficulty</option>
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="expert">Expert</option>
+                  </select>
+                </div>
               </div>
+              
+              <div class="space-y-1">
+                <x-app.input 
+                  type="text" 
+                  label="Notes" 
+                  placeholder="What to note..." 
+                  name="notes"
+                >
+                  <x-slot name="errors">
+                    @error('notes')
+                    <p class="text-red-500 text-sm error">{{$message}}</p>
+                    @enderror
+                  </x-slot>
+                </x-app.input>
 
-              <x-app.input 
-                type="text" 
-                label="Notes" 
-                placeholder="What to note..." 
-                name="notes"
-              >
-                <x-slot name="errors">
-                  @error('notes')
-                  <p class="text-red-500 text-sm error">{{$message}}</p>
-                  @enderror
+              {{-- Custom Select Tag --}}
+              <x-app.custom-select label="Schedule">
+                <x-slot name="data">
+                  <p class="text-lg capitalize text-ellipsis overflow-hidden" id="selectedTags"><span class="text-gray-400">Schedule</span></p>
                 </x-slot>
-              </x-app.input>
 
+                @php
+                    $options = [
+                      0 => 'monday',
+                      1 => 'tuesday',
+                      2 => 'wednesday',
+                      4 => 'thursday',
+                      5 => 'friday',
+                      6 => 'saturday',
+                      7 => 'sunday',
+                    ];
+                @endphp
+
+                @foreach ($options as $value)
+                <label for="{{ $value }}" class="flex items-center space-x-2 indent-5 hover:bg-gray-200 py-1 cursor-pointer relative w-full pr-10">
+                  <p class="text-lg text-black font-norma capitalize mr-auto">{{ $value }}</p>
+                  <input id="{{ $value }}" name="schedule[]" type="checkbox" class="w-4 h-4" value="{{ $value }}">
+                </label>
+                @endforeach
+
+                <x-slot name="input">
+                  <p class="text-lg" id="checkboxValue"></p>
+                </x-slot>
+              </x-app.custom-select>
+              </div>
             </div>
           </div>
 
@@ -146,18 +179,16 @@ $(document).ready(function() {
 
 var checkboxes = document.querySelectorAll('input[name="schedule[]"]');
 
-var selectedDaysParagraph = document.getElementById('selectedDays');
+var selectedTagsParagraph = document.getElementById('selectedTags');
 
-// Add change event listener to each checkbox
 checkboxes.forEach(function(checkbox) {
   checkbox.addEventListener('change', function() {
-    // Get all selected checkbox values
-    var selectedDays = Array.from(document.querySelectorAll('input[name="schedule[]"]:checked')).map(function(checkbox) {
+    var selectedTags = Array.from(document.querySelectorAll('input[name="schedule[]"]:checked')).map(function(checkbox) {
         return checkbox.value;
     });
 
-    // Update the paragraph element with selected tags
-    selectedDaysParagraph.innerText = 'days: ' + selectedDays.join(', ');
+    selectedTagsParagraph.innerText = 'schedule: ' + selectedTags.join(', ');
   });
 });
+
 </script>

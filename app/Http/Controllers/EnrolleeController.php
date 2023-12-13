@@ -26,7 +26,7 @@ class EnrolleeController extends Controller
         return view('progress.main', compact('enrolled'));
     }
     public function showProgress(Enrollee $enrollee)
-{
+    {
     $a = $enrollee->progress->count();
     $b = $enrollee->stats;
     $finished = 0;
@@ -44,20 +44,19 @@ class EnrolleeController extends Controller
     }
 
     if ($b == $a && !$enrollee->completion_email_sent) {
-        $enrollee->completion = 'completed';
-        $enrollee->completion_email_sent = true; // Set the flag to true
+        $enrollee->completion = 'submitted for evaluation';
+
         $enrollee->save();
-    
-        // Get the current logged-in user's name and email
-        $userName = Auth::user()->name; // Replace with the actual attribute containing the user's name
-        $userEmail = Auth::user()->email;
-    
-        // Send email with the certificate template
-        $subject = 'Congratulations on Completion';
+
+        // $userName = Auth::user()->name;
+
+        // $userEmail = Auth::user()->email;
+
+        // $subject = 'Congratulations on Completion';
         
-        Mail::send('certificate', ['userName' => $userName, 'enrollee' => $enrollee], function ($message) use ($userEmail, $subject) {
-            $message->to($userEmail)->subject($subject);
-        });
+        // Mail::send('certificate', ['userName' => $userName, 'enrollee' => $enrollee], function ($message) use ($userEmail, $subject) {
+        //     $message->to($userEmail)->subject($subject);
+        // });
     }
     
     return view('progress.module', [
@@ -81,32 +80,33 @@ class EnrolleeController extends Controller
 
         $programs = Program::find($form['program_id']);
         
+        $firstModule = true;
+
         foreach ($programs->modules as $module) {
             Progress::create([
                 'module_id' => $module->id, // Assuming modules have an 'id' attribute
                 'program_id' => $programs->id,
                 'enrollee_id' => $enrollee->id,
+                'next_stage' => $firstModule,
                 // Copy other attributes as needed
             ]);
+
+            $firstModule = false;
         }
 
         return redirect('/admin/payments')->with('message', 'Trainee Enrolled Successfully');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function meetingLink(Request $request)
     {
         //
-    }
+        $form = $request->validate([
+            'meet_link'=>['required'],
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        Enrollee::create(['meet_link' => $form['meet_link']]);
+
+        return redirect('/home')->with('message', 'Successfully');
     }
 
     /**
@@ -114,18 +114,31 @@ class EnrolleeController extends Controller
      */
     public function update(Request $request, Progress $progress)
     {
-        $id = $request->input('enrollee_id');
-        $program = $request->input('program_id');
-        $enrollee = Enrollee::find($id);
+        $enrolleeId = $request->input('enrollee_id');
+        $programId = $request->input('program_id');
+        $enrollee = Enrollee::find($enrolleeId);
+
         // Increment the 'stats' column by 1
         $enrollee->increment('stats');
+
         $form = $request->validate([
             'status' => ['nullable'],
         ]);
-        
+
+        // Update the current progress
         $progress->update($form);
 
-        return redirect('/progress/show/' . $program)->with('message', 'Module successfully finished!');
+        $nextProgress = Progress::where('enrollee_id', $enrolleeId)
+            ->where('program_id', $programId)
+            ->where('id', '>', $progress->id) // Ensure it's the next progress
+            ->orderBy('id')
+            ->first();
+
+        if ($nextProgress) {
+            $nextProgress->update(['next_stage' => true]);
+        }
+
+        return redirect('/progress/show/' . $programId)->with('message', 'Module successfully finished!');
     }
 
     /**

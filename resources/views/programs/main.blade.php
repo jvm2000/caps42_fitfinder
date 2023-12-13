@@ -98,6 +98,7 @@ function openTab(evt, tabName) {
 								<p class="text-xl font-medium text-gray-400 py-4 text-left whitespace-nowrap">Number of Trainees Enrolled</p>
 							</th>
 							<th class="text-xl font-medium text-gray-400 py-4 text-left">Action</th>
+							<th class="text-xl font-medium text-gray-400 py-4 text-left">Overview</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -155,10 +156,12 @@ function openTab(evt, tabName) {
 
 									</div>
 								</td>
+
+								<td class="py-2">
+									<x-programs.modal.see-trainees :index="$index" :active="$active" />
+								</td>
 							</tr>
-							
 							@endif
-							
 						@endforeach
 					</tbody>
 					{{$programs->links()}}

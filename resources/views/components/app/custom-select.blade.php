@@ -9,7 +9,7 @@
   <div class="space-y-1">
     <div
       id="dropdown-menu"
-      class="mt-4 w-full absolute rounded-b-md border-t shadow-lg hidden  pt-0 pb-2 z-[9999] bg-white"
+      class="mt-4 w-full absolute rounded-b-md border-t shadow-lg hidden pt-0 pb-2 z-[9999] bg-white"
     >
       {{ $slot }}
     </div>

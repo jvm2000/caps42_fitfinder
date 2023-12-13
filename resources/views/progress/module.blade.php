@@ -86,10 +86,11 @@
 
           @foreach ($enrollee->progress as $index => $mod)
           <tr>
-            
             <td class="border-l-8 
-              @if($mod->status === 'not done')
+              @if($mod->status === 'not done' && $mod->next_stage === 1)
               border-red-500
+              @elseif($mod->status === 'not done' && $mod->next_stage === 0)
+              border-gray-500
               @else
               border-green-500
               @endif 
@@ -107,29 +108,43 @@
             <td class="py-1 text-sm">
               <div class="flex items-center space-x-4">
                 <span class="w-2 h-2 
-                  @if($mod->status === 'not done')
+                  @if($mod->status === 'not done' && $mod->next_stage === 1)
                     bg-red-500
+                  @elseif($mod->status === 'not done' && $mod->next_stage === 0)
+                    bg-gray-500
                   @else
                     bg-green-500
                   @endif
                   rounded-full"
                 ></span>
-                <p class="text-neutral-950 lowercase">{{ $mod->status }}</span></p>
+                <p class="text-neutral-950 lowercase">
+                  @if($mod->status === 'not done' && $mod->next_stage === 1)
+                    on going
+                  @elseif($mod->status === 'not done' && $mod->next_stage === 0)
+                    upcoming
+                  @else
+                    {{ $mod->status }}
+                  @endif
+                </span></p>
               </div>
             </td>
 
             <td class="py-1">
               <div class="flex items-center space-x-3">
-                @if( $mod->status === 'not done' )
-                <x-progress.preview :mod="$mod" :index="$index" :enrollee="$enrollee">
-                  <div class="bg-red-500 px-4 py-1 text-sm text-white font-medium rounded-lg">
-                    Start
+                @if($mod->status === 'not done' && $mod->next_stage === 1)
+                  <x-progress.preview :mod="$mod" :index="$index" :enrollee="$enrollee">
+                    <div class="bg-red-500 px-4 py-1 text-sm text-white font-medium rounded-lg">
+                      Start
+                    </div>
+                  </x-progress.preview>
+                @elseif($mod->status === 'not done' && $mod->next_stage === 0)
+                  <div class="bg-gray-500 px-4 py-1 text-sm text-white font-medium rounded-lg ml-4 cursor-not-allowed">
+                    Next
                   </div>
-                </x-progress.preview>
                 @else
-                <div class="bg-green-500 px-4 py-1 text-sm text-white font-medium rounded-lg">
-                  Finished
-                </div>
+                  <div class="bg-green-500 px-4 py-1 text-sm text-white font-medium rounded-lg">
+                    Finished
+                  </div>
                 @endif
               </div>
             </td>

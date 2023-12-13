@@ -20,12 +20,17 @@ class ModuleController extends Controller
             'name'=>['required','string'],
             'procedure'=>['required'],
             'sets' => ['required','string'],
-            'reps'=>['nullable'],
-            'rest_period'=>['nullable'],
-            'difficulty'=>['nullable'],
-            'notes'=>['nullable'],
+            'reps'=>['required'],
+            'rest_period'=>['required'],
+            'difficulty'=>['required'],
+            'notes'=>['required'],
+            'schedule'=>['required'],
             'video_url'=>['required'],
         ]);
+
+        $hasModules = $program->modules()->exists();
+
+        $form['status'] = !$hasModules;
 
         $program->modules()->create($form);
 

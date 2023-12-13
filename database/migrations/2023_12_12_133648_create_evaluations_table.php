@@ -12,12 +12,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('progress', function (Blueprint $table) {
+        Schema::create('evaluations', function (Blueprint $table) {
             $table->id();
-            $table->string('status')->default('not done');
-            $table->boolean('next_stage')->default(false);
-            $table->foreignId('module_id')->constrained('modules')->onDelete('cascade');
-            $table->foreignId('program_id')->constrained('programs')->onDelete('cascade');
+            $table->string('meeting_link');
+            $table->date('schedule');
+            $table->time('time');
             $table->foreignIdFor(Enrollee::class);
             $table->timestamps();
         });
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('progress');
+        Schema::dropIfExists('evaluations');
     }
 };
