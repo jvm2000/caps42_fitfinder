@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create('progress', function (Blueprint $table) {
             $table->id();
             $table->string('status')->default('not done');
+            $table->boolean('next_stage')->default(false);
             $table->foreignId('module_id')->constrained('modules')->onDelete('cascade');
             $table->foreignId('program_id')->constrained('programs')->onDelete('cascade');
             $table->foreignIdFor(Enrollee::class);

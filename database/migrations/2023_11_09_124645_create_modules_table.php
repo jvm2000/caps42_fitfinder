@@ -15,7 +15,6 @@ return new class extends Migration
         Schema::create('modules', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->date('schedule');
             $table->string('procedure');
             $table->smallInteger('sets');
             $table->smallInteger('reps');
@@ -23,6 +22,8 @@ return new class extends Migration
             $table->string('difficulty');
             $table->string('notes');
             $table->string('video_url');
+            $table->json('schedule');
+            $table->boolean('status')->default(false);
             $table->foreignIdFor(Program::class);
             $table->timestamps();
         });

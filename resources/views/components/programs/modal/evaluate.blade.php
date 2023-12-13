@@ -99,18 +99,18 @@
           <div class="flex flex-col items-center space-y-2 mt-6">
             <p class="text-xl font-bold text-indigo-500">Meeting Link</p>
             @foreach($enrollee->evaluation as $evaluation)
-            <a href="{{ $evaluation->meeting_link }}" class="text-lg text-blue-300">{{ $evaluation->meeting_link }}</a>
-            <div class="flex items-center space-x-4">
-              <div class="flex flex-col space-y-1 text-center">
-                <p class="text-lg font-medium text-gray-900">Schedule</p>
-                <p class="text-base text-gray-600">{{ $evaluation->schedule }}</p>
-              </div>
+              <a href="{{ $evaluation->meeting_link }}" class="text-lg text-blue-300">{{ $evaluation->meeting_link }}</a>
+              <div class="flex items-center space-x-4">
+                <div class="flex flex-col space-y-1 text-center">
+                  <p class="text-lg font-medium text-gray-900">Schedule</p>
+                  <p class="text-base text-gray-600">{{ $evaluation->schedule }}</p>
+                </div>
 
-              <div class="flex flex-col space-y-1 text-center">
-                <p class="text-lg font-medium text-gray-900">Time</p>
-                <p class="text-base text-gray-600">{{ $evaluation->time }}</p>
+                <div class="flex flex-col space-y-1 text-center">
+                  <p class="text-lg font-medium text-gray-900">Time</p>
+                  <p class="text-base text-gray-600">{{ $evaluation->time }}</p>
+                </div>
               </div>
-
               <form action="/programs/evaluate/update/{{$enrollee->id}}" method="POST" enctype="multipart/form-data" >
                 @csrf
                 @method('PUT')
@@ -124,7 +124,6 @@
                   </button>
                 </div>
               </form>
-            </div>
             @endforeach
           </div>
         @endif

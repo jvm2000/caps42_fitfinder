@@ -38,6 +38,8 @@
                     <span class="w-3 h-3 
                       @if($enrollee->completion === 'submitted for evaluation')
                         bg-yellow-500
+                      @elseif($enrollee->completion === 'completed')
+                        bg-green-500
                       @else
                         bg-red-500
                       @endif
@@ -52,7 +54,11 @@
                   </div>
                 </td>
                 <td class="text-sm font-medium text-gray-400 py-4">
-                  <x-programs.modal.evaluate :index="$index" :enrollee="$enrollee" />
+                  @if($enrollee->completion !== 'completed')
+                    <x-programs.modal.evaluate :index="$index" :enrollee="$enrollee" />
+                  @else
+                  done
+                  @endif
                 </td>
               </tr>
             @endforeach
